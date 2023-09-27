@@ -6,6 +6,8 @@ import os
 import json
 from PIL import ImageStat, Image
 import numpy as np
+import os
+import shutil
 
 import plotly.express as px
 
@@ -142,9 +144,6 @@ def generate_train_val_test_split(df, seed=1, val_ratio=0.2, test_ratio=0.2):
     df_val["set"] = "val"
     df_test = df_temp.iloc[train_num + val_num :]
     df_test["set"] = "test"
-    print(f"len train {len(df_train)}")
-    print(f"len val {len(df_val)}")
-    print(f"len test {len(df_test)}")
     assert len(df_temp) == len(df_val) + len(df_train) + len(df_test)
 
     df = pd.merge(
@@ -194,3 +193,69 @@ def find_contours(mask, epsilon=0.8):
         coordinates.append(coord)
         labels.append(label_line)
     return labels, coordinates
+
+
+def make_directory_structure(path, dataset):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    if not os.path.exists(f"{path}{dataset}"):
+        os.makedirs(f"{path}{dataset}")
+
+    if not os.path.exists(f"{path}{dataset}/train"):
+        os.makedirs(f"{path}{dataset}/train")
+
+    if not os.path.exists(f"{path}{dataset}/train/labels"):
+        os.makedirs(f"{path}{dataset}/train/labels")
+
+    if not os.path.exists(f"{path}{dataset}/train/images"):
+        os.makedirs(f"{path}{dataset}/train/images")
+
+    if not os.path.exists(f"{path}{dataset}/val"):
+        os.makedirs(f"{path}{dataset}/val")
+
+    if not os.path.exists(f"{path}{dataset}/val/images"):
+        os.makedirs(f"{path}{dataset}/val/images")
+
+    if not os.path.exists(f"{path}{dataset}/val/labels"):
+        os.makedirs(f"{path}{dataset}/val/labels")
+
+    if not os.path.exists(f"{path}{dataset}/test"):
+        os.makedirs(f"{path}{dataset}/test")
+
+    if not os.path.exists(f"{path}{dataset}/test/images"):
+        os.makedirs(f"{path}{dataset}/test/images")
+
+    if not os.path.exists(f"{path}{dataset}/test/labels"):
+        os.makedirs(f"{path}{dataset}/test/labels")
+
+
+def create_yml_file(path, dataset):
+    yaml_content = f"""
+    path: ./{dataset}
+    train: train/images
+    val: val/images
+
+    nc: 1
+    names: ['track']
+        """
+    with open(f"{path}{dataset}.yml", "w") as f:
+        f.write(yaml_content)
+
+
+def write_dataset_to_directory(df, path_yml, path_data, dataset):
+    make_directory_structure(dataset=dataset, path=path_data)
+    create_yml_file(path=path_yml, dataset=dataset)
+    for idx, row in df[["path", "set"]].drop_duplicates().iterrows():
+        source = f"./orig_data/DB/{row['path']}"
+        filename = row["path"].replace("/", "_")
+        destination = f"{path_data}{dataset}/{row['set']}/images/{filename}"
+        shutil.copy(source, destination)
+
+        mask = generate_mask(df, row["path"])
+        labels, coordinates = find_contours(mask)
+        with open(
+            f"{path_data}{dataset}/{row['set']}/labels/{filename.replace('png','txt')}",
+            "w",
+        ) as f:
+            f.write("\n".join(labels))
