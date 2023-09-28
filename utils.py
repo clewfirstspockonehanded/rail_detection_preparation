@@ -159,7 +159,7 @@ def generate_train_val_test_split(df, seed=1, val_ratio=0.2, test_ratio=0.2):
 def generate_mask(df, path):
     df = df[df["path"] == path]
     img = cv2.imread(f"./orig_data/DB/{path}")
-    thickness = int(img.shape[1] / 120)
+    thickness = int(img.shape[1] / 100)
     mask = np.zeros_like(img)
     for idx, row in df.iterrows():
         cv2.polylines(
