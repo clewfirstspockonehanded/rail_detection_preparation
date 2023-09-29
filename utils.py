@@ -243,7 +243,7 @@ def create_yml_file(path, dataset):
         f.write(yaml_content)
 
 
-def write_dataset_to_directory(df, path_yml, path_data, dataset):
+def write_dataset_to_directory(df, path_yml, path_data, dataset, only_label=False):
     make_directory_structure(dataset=dataset, path=path_data)
     create_yml_file(path=path_yml, dataset=dataset)
     for idx, row in df[["path", "set"]].drop_duplicates().iterrows():
