@@ -129,12 +129,14 @@ def calculate_brightness(im_file):
     return stat.rms[0]
 
 
-def generate_train_val_test_split(df, seed=1, val_ratio=0.2, test_ratio=0.2):
-    df_temp = (
-        df[["longitude", "latitude"]]
-        .drop_duplicates()
-        .sample(frac=1, random_state=seed)
-    )
+def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
+    #    df_temp = (
+    #        df[["longitude", "latitude"]]
+    #        .drop_duplicates()
+    #        .sample(frac=1, random_state=seed)
+    #    )
+
+    df_temp = df[["tag"]].drop_duplicates().sample(frac=1, random_state=seed)
     test_num = int(len(df_temp) * test_ratio)
     val_num = int(len(df_temp) * val_ratio)
     train_num = len(df_temp) - test_num - val_num
@@ -146,12 +148,19 @@ def generate_train_val_test_split(df, seed=1, val_ratio=0.2, test_ratio=0.2):
     df_test["set"] = "test"
     assert len(df_temp) == len(df_val) + len(df_train) + len(df_test)
 
+    #    df = pd.merge(
+    #        how="left",
+    #        left=df,
+    #        right=pd.concat([df_test, df_train, df_val]),
+    #        left_on=["latitude", "longitude"],
+    #        right_on=["latitude", "longitude"],
+    #    )
     df = pd.merge(
         how="left",
         left=df,
         right=pd.concat([df_test, df_train, df_val]),
-        left_on=["latitude", "longitude"],
-        right_on=["latitude", "longitude"],
+        left_on=["tag"],
+        right_on=["tag"],
     )
     return df
 
@@ -235,6 +244,7 @@ def create_yml_file(path, dataset):
     path: ./{dataset}
     train: train/images
     val: val/images
+    test: test/images
 
     nc: 1
     names: ['track']
