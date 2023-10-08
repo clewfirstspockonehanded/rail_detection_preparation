@@ -33,7 +33,7 @@ def print_map(df):
     fig.show()
 
 
-def print_image(df, path, include_polyline=False):
+def print_image(df, path, include_polyline=False, include_bounding_box=False):
     print(path)
     image = cv2.imread(f"./orig_data/DB/{path}")
     window_name = "Image"
@@ -47,6 +47,12 @@ def print_image(df, path, include_polyline=False):
         isClosed = row["closed"]
         pts = row["poly2d"].reshape((-1, 1, 2))
         image = cv2.polylines(image, [pts], isClosed, color, thickness)
+        if include_bounding_box:
+            x = min([i[0] for i in row.poly2d])
+            y = min([i[1] for i in row.poly2d])
+            w = max([i[0] for i in row.poly2d]) - min([i[0] for i in row.poly2d])
+            h = max([i[1] for i in row.poly2d]) - min([i[1] for i in row.poly2d])
+            image = cv2.rectangle(image, (x, y), (x + w, y + h), color, thickness // 2)
 
     plt.imshow(image)
     plt.show()
