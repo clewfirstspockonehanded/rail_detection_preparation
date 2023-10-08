@@ -13,6 +13,10 @@ import plotly.express as px
 
 
 def print_map(df):
+    """
+    input: data frame with relevant information
+    output: map showing the location where images were taken
+    """
     df_temp = df[["longitude", "latitude", "tag"]].drop_duplicates()
     df_temp["size"] = 6
 
@@ -34,6 +38,10 @@ def print_map(df):
 
 
 def print_image(df, path, include_polyline=False, include_bounding_box=False):
+    """
+    function to show images
+    polylines and bounding boxes can be plotted optionally
+    """
     print(path)
     image = cv2.imread(f"./orig_data/DB/{path}")
     window_name = "Image"
@@ -59,6 +67,12 @@ def print_image(df, path, include_polyline=False, include_bounding_box=False):
 
 
 def parse_input():
+    """
+    function reads json data for each dataset and extracts relevant information for
+    sensors
+    images
+    labels
+    """
     data = []
 
     # iterate over all direcotries and open json file
@@ -130,37 +144,33 @@ def parse_input():
 
 
 def calculate_brightness(im_file):
+    """
+    calculate average brightness of image
+    """
     im = Image.open(im_file).convert("L")
     stat = ImageStat.Stat(im)
     return stat.rms[0]
 
 
 def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
-    #    df_temp = (
-    #        df[["longitude", "latitude"]]
-    #        .drop_duplicates()
-    #        .sample(frac=1, random_state=seed)
-    #    )
-
+    """
+    split dataset into validation, train, and test split
+    """
     df_temp = df[["tag"]].drop_duplicates().sample(frac=1, random_state=seed)
+    # define number of tags in each set
     test_num = int(len(df_temp) * test_ratio)
     val_num = int(len(df_temp) * val_ratio)
     train_num = len(df_temp) - test_num - val_num
+    # generate set
     df_train = df_temp.iloc[:train_num]
     df_train["set"] = "train"
     df_val = df_temp.iloc[train_num : train_num + val_num]
     df_val["set"] = "val"
     df_test = df_temp.iloc[train_num + val_num :]
     df_test["set"] = "test"
-    assert len(df_temp) == len(df_val) + len(df_train) + len(df_test)
 
-    #    df = pd.merge(
-    #        how="left",
-    #        left=df,
-    #        right=pd.concat([df_test, df_train, df_val]),
-    #        left_on=["latitude", "longitude"],
-    #        right_on=["latitude", "longitude"],
-    #    )
+    # the sum of the sizes of all sub sets must match the size of the original set
+    assert len(df_temp) == len(df_val) + len(df_train) + len(df_test)
     df = pd.merge(
         how="left",
         left=df,
@@ -172,6 +182,9 @@ def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
 
 
 def generate_mask(df, path):
+    """
+    takes an image and the repective labels and generates mask
+    """
     df = df[df["path"] == path]
     img = cv2.imread(f"./orig_data/DB/{path}")
     thickness = int(img.shape[1] / 100)
@@ -188,6 +201,9 @@ def generate_mask(df, path):
 
 
 def find_contours(mask, epsilon=0.8):
+    """
+    given a mask this function generates the countour around the
+    """
     mask_temp = mask.copy()
     imgray = cv2.cvtColor(mask_temp, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, cv2.THRESH_BINARY)
@@ -197,10 +213,9 @@ def find_contours(mask, epsilon=0.8):
     labels = []
     coordinates = []
     for idx, contour in enumerate(contours):
-        #    contour = np.append(contour, [contour[0]], axis=0)  # close polygon
         con_short = cv2.approxPolyDP(contour, epsilon=0.8, closed=True)
         coord = [point[0] for point in con_short]
-        coord += [coord[0]]
+        coord += [coord[0]]  # close polygon
         label_line = "0 " + " ".join(
             [f"{cord[0]/mask.shape[1]} {cord[1]/mask.shape[0]}" for cord in coord]
         )
