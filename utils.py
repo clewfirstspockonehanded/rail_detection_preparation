@@ -290,3 +290,36 @@ def write_dataset_to_directory(df, path_yml, path_data, dataset, only_label=Fals
             "w",
         ) as f:
             f.write("\n".join(labels))
+
+
+def apply_fast_line_detection(
+    path,
+    kernel_size=0,
+    length_treshold=10,
+    min_aspect_ration=0,
+    max_aspect_ration=float("inf"),
+):
+    image_orig = cv2.imread(path)
+    image = cv2.imread(path, cv2.CV_8UC1)
+    if kernel_size > 0:
+        image = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
+    fld = cv2.ximgproc.createFastLineDetector(
+        length_threshold=length_treshold, do_merge=True
+    )
+    lines = fld.detect(image)
+    line_image = np.copy(image_orig)
+
+    if lines is not None:
+        for line in lines.astype(int):
+            for x1, y1, x2, y2 in line:
+                aspect = abs(x1 - x2) / max(abs(y1 - y2), 1)
+                if aspect > min_aspect_ration and aspect < max_aspect_ration:
+                    cv2.line(
+                        line_image,
+                        (x1, y1),
+                        (x2, y2),
+                        (255, 0, 0),
+                        image.shape[1] // 100,
+                    )
+    plt.imshow(line_image)
+    plt.show()
