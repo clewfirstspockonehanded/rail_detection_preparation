@@ -162,6 +162,8 @@ class BinaryMetrics:
         self.activation = activation
 
     def _calculate_overlap_metrics(self, gt, pred):
+        assert gt.max() <= 1 or pred.max() <= 1, "image matrix not normalized to 0-1"
+
         output = pred.view(
             -1,
         )
@@ -174,6 +176,11 @@ class BinaryMetrics:
         fn = torch.sum((1 - output) * target)  # FN
         tn = torch.sum((1 - output) * (1 - target))  # TN
 
+        intersection = (output * target).sum()
+        total = (output + target).sum()
+        union = total - intersection
+        iou = (intersection + +self.eps) / (union + +self.eps)
+
         pixel_acc = (tp + tn + self.eps) / (tp + tn + fp + fn + self.eps)
         dice = (2 * tp + self.eps) / (2 * tp + fp + fn + self.eps)
         precision = (tp + self.eps) / (tp + fp + self.eps)
@@ -181,7 +188,7 @@ class BinaryMetrics:
         specificity = (tn + self.eps) / (tn + fp + self.eps)
         f1_score = (2 * precision * recall + self.eps) / (precision + recall + self.eps)
 
-        return pixel_acc, dice, precision, specificity, recall, f1_score
+        return pixel_acc, dice, precision, specificity, recall, f1_score, iou
 
     def __call__(self, y_true, y_pred):
         # y_true: (N, H, W)
@@ -209,66 +216,8 @@ class BinaryMetrics:
             specificity,
             recall,
             f1_score,
+            iou,
         ) = self._calculate_overlap_metrics(
             y_true.to(y_pred.device, dtype=torch.float), activated_pred
         )
-        return [pixel_acc, dice, precision, specificity, recall, f1_score]
-
-
-def meanIOU(target, predicted):
-    if target.shape != predicted.shape:
-        print(
-            "target has dimension",
-            target.shape,
-            ", predicted values have shape",
-            predicted.shape,
-        )
-        return
-
-    if target.dim() != 4:
-        print("target has dim", target.dim(), ", Must be 4.")
-        return
-
-    iousum = 0
-    for i in range(target.shape[0]):
-        target_arr = target[i, :, :, :].clone().detach().cpu().numpy().argmax(0)
-        predicted_arr = predicted[i, :, :, :].clone().detach().cpu().numpy().argmax(0)
-
-        intersection = np.logical_and(target_arr, predicted_arr).sum()
-        union = np.logical_or(target_arr, predicted_arr).sum()
-        if union == 0:
-            iou_score = 0
-        else:
-            iou_score = intersection / union
-        iousum += iou_score
-
-    miou = iousum / target.shape[0]
-    return miou
-
-
-def pixelAcc(target, predicted):
-    if target.shape != predicted.shape:
-        print(
-            "target has dimension",
-            target.shape,
-            ", predicted values have shape",
-            predicted.shape,
-        )
-        return
-
-    if target.dim() != 4:
-        print("target has dim", target.dim(), ", Must be 4.")
-        return
-
-    accsum = 0
-    for i in range(target.shape[0]):
-        target_arr = target[i, :, :, :].clone().detach().cpu().numpy().argmax(0)
-        predicted_arr = predicted[i, :, :, :].clone().detach().cpu().numpy().argmax(0)
-
-        same = (target_arr == predicted_arr).sum()
-        a, b = target_arr.shape
-        total = a * b
-        accsum += same / total
-
-    pixelAccuracy = accsum / target.shape[0]
-    return pixelAccuracy
+        return [pixel_acc, dice, precision, specificity, recall, f1_score, iou]
