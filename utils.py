@@ -8,6 +8,9 @@ from PIL import ImageStat, Image
 import numpy as np
 import os
 import shutil
+from metrics import BinaryMetrics
+import torch
+import torchvision.transforms as transforms
 
 import plotly.express as px
 
@@ -37,20 +40,25 @@ def print_map(df):
     fig.show()
 
 
-def print_image(df, path, include_polyline=False, include_bounding_box=False):
+def print_image(
+    df, path, file, include_polyline=False, include_bounding_box=False, target=True
+):
     """
     function to show images
     polylines and bounding boxes can be plotted optionally
     """
-    print(path)
-    image = cv2.imread(f"./orig_data/DB/{path}")
+    print(file)
+    image = cv2.imread(path + file)
     window_name = "Image"
-    color = (255, 0, 0)
+    if target:
+        color = (0, 255, 0)
+    else:
+        color = (255, 0, 0)
     if not include_polyline:
         plt.imshow(image)
         plt.show()
         return
-    for idx, row in df[df["path"] == path].iterrows():
+    for idx, row in df[df["path"] == file].iterrows():
         thickness = row.width // 100
         isClosed = row["closed"]
         pts = row["poly2d"].reshape((-1, 1, 2))
@@ -113,7 +121,6 @@ def parse_input():
                         temp["latitude"] = lat
                         temp["tag"] = raw["metadata"]["tagged_file"]
                         temp["type"] = raw["objects"][k2]["type"]
-                        temp["object_uid"] = k2
                         temp["type"] = raw["objects"][k2]["type"]
                         coordinate_system = b["coordinate_system"]
                         label_uid = b["uid"]
@@ -139,6 +146,41 @@ def parse_input():
                             temp["name"] = b["name"]
                             for t in b["attributes"]["text"]:
                                 temp[t["name"]] = t["val"]
+                        data.append(temp)
+    return pd.DataFrame(data)
+
+
+def parse_rail_sem_input(path):
+    data = []
+    uid = 0
+    for file_name in glob(f"{path}*.json"):
+        with open(file_name) as json_file:
+            raw = json.load(json_file)
+            for o in raw["objects"]:
+                if o["label"] == "rail":
+                    if "polyline-pair" in o.keys():
+                        assert len(o["polyline-pair"]) == 2
+                        for p in o["polyline-pair"]:
+                            temp = {}
+                            temp["path"] = raw["frame"] + ".jpg"
+                            temp["width"] = raw["imgWidth"]
+                            temp["height"] = raw["imgHeight"]
+                            temp["type"] = "rail"
+                            temp["label_uid"] = uid
+                            uid += 1
+                            temp["val"] = p
+                            temp["closed"] = False
+                            data.append(temp)
+                    else:
+                        temp = {}
+                        temp["path"] = raw["frame"] + ".jpg"
+                        temp["width"] = raw["imgWidth"]
+                        temp["height"] = raw["imgHeight"]
+                        temp["type"] = "rail"
+                        temp["label_uid"] = uid
+                        uid += 1
+                        temp["val"] = o["polyline"]
+                        temp["closed"] = False
                         data.append(temp)
     return pd.DataFrame(data)
 
@@ -181,12 +223,13 @@ def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
     return df
 
 
-def generate_mask(df, path):
+def generate_mask_df(df: pd.DataFrame, path: str, file: str):
     """
     takes an image and the repective labels and generates mask
     """
-    df = df[df["path"] == path]
-    img = cv2.imread(f"./orig_data/DB/{path}")
+    print(file)
+    df = df[df["path"] == file]
+    img = cv2.imread(path + file)
     thickness = int(img.shape[1] / 100)
     mask = np.zeros_like(img)
     for idx, row in df.iterrows():
@@ -198,6 +241,35 @@ def generate_mask(df, path):
             thickness=thickness,
         )
     return mask
+
+
+def generate_mask_path(path_image: str, path_label: str, print=False):
+    """
+    input: path of image and label
+    output: mask
+    """
+    with open(path_label, "r") as f:
+        labels = f.read().splitlines()
+    img = cv2.imread(path_image)
+    h, w = img.shape[:2]
+    mask = np.zeros_like(img).astype(np.float32)
+    for label in labels:
+        class_id, *poly = label.split(" ")
+        poly = np.asarray(poly, dtype=np.float16).reshape(-1, 2)  # Read poly, reshape
+        poly *= [w, h]  # Unscale
+        cv2.polylines(
+            img, [poly.astype("int")], True, (0, 255, 0), 4
+        )  # Draw Poly Lines
+
+        cv2.fillPoly(
+            mask, [poly.astype("int")], (255, 255, 255), cv2.LINE_AA
+        )  # Draw area
+    if print:
+        fig, ax = plt.subplots(2)
+        fig.suptitle("Original image and the respective mask")
+        ax[0].imshow(img)
+        ax[1].imshow(mask)
+    return mask / 255
 
 
 def find_contours(mask, epsilon=0.8):
@@ -274,19 +346,21 @@ def create_yml_file(path, dataset):
         f.write(yaml_content)
 
 
-def write_dataset_to_directory(df, path_yml, path_data, dataset, only_label=False):
+def write_dataset_to_directory(
+    df, path_yml, path_data, dataset, only_label=False, path_orig_data="./orig_data/DB/"
+):
     make_directory_structure(dataset=dataset, path=path_data)
     create_yml_file(path=path_yml, dataset=dataset)
     for idx, row in df[["path", "set"]].drop_duplicates().iterrows():
-        source = f"./orig_data/DB/{row['path']}"
+        source = f"{path_orig_data}{row['path']}"
         filename = row["path"].replace("/", "_")
         destination = f"{path_data}{dataset}/{row['set']}/images/{filename}"
         shutil.copy(source, destination)
 
-        mask = generate_mask(df, row["path"])
+        mask = generate_mask_df(df, path=path_orig_data, file=row["path"])
         labels, coordinates = find_contours(mask)
         with open(
-            f"{path_data}{dataset}/{row['set']}/labels/{filename.replace('png','txt')}",
+            f"{path_data}{dataset}/{row['set']}/labels/{filename.replace('png','txt').replace('jpg', 'txt')}",
             "w",
         ) as f:
             f.write("\n".join(labels))
@@ -298,13 +372,20 @@ def apply_fast_line_detection(
     length_treshold=10,
     min_aspect_ration=0,
     max_aspect_ration=float("inf"),
+    canny_th1=50,
+    canny_th2=50,
+    canny_aperture_size=3,
 ):
     image_orig = cv2.imread(path)
     image = cv2.imread(path, cv2.CV_8UC1)
     if kernel_size > 0:
         image = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
     fld = cv2.ximgproc.createFastLineDetector(
-        length_threshold=length_treshold, do_merge=True
+        length_threshold=length_treshold,
+        do_merge=True,
+        canny_th1=canny_th1,
+        canny_th2=canny_th2,
+        canny_aperture_size=canny_aperture_size,
     )
     lines = fld.detect(image)
     line_image = np.copy(image_orig)
@@ -323,3 +404,56 @@ def apply_fast_line_detection(
                     )
     plt.imshow(line_image)
     plt.show()
+
+
+def compare_masks(target_mask, prediction_mask, verbose=False):
+    assert target_mask.max() <= 1 and prediction_mask.max()
+    transform = transforms.Compose([transforms.ToTensor()])
+    target_tensor = transform(target_mask)
+    target_tensor = target_tensor[None, :]
+
+    pred_tensor = transform(prediction_mask)
+    pred_tensor = pred_tensor[None, :]
+
+    bm = BinaryMetrics()
+    pixel_acc, dice, precision, specificity, recall, f1_score, iou = bm(
+        y_pred=pred_tensor, y_true=target_tensor
+    )
+    if verbose:
+        print(
+            f"""
+            pixel_acc: {pixel_acc:.4f}
+            dice: {dice:.4f}
+            precision: {precision:.4f}
+            specificity: {specificity:.4f}
+            recall: {recall:.4f}
+            f1_score: {f1_score:.4f}
+            iou: {iou:.4f}
+            ------------------------------------
+        """
+        )
+    return pixel_acc, dice, precision, specificity, recall, f1_score, iou
+
+
+def q10(x):
+    return x.quantile(0.1)
+
+
+def q90(x):
+    return x.quantile(0.9)
+
+
+def q5(x):
+    return x.quantile(0.05)
+
+
+def q95(x):
+    return x.quantile(0.95)
+
+
+def q1(x):
+    return x.quantile(0.01)
+
+
+def q99(x):
+    return x.quantile(0.99)

@@ -162,7 +162,7 @@ class BinaryMetrics:
         self.activation = activation
 
     def _calculate_overlap_metrics(self, gt, pred):
-        assert gt.max() <= 1 or pred.max() <= 1, "image matrix not normalized to 0-1"
+        assert gt.max() <= 1 and pred.max() <= 1, "image matrix not normalized to 0-1"
 
         output = pred.view(
             -1,
