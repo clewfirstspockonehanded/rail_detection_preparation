@@ -179,7 +179,7 @@ class BinaryMetrics:
         intersection = (output * target).sum()
         total = (output + target).sum()
         union = total - intersection
-        iou = (intersection + +self.eps) / (union + +self.eps)
+        iou = (intersection + self.eps) / (union + self.eps)
 
         pixel_acc = (tp + tn + self.eps) / (tp + tn + fp + fn + self.eps)
         dice = (2 * tp + self.eps) / (2 * tp + fp + fn + self.eps)
