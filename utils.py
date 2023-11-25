@@ -11,6 +11,7 @@ import shutil
 from metrics import BinaryMetrics
 import torch
 import torchvision.transforms as transforms
+from scipy.stats import entropy
 
 import plotly.express as px
 
@@ -49,6 +50,7 @@ def print_image(
     """
     print(file)
     image = cv2.imread(path + file)
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     window_name = "Image"
     if target:
         color = (0, 255, 0)
@@ -151,6 +153,10 @@ def parse_input():
 
 
 def parse_rail_sem_input(path):
+    """
+    function reads json data for railsem dataset and extracts relevant
+    information for images and labels
+    """
     data = []
     uid = 0
     for file_name in glob(f"{path}*.json"):
@@ -192,6 +198,19 @@ def calculate_brightness(im_file):
     im = Image.open(im_file).convert("L")
     stat = ImageStat.Stat(im)
     return stat.rms[0]
+
+
+def calculate_entropy(im_file):
+    """
+    calculate entropy of image
+    """
+    image = cv2.imread(im_file)
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    _bins = 128
+    hist, _ = np.histogram(gray_image.ravel(), bins=_bins, range=(0, _bins))
+    prob_dist = hist / hist.sum()
+    image_entropy = entropy(prob_dist, base=2)
+    return image_entropy
 
 
 def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
@@ -298,6 +317,10 @@ def find_contours(mask, epsilon=0.8):
 
 
 def make_directory_structure(path, dataset):
+    """
+    make directory structure
+    TODO: put everything in loop
+    """
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -389,6 +412,7 @@ def apply_fast_line_detection(
     )
     lines = fld.detect(image)
     line_image = np.copy(image_orig)
+    mask = np.zeros_like(image)
 
     if lines is not None:
         for line in lines.astype(int):
@@ -402,8 +426,16 @@ def apply_fast_line_detection(
                         (255, 0, 0),
                         image.shape[1] // 100,
                     )
+                    cv2.line(
+                        mask,
+                        (x1, y1),
+                        (x2, y2),
+                        (255, 255, 255),
+                        mask.shape[1] // 100,
+                    )
     plt.imshow(line_image)
     plt.show()
+    return mask
 
 
 def compare_masks(target_mask, prediction_mask, verbose=False):
