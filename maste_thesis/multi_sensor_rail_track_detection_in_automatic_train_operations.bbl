@@ -1,0 +1,217 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Arastounia(2015)]{rs71114916}
+Mostafa Arastounia.
+\newblock Automated recognition of railroad infrastructure in rural areas from
+  lidar data.
+\newblock \emph{Remote Sensing}, 7\penalty0 (11):\penalty0 14916--14938, 2015.
+\newblock ISSN 2072-4292.
+\newblock \doi{10.3390/rs71114916}.
+\newblock URL \url{https://www.mdpi.com/2072-4292/7/11/14916}.
+
+\bibitem[{Atmel Corporation}(2011)]{ATM11}
+{Atmel Corporation}.
+\newblock Atmel atmega16 -- 8-bit microcontroller with 16k bytes in-system
+  programmable flash, 2011.
+\newblock URL
+  \url{http://www.atmel.com/dyn/resources/prod\_documents/doc2466.pdf}.
+
+\bibitem[Cheng et~al.(2023)Cheng, Li, Li, Hua, and Sheng]{cmc.2023.032757}
+Jieren Cheng, Hua Li, Dengbo Li, Shuai Hua, and Victor~S. Sheng.
+\newblock A survey on image semantic segmentation using deep learning
+  techniques.
+\newblock \emph{Computers, Materials \& Continua}, 74\penalty0 (1):\penalty0
+  1941--1957, 2023.
+\newblock ISSN 1546-2226.
+\newblock \doi{10.32604/cmc.2023.032757}.
+\newblock URL \url{http://www.techscience.com/cmc/v74n1/49879}.
+
+\bibitem[{Deutsche Bahn AG}(2022)]{DB2024}
+{Deutsche Bahn AG}.
+\newblock Automatic train operation (ato), 2022.
+\newblock URL
+  \url{https://digitale-schiene-deutschland.de/en/Automatic-Train-Operation}.
+
+\bibitem[Giben et~al.(2015)Giben, Patel, and Chellappa]{7350873}
+Xavier Giben, Vishal~M. Patel, and Rama Chellappa.
+\newblock Material classification and semantic segmentation of railway track
+  images with deep convolutional neural networks.
+\newblock In \emph{2015 IEEE International Conference on Image Processing
+  (ICIP)}, pages 621--625, 2015.
+\newblock \doi{10.1109/ICIP.2015.7350873}.
+
+\bibitem[Goossens et~al.(2002)Goossens, Mittelbach, and Samarin]{MiGo05}
+Michel Goossens, Frank Mittelbach, and Alexander Samarin.
+\newblock \emph{Der LaTeX Begleiter}.
+\newblock Addison-Wesley Deutschland, Bonn, 2002.
+
+\bibitem[Hemetsberger(2007)]{He07}
+H.~Hemetsberger.
+\newblock Ait stereo sensor im einsatz während der darpa urban challenge 2007,
+  2007.
+\newblock AIT Austrian Institute of Technology.
+
+\bibitem[Humenberger et~al.(2007)Humenberger, Hartermann, and Kubinger]{HuHa07}
+M.~Humenberger, D.~Hartermann, and W.~Kubinger.
+\newblock Evaluation of stereo matching systems for real world applications
+  using structured light for ground truth estimation.
+\newblock In \emph{Proceedings of the Tenth IAPR Conference on Machine Vision
+  Applications (MVA2007)}, pages 433--436. MVA Conference Committee, 2007.
+
+\bibitem[Humenberger(2011)]{Hu11}
+Martin Humenberger.
+\newblock Real-time stereo matching for embedded systems in robotic
+  applications, 2011.
+
+\bibitem[Humenberger et~al.(2010)Humenberger, Zinner, Weber, Kubinger, and
+  Vincze]{HuZi10}
+Martin Humenberger, Christian Zinner, Michael Weber, Wilfried Kubinger, and
+  Markus Vincze.
+\newblock A fast stereo matching algorithm suitable for embedded real-time
+  systems.
+\newblock \emph{Computer Vision and Image Understanding}, 114\penalty0
+  (11):\penalty0 1180--1202, 2010.
+
+\bibitem[{International Standards Office}(1998)]{ISO98}
+{International Standards Office}.
+\newblock Iso 690 -- information and documentation: Bibliographical references:
+  Electronic documents, 1998.
+
+\bibitem[Kaleli and Akgul(2009)]{5309526}
+Fatih Kaleli and Yusuf~Sinan Akgul.
+\newblock Vision-based railroad track extraction using dynamic programming.
+\newblock In \emph{2009 12th International IEEE Conference on Intelligent
+  Transportation Systems}, pages 1--6, 2009.
+\newblock \doi{10.1109/ITSC.2009.5309526}.
+
+\bibitem[Kopka(2005{\natexlab{a}})]{Ko05a}
+Helmut Kopka.
+\newblock \emph{{LaTeX, Band 1: Einf{\"u}hrung}}.
+\newblock Pearson Studium, {M{\"u}nchen}, 3 edition, 2005{\natexlab{a}}.
+
+\bibitem[Kopka(2005{\natexlab{b}})]{Ko05b}
+Helmut Kopka.
+\newblock \emph{{LaTeX, Band 1: Einf{\"u}hrung}}.
+\newblock Pearson Studium, {M{\"u}nchen}, 3 edition, 2005{\natexlab{b}}.
+\newblock URL \url{http://www.pearson-studium.de}.
+
+\bibitem[Le~Saux et~al.(2018)Le~Saux, Beaupère, Boulch, Brossard, Manier, and
+  Villemin]{8517865}
+B.~Le~Saux, A.~Beaupère, A.~Boulch, J.~Brossard, A.~Manier, and G.~Villemin.
+\newblock Railway detection: From filtering to segmentation networks.
+\newblock In \emph{IGARSS 2018 - 2018 IEEE International Geoscience and Remote
+  Sensing Symposium}, pages 4819--4822, 2018.
+\newblock \doi{10.1109/IGARSS.2018.8517865}.
+
+\bibitem[Li and Peng(2022)]{10.1145/3503161.3548050}
+Xinpeng Li and Xiaojiang Peng.
+\newblock Rail detection: An efficient row-based network and a new benchmark.
+\newblock In \emph{Proceedings of the 30th ACM International Conference on
+  Multimedia}, MM '22, page 6455–6463, New York, NY, USA, 2022. Association
+  for Computing Machinery.
+\newblock ISBN 9781450392037.
+\newblock \doi{10.1145/3503161.3548050}.
+\newblock URL \url{https://doi.org/10.1145/3503161.3548050}.
+
+\bibitem[Nassu and Ukai(2011)]{5940410}
+Bogdan~Tomoyuki Nassu and Masato Ukai.
+\newblock Rail extraction for driver support in railways.
+\newblock In \emph{2011 IEEE Intelligent Vehicles Symposium (IV)}, pages
+  83--88, 2011.
+\newblock \doi{10.1109/IVS.2011.5940410}.
+
+\bibitem[Pan et~al.(2018)Pan, Shi, Luo, Wang, and Tang]{pan2018SCNN}
+Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
+\newblock Spatial as deep: Spatial cnn for traffic scene understanding.
+\newblock In \emph{AAAI Conference on Artificial Intelligence (AAAI)}, February
+  2018.
+
+\bibitem[Pohn(2010)]{Po10}
+Johannes Pohn.
+\newblock Condition monitoring systeme für die zustandorientierte
+  instandhaltung von windkraftanlagen, 2010.
+
+\bibitem[Purica et~al.(2017)Purica, Pesquet-Popescu, and Dufaux]{7952544}
+Andrei~I. Purica, Beatrice Pesquet-Popescu, and Frederic Dufaux.
+\newblock A railroad detection algorithm for infrastructure surveillance using
+  enduring airborne systems.
+\newblock In \emph{2017 IEEE International Conference on Acoustics, Speech and
+  Signal Processing (ICASSP)}, pages 2187--2191, 2017.
+\newblock \doi{10.1109/ICASSP.2017.7952544}.
+
+\bibitem[Qi et~al.(2013)Qi, Tian, and Shi]{qi2013efficient}
+Zhiquan Qi, Yingjie Tian, and Yong Shi.
+\newblock Efficient railway tracks detection and turnouts recognition method
+  using hog features.
+\newblock \emph{Neural Computing and Applications}, 23:\penalty0 245--254,
+  2013.
+
+\bibitem[{Siemens Automation Technology}(2011)]{SIE11}
+{Siemens Automation Technology}.
+\newblock Simatic, 2011.
+\newblock URL
+  \url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}.
+
+\bibitem[{Siemens Automation Technology}(2014)]{SIE14}
+{Siemens Automation Technology}.
+\newblock Simatic, 2014.
+\newblock {\lbrack}Online{\rbrack} Verfügbar unter:
+  <\url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}>
+  {\lbrack}Zugang am 17.10.2014{\rbrack}.
+
+\bibitem[Teng et~al.(2016)Teng, Liu, and Zhang]{teng2016visual}
+Zhu Teng, Feng Liu, and Baopeng Zhang.
+\newblock Visual railway detection by superpixel based intracellular decisions.
+\newblock \emph{Multimedia Tools and Applications}, 75:\penalty0 2473--2486,
+  2016.
+
+\bibitem[Teschl et~al.(2014)Teschl, G{\"o}schka, and Essl]{TeGo14}
+Susanne Teschl, Karl~Michael G{\"o}schka, and G{\"u}nter Essl.
+\newblock {Leitfaden zur Verfassung einer Bachelorarbeit oder Master Thesis},
+  2014.
+\newblock URL \url{www.technikum-wien.at}.
+
+\bibitem[{TuSimple}(2017)]{TuSimple}
+{TuSimple}.
+\newblock Tusimple, 2017.
+\newblock URL
+  \url{https://github.com/TuSimple/tusimple-benchmark/tree/master/doc/lane_detection}.
+
+\bibitem[Wang et~al.(2019)Wang, Wang, Hu, and Qiu]{8859360}
+Yin Wang, Lide Wang, Yu~Hen Hu, and Ji~Qiu.
+\newblock Railnet: A segmentation network for railroad detection.
+\newblock \emph{IEEE Access}, 7:\penalty0 143772--143779, 2019.
+\newblock \doi{10.1109/ACCESS.2019.2945633}.
+
+\bibitem[Yang and Fang(2014)]{6783695}
+Bisheng Yang and Lina Fang.
+\newblock Automated extraction of 3-d railway tracks from mobile laser scanning
+  point clouds.
+\newblock \emph{IEEE Journal of Selected Topics in Applied Earth Observations
+  and Remote Sensing}, 7\penalty0 (12):\penalty0 4750--4761, 2014.
+\newblock \doi{10.1109/JSTARS.2014.2312378}.
+
+\bibitem[Zaidi et~al.(2022)Zaidi, Ansari, Aslam, Kanwal, Asghar, and
+  Lee]{ZAIDI2022103514}
+Syed Sahil~Abbas Zaidi, Mohammad~Samar Ansari, Asra Aslam, Nadia Kanwal,
+  Mamoona Asghar, and Brian Lee.
+\newblock A survey of modern deep learning based object detection models.
+\newblock \emph{Digital Signal Processing}, 126:\penalty0 103514, 2022.
+\newblock ISSN 1051-2004.
+\newblock \doi{https://doi.org/10.1016/j.dsp.2022.103514}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S1051200422001312}.
+
+\bibitem[Zinner et~al.(2007)Zinner, Kubinger, and Isaacs]{ZiKu07}
+Christian Zinner, Wilfried Kubinger, and Richard Isaacs.
+\newblock Pfelib: a performance primitives library for embedded vision.
+\newblock \emph{EURASIP Journal on Embedded Systems}, 2007:\penalty0 1--14,
+  2007.
+\newblock URL \url{http://downloads.hindawi.com/journals/es/2007/049051.pdf}.
+
+\end{thebibliography}
