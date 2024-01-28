@@ -1,9 +1,22 @@
-\begin{thebibliography}{30}
+\begin{thebibliography}{46}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Almazàn et~al.(2017)Almazàn, Tal, Qian, and Elder]{8100103}
+Emilio~J. Almazàn, Ron Tal, Yiming Qian, and James~H. Elder.
+\newblock Mcmlsd: A dynamic programming approach to line segment detection.
+\newblock In \emph{2017 IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 5854--5862, 2017.
+\newblock \doi{10.1109/CVPR.2017.620}.
+
+\bibitem[{ALSTOM Transport SA}(2021)]{ALSTOM2021}
+{ALSTOM Transport SA}.
+\newblock Autonomous mobility: The future of rail is automated, 2021.
+\newblock URL
+  \url{https://www.alstom.com/autonomous-mobility-future-rail-automated}.
 
 \bibitem[Arastounia(2015)]{rs71114916}
 Mostafa Arastounia.
@@ -37,6 +50,22 @@ Jieren Cheng, Hua Li, Dengbo Li, Shuai Hua, and Victor~S. Sheng.
 \newblock URL
   \url{https://digitale-schiene-deutschland.de/en/Automatic-Train-Operation}.
 
+\bibitem[Duda and Hart(1972)]{10.1145/361237.361242}
+Richard~O. Duda and Peter~E. Hart.
+\newblock Use of the hough transformation to detect lines and curves in
+  pictures.
+\newblock \emph{Commun. ACM}, 15\penalty0 (1):\penalty0 11–15, jan 1972.
+\newblock ISSN 0001-0782.
+\newblock \doi{10.1145/361237.361242}.
+\newblock URL \url{https://doi.org/10.1145/361237.361242}.
+
+\bibitem[{Europe’s Rail Joint Undertaking}(2019)]{ERJU2019}
+{Europe’s Rail Joint Undertaking}.
+\newblock Innovation in the spotlight: Towards unattended mainline train
+  operations (ato goa 4), 2019.
+\newblock URL
+  \url{https://rail-research.europa.eu/highlight/innovation-in-the-spotlight-towards-unattended-mainline-train-operations-ato-goa4/}.
+
 \bibitem[Giben et~al.(2015)Giben, Patel, and Chellappa]{7350873}
 Xavier Giben, Vishal~M. Patel, and Rama Chellappa.
 \newblock Material classification and semantic segmentation of railway track
@@ -49,6 +78,23 @@ Xavier Giben, Vishal~M. Patel, and Rama Chellappa.
 Michel Goossens, Frank Mittelbach, and Alexander Samarin.
 \newblock \emph{Der LaTeX Begleiter}.
 \newblock Addison-Wesley Deutschland, Bonn, 2002.
+
+\bibitem[Grompone~von Gioi et~al.(2010)Grompone~von Gioi, Jakubowicz, Morel,
+  and Randall]{4731268}
+Rafael Grompone~von Gioi, Jeremie Jakubowicz, Jean-Michel Morel, and Gregory
+  Randall.
+\newblock Lsd: A fast line segment detector with a false detection control.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 32\penalty0 (4):\penalty0 722--732, 2010.
+\newblock \doi{10.1109/TPAMI.2008.300}.
+
+\bibitem[Grompone~von Gioi et~al.(2012)Grompone~von Gioi, Jakubowicz, Morel,
+  and Randall]{ipol.2012.gjmr-lsd}
+Rafael Grompone~von Gioi, Jérémie Jakubowicz, Jean-Michel Morel, and Gregory
+  Randall.
+\newblock {LSD: a Line Segment Detector}.
+\newblock \emph{{Image Processing On Line}}, 2:\penalty0 35--55, 2012.
+\newblock \url{https://doi.org/10.5201/ipol.2012.gjmr-lsd}.
 
 \bibitem[Hemetsberger(2007)]{He07}
 H.~Hemetsberger.
@@ -77,10 +123,22 @@ Martin Humenberger, Christian Zinner, Michael Weber, Wilfried Kubinger, and
 \newblock \emph{Computer Vision and Image Understanding}, 114\penalty0
   (11):\penalty0 1180--1202, 2010.
 
+\bibitem[{International Energy Agency}(2019)]{IEA2019}
+{International Energy Agency}.
+\newblock The future of rail, 2019.
+\newblock URL \url{https://www.iea.org/reports/the-future-of-rail}.
+
 \bibitem[{International Standards Office}(1998)]{ISO98}
 {International Standards Office}.
 \newblock Iso 690 -- information and documentation: Bibliographical references:
   Electronic documents, 1998.
+
+\bibitem[Islam et~al.(2016)Islam, Ricci, and Nelldal]{islam2016make}
+Dewan Md~Zahurul Islam, Stefano Ricci, and Bo-Lennart Nelldal.
+\newblock How to make modal shift from road to rail possible in the european
+  transport market, as aspired to in the eu transport white paper 2011.
+\newblock \emph{European transport research review}, 8\penalty0 (3):\penalty0
+  1--14, 2016.
 
 \bibitem[Kaleli and Akgul(2009)]{5309526}
 Fatih Kaleli and Yusuf~Sinan Akgul.
@@ -118,12 +176,30 @@ Xinpeng Li and Xiaojiang Peng.
 \newblock \doi{10.1145/3503161.3548050}.
 \newblock URL \url{https://doi.org/10.1145/3503161.3548050}.
 
+\bibitem[Ma and Xie(2010)]{5432669}
+Chao Ma and Mei Xie.
+\newblock A method for lane detection based on color clustering.
+\newblock In \emph{2010 Third International Conference on Knowledge Discovery
+  and Data Mining}, pages 200--203, 2010.
+\newblock \doi{10.1109/WKDD.2010.118}.
+
+\bibitem[Meyer et~al.(2021)Meyer, Skudlik, Pauls, and Stiller]{meyer2021yolino}
+Annika Meyer, Philipp Skudlik, Jan-Hendrik Pauls, and Christoph Stiller.
+\newblock Yolino: Generic single shot polyline detection in real time.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 2916--2925, 2021.
+
 \bibitem[Nassu and Ukai(2011)]{5940410}
 Bogdan~Tomoyuki Nassu and Masato Ukai.
 \newblock Rail extraction for driver support in railways.
 \newblock In \emph{2011 IEEE Intelligent Vehicles Symposium (IV)}, pages
   83--88, 2011.
 \newblock \doi{10.1109/IVS.2011.5940410}.
+
+\bibitem[Pagand et~al.(2020)Pagand, Carr, and Doppelbauer]{pagand2020fostering}
+I~Pagand, C~Carr, and J~Doppelbauer.
+\newblock Fostering the railway sector through the european green deal.
+\newblock \emph{European Union Agency For Railways}, 2020.
 
 \bibitem[Pan et~al.(2018)Pan, Shi, Luo, Wang, and Tang]{pan2018SCNN}
 Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
@@ -151,6 +227,16 @@ Zhiquan Qi, Yingjie Tian, and Yong Shi.
 \newblock \emph{Neural Computing and Applications}, 23:\penalty0 245--254,
   2013.
 
+\bibitem[Sahoo et~al.(1988)Sahoo, Soltani, and Wong]{SAHOO1988233}
+P.K Sahoo, S~Soltani, and A.K.C Wong.
+\newblock A survey of thresholding techniques.
+\newblock \emph{Computer Vision, Graphics, and Image Processing}, 41\penalty0
+  (2):\penalty0 233--260, 1988.
+\newblock ISSN 0734-189X.
+\newblock \doi{https://doi.org/10.1016/0734-189X(88)90022-9}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0734189X88900229}.
+
 \bibitem[{Siemens Automation Technology}(2011)]{SIE11}
 {Siemens Automation Technology}.
 \newblock Simatic, 2011.
@@ -163,6 +249,11 @@ Zhiquan Qi, Yingjie Tian, and Yong Shi.
 \newblock {\lbrack}Online{\rbrack} Verfügbar unter:
   <\url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}>
   {\lbrack}Zugang am 17.10.2014{\rbrack}.
+
+\bibitem[Tang et~al.(2021)Tang, Li, and Liu]{tang2021review}
+Jigang Tang, Songbin Li, and Peng Liu.
+\newblock A review of lane detection methods based on deep learning.
+\newblock \emph{Pattern Recognition}, 111:\penalty0 107623, 2021.
 
 \bibitem[Teng et~al.(2016)Teng, Liu, and Zhang]{teng2016visual}
 Zhu Teng, Feng Liu, and Baopeng Zhang.
@@ -182,6 +273,14 @@ Susanne Teschl, Karl~Michael G{\"o}schka, and G{\"u}nter Essl.
 \newblock URL
   \url{https://github.com/TuSimple/tusimple-benchmark/tree/master/doc/lane_detection}.
 
+\bibitem[Wang et~al.(2022)Wang, Ma, Huang, Hui, Wang, Qian, and
+  Zhang]{wang2022keypoint}
+Jinsheng Wang, Yinchao Ma, Shaofei Huang, Tianrui Hui, Fei Wang, Chen Qian, and
+  Tianzhu Zhang.
+\newblock A keypoint-based global association network for lane detection.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 1392--1401, 2022.
+
 \bibitem[Wang et~al.(2019)Wang, Wang, Hu, and Qiu]{8859360}
 Yin Wang, Lide Wang, Yu~Hen Hu, and Ji~Qiu.
 \newblock Railnet: A segmentation network for railroad detection.
@@ -196,6 +295,12 @@ Bisheng Yang and Lina Fang.
   and Remote Sensing}, 7\penalty0 (12):\penalty0 4750--4761, 2014.
 \newblock \doi{10.1109/JSTARS.2014.2312378}.
 
+\bibitem[Yang(2023)]{yang2023lane}
+Mingyue Yang.
+\newblock Lane detection methods survey for automatic driving.
+\newblock In \emph{Journal of Physics: Conference Series}, volume 2547, page
+  012015. IOP Publishing, 2023.
+
 \bibitem[Zaidi et~al.(2022)Zaidi, Ansari, Aslam, Kanwal, Asghar, and
   Lee]{ZAIDI2022103514}
 Syed Sahil~Abbas Zaidi, Mohammad~Samar Ansari, Asra Aslam, Nadia Kanwal,
@@ -206,6 +311,14 @@ Syed Sahil~Abbas Zaidi, Mohammad~Samar Ansari, Asra Aslam, Nadia Kanwal,
 \newblock \doi{https://doi.org/10.1016/j.dsp.2022.103514}.
 \newblock URL
   \url{https://www.sciencedirect.com/science/article/pii/S1051200422001312}.
+
+\bibitem[Zheng et~al.(2022)Zheng, Huang, Liu, Tang, Yang, Cai, and
+  He]{zheng2022clrnet}
+Tu~Zheng, Yifei Huang, Yang Liu, Wenjian Tang, Zheng Yang, Deng Cai, and
+  Xiaofei He.
+\newblock Clrnet: Cross layer refinement network for lane detection.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision
+  and pattern recognition}, pages 898--907, 2022.
 
 \bibitem[Zinner et~al.(2007)Zinner, Kubinger, and Isaacs]{ZiKu07}
 Christian Zinner, Wilfried Kubinger, and Richard Isaacs.

@@ -54,18 +54,20 @@
 \chapter{Introduction} %500 words
 
 
-The railway is one of the most efficient and reliable modes of transportation of goods and passengers for which the demand is continuously growing. The economic development, urbanization, environmental concerns, and congested roads are some examples of the drivers for shifting transportation from road to rail.
-At the same time, there is a need to enhance and automate various aspects of train operations to ensure safety, efficiency, and sustainability. Automatic Train Operations (ATO) refers to a system that automates different aspects of train operations, including acceleration, braking, and speed control.
-% with the ultimate goal of increasing safety, operational efficiency, and overall system reliability. 
-Advanced technologies are used to perceive and interpret the railway environment, and to operate trains with minimal or no human intervention \citep{DB2024}.  
-One aspect of ATO is the precise identification and localization of railway tracks. The ability to detect and isolate tracks based on video images is essential for ensuring the safe navigation of autonomous trains through the railway network or in shunting yards. Accurate track detection ensures that the train can make informed decisions, such as adjusting speed, navigating turns, and responding to potential obstacles.
+According to the International Energy Agency (IEA), the global demand for passenger and freight transportation will more than double by 2050 compared to 2019 \citep{IEA2019}. However, a greater demand entails higher energy consumption as well as increased CO2 emissions and atmospheric pollutants.  
+Given the fact that railway is one of the most efficient and reliable modes of transportation there seems to be consensus between politicians and researchers that a greater reliance of rail has the potential to counterbalance the negative impacts of transportation \citep{islam2016make, pagand2020fostering}.
+The IEA lists minimizing costs per passenger-kilometer or ton-kilometer moved as one of three pillars that are essential to increase the market share of rail transportation\footnote {The other pillars are maximizing revenues from rail systems, and ensuring that all forms of transport (especially road transportation) pay not only for the use of the infrastructure they need, but also for the adverse impacts they generate.}.
+
+Automatic Train Operations (ATO) which refers to a system that automates different aspects of train operations is expected be one of the key drivers of a more efficient and competitive railway system \citep{ERJU2019, ALSTOM2021}. ATO is estimated to reduce energy consumption by up to 45\%, increase the level of punctuality, increase operational flexibility, and allow for a 50\% better utilization of the infrastructure when combined with other technologies.
+
+ATO relies on advanced technologies that are used to perceive and interpret the railway environment in order to allow autonomous operations with minimal or no human intervention \citep{DB2024}. 
+One aspect of ATO is the precise identification and localization of railway tracks. The ability to detect and isolate tracks based on video images is essential for ensuring the safe navigation of trains through the railway network or in shunting yards. Accurate track detection ensures that the train can make informed decisions, such as adjusting speed, navigating turns, and responding to potential obstacles.
 
 Traditional methods of track detection often rely on rule-based algorithms and image processing techniques, but these approaches may face challenges in diverse environmental conditions such as bad weather, complex background, lighting variations (e.g., day and night), and dirty cameras.
-This master's thesis addresses the task of multi-sensor rail track detection in the context of ATO, by exploring a deep-learning based approach. Deep learning techniques, particularly convolutional neural networks (CNNs), have demonstrated great success in computer vision tasks, including image segmentation. The application of deep learning to track detection is expected to outperform conventional non-AI-based techniques and thereby improving the accuracy and robustness of the system.
-The deployment of multiple sensors, including normal RGB cameras, high-resolution cameras, and infrared cameras, provides a holistic view of the railway infrastructure. This multi-sensor approach allows to compare the the effectiveness of different cameras and informs the deployment of those in order to improve the robustness of track detection in diverse conditions. 
+This master's thesis addresses the task of multi-sensor rail track detection in the context of ATO. We explore deep learning techniques, particularly convolutional neural networks (CNNs), that have demonstrated great success in computer vision tasks, including image segmentation. The application of deep learning to track detection is expected to outperform conventional non-AI-based techniques and thereby improving the accuracy and robustness of the system.
+Our analysis is based on a multi-sensors dataset, including images of normal RGB cameras, high-resolution cameras, and infrared cameras, with different orientations, respectively. This multi-sensor approach allows to compare the the effectiveness of different cameras and informs the deployment of those in order to improve the robustness of track detection in diverse conditions. 
 
-In the context of rail track detection, researchers have explored various areas. Yet, applying deep learning techniques to detect rail tracks is a relatively raw field. In particular, there is no research that is focusing on comparing different input images such as RGB and infrared cameras.
-
+In the context of rail track detection, researchers have explored various areas. Yet, applying deep learning techniques to detect rail tracks is a relatively raw field. In particular, there is no research that is focusing on comparing different input images such as RGB and infrared cameras and images that are oriented to the left, center, and right of the locomotive. 
 The contribution of this thesis to the literature is three-fold: First, we select and train a deep learning model capable of accurately detecting and segmenting railway tracks using data from RGB cameras, high-resolution cameras, and infrared cameras. In contrast to approaches that have been specifically tailored to the task, we apply a general framework that is easier to use by practitioners without elaborate software engineering skills.
 The results of the deep learning model are compared to a non-AI based method specialized in identifying lines in images. 
 Second, we conduct a comprehensive performance evaluation to assess the accuracy and computational efficiency of the proposed track detection system on images generated by different cameras.
@@ -87,7 +89,7 @@ The following sections examine related research in track detection, considering 
 
 \section{Traditional rail track detection}
 
-While deep learning has shown remarkable success in track detection, non-AI segmentation techniques continue to play a role in this field as they allow the integration of domain-specific knowledge and rules into the algorithm and require less data for training. These methods often involve traditional computer vision approaches such as thresholding, edge/contour detection, template matching, and region growing.
+While deep learning has shown remarkable success in track detection, non-AI segmentation techniques continue to play a role in this field as they allow the integration of domain-specific knowledge and rules into the algorithm and require less data for training. These methods are often referred to as line segment detectors and involve traditional computer vision techniques such as thresholding, edge/contour detection, template matching, and region growing \citep{4731268, ipol.2012.gjmr-lsd, 8100103, SAHOO1988233}.
 
 \cite{5309526} present a dynamic programming algorithm to extract the rail tracks in front of the train. The idea is to first identify the vanishing point which refers to the imaginary intersection of the tracks as the distance between the tracks decreases from the bottom of the image to the top.  This step is based on computing the gradient and applying Hough transform to detect the straight lines that indicate the tracks. Next, dynamic programming is used to extract the space between the two tracks.
  \cite{qi2013efficient} apply a method based on histogram of oriented gradients (HOG) to identify tracks and switches. First, HOG features are computed;  railway tracks are then identified by a region-growing algorithm. The proposed method is able to predict the patch the train will travel by detecting the setting of the switches. 
@@ -117,33 +119,19 @@ A machine-learning based approach is proposed by \citep{teng2016visual} where fe
 
 \section{Lane detection}
 
-Lane detection on the road is similar to rail track segmentation in the sense that both tasks aim to identify and segment elongated shapes -- rail tracks and lanes, respectively -- in environments that vary in lighting conditions, shadows, and occlusions. 
-The field of lane detection appears to have a richer body of literature, possibly attributed to the presence of well-established benchmark datasets such as \cite{TuSimple} and CULane \citep{pan2018SCNN}. 
+Lane detection for road vehicles is similar to rail track detection for locomotives in the sense that both tasks aim to identify and segment elongated shapes in complex environments that vary in lighting conditions, shadows, and occlusions. 
+The field of lane detection has a rich body of literature which is among others attributed to the existence of well-established benchmark datasets such as \cite{TuSimple} and CULane \citep{pan2018SCNN}. 
 
-
-
-
-
-
-\cite{tang2021review} and \cite{yang2023lane} provide comprehensive surveys on lane detection approaches.
-
-
-
-
-
-
-
-
-
-
+Early work on lane detection is based on traditional approaches such as Hough transform and clustering \citep{10.1145/361237.361242, 5432669}. Recently, the focus of researchers has shifted to deep-learning based approaches \citep{meyer2021yolino, zheng2022clrnet, wang2022keypoint}.
+\cite{tang2021review} and \cite{yang2023lane} provide comprehensive surveys on lane detection approaches. In \citep{yang2023lane}, the authors propose a combined approach in which the advantages of traditional and deep-learning based methods are mixed.
 
 
 \chapter{Datasets} %2000 words
 
 Deep learning algorithms require a labeled dataset with a large number of images in order to train
-models that are capable of detecting objects in real-time with a high level of accuracy. Compared
-to the domain of autonomous vehicles on the road, there is only a very limited number of datasets
-for railway applications. The rail semantics dataset 2019 (RailSem19) is the first publicly available
+models that are capable of detecting objects with a high level of accuracy.    
+
+The rail semantics dataset 2019 (RailSem19) is the first publicly available
 dataset for detecting objects (including rails) in the railway domain (Zendel et al., 2020). The
 French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights (Harb et al.,
 2020), whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection
@@ -262,8 +250,8 @@ Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.over
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier beginnt der Anhang.
 \clearpage
 \appendix
-\chapter{Anhang A}
+\chapter{Appendix A}
 \clearpage
-\chapter{Anhang B}
+\chapter{Appendix B}
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende des Inhalts
