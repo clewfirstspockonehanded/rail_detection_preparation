@@ -22,7 +22,7 @@
 
 %\addbibresource{Literatur.bib}                              % Literatur-File definieren
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Einträge für Deckblatt
-\title{Multi-sensor rail track detection in automatic train operations}
+\title{Multi-sensor rail track detection \\ in automatic train operations}
 
 \author{Attila Kovacs}
 \studentnumber{2110854031}
@@ -128,29 +128,32 @@ Early work on lane detection is based on traditional approaches such as Hough tr
 
 \chapter{Datasets} %2000 words
 
-Deep learning algorithms require a labeled dataset with a large number of images in order to train
-models that are capable of detecting objects with a high level of accuracy.    
+Labeled images are an essential prerequisite for training deep-learning algorithms to detect objects accurately.
+With the growing popularity of deep-learning, we have observed the creation of new datasets specifically designed for railway applications.
 
 The rail semantics dataset 2019 (RailSem19) is the first publicly available
-dataset for detecting objects (including rails) in the railway domain (Zendel et al., 2020). The
-French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights (Harb et al.,
-2020), whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection
-methods (Toprak et al., 2020). The dataset proposed by Wang et al., 2019 - railroad segmentation
-dataset – is not available to the public. The Rail-DB dataset (Xinpeng and Xiaojiang, 2022)
-comprises 7.432 annotated images, featuring different scenarios (e.g., weather conditions).
-This thesis is based on the first freely available multi-sensor data set for the development of fully
-automated driving in the railway sector (Deutschland Deutsche Bahn AG, 2023; Tagiew, 2023).
-The setup on the locomotive comprises infrared/RGB cameras, lidar, radar, positioning, and
-acceleration sensors. The images may contain up to 20 different object classes that are annotated
-using polylines, polygons, bounding boxes and cuboids. For our purposes (i.e., detecting tracks),
-we will focus on images of infrared and RGB cameras. Three examples of annotated images are
-given in Figure 1, one for each sensor respectively. The dataset features 18.543 annotations of
-tracks.
+dataset for detecting objects (including rail tracks) in the railway domain \citep{9025646}. 
+The French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights \citep{9025646}, whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection methods \citep{9050835}. The dataset proposed by \cite{8859360} -- railroad segmentation dataset -- has been compiled for the development railroad segmentation algorithms but it is not available to the public. The Rail-DB dataset is available upon request \citep{10.1145/3503161.3548050}. The dataset comprises 7.432 annotated images, featuring different scenarios (e.g., weather conditions). 
+
+This thesis is based on the first freely available multi-sensor dataset for the development of fully
+automated driving in the railway sector \citep{DB2023, tagiew2023osdar23}.
+Unlike the previously mentioned dataset that consist of RGB images, the system on the locomotive used to create the multi-sensor dataset includes infrared cameras, RGB cameras with different resolution, lidar, radar, positioning, and acceleration sensors.
+
+Preliminary experiments indicated that our model fails to generalize when trained only on the mulit-sensor dataset due to reasons that will be described in the next section. Therefore, we also train our model on images from the RailSem19 dataset.
+In the following, we give a detailed description of the two datasets used in this thesis.
 
 
 \section{Mutli-sensor dataset by Deutsch Bahn}
 
+The images may contain up to 20 different object classes that are annotated
+using polylines, polygons, bounding boxes and cuboids. For our purposes (i.e., detecting tracks),
+we will focus on images of infrared, RGB and high resolution cameras.  
 
+\begin{figure}[h]
+\caption{Example images of high resolution RGB, low resolution RGB, and infrared sensors \citep{tagiew2023osdar23} }
+\centering
+\includegraphics[width=0.5\textwidth]{images/datasets/db/2024-01-29 19_50_46-2305.03001}
+\end{figure}
 
 
 
