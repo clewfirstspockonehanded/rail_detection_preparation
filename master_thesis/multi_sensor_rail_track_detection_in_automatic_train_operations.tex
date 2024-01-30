@@ -19,6 +19,8 @@
 %\usepackage[backend=biber, style=authoryear]{biblatex}      % LaTeX definierter Harvard-Standard
 \usepackage{cite}
 \usepackage[round]{natbib}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
 %\addbibresource{Literatur.bib}                              % Literatur-File definieren
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Einträge für Deckblatt
@@ -135,29 +137,221 @@ The rail semantics dataset 2019 (RailSem19) is the first publicly available
 dataset for detecting objects (including rail tracks) in the railway domain \citep{9025646}. 
 The French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights \citep{9025646}, whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection methods \citep{9050835}. The dataset proposed by \cite{8859360} -- railroad segmentation dataset -- has been compiled for the development railroad segmentation algorithms but it is not available to the public. The Rail-DB dataset is available upon request \citep{10.1145/3503161.3548050}. The dataset comprises 7.432 annotated images, featuring different scenarios (e.g., weather conditions). 
 
-This thesis is based on the first freely available multi-sensor dataset for the development of fully
-automated driving in the railway sector \citep{DB2023, tagiew2023osdar23}.
-Unlike the previously mentioned dataset that consist of RGB images, the system on the locomotive used to create the multi-sensor dataset includes infrared cameras, RGB cameras with different resolution, lidar, radar, positioning, and acceleration sensors.
+This thesis is based on the first freely available multi-sensor dataset ``Open Sensor Data for Rail 2023'' (OSDaR23) for the development of fully automated driving in the railway sector \citep{DB2023, tagiew2023osdar23}.
+Unlike the previously mentioned dataset that involve a limited number of sensors and perspectives, the system on the locomotive used to create the OSDaR23 dataset includes multiple infrared cameras, RGB cameras with different resolution, lidar, radar, positioning, and acceleration sensors.
 
-Preliminary experiments indicated that our model fails to generalize when trained only on the mulit-sensor dataset due to reasons that will be described in the next section. Therefore, we also train our model on images from the RailSem19 dataset.
+Preliminary experiments indicated that our model fails to generalize when trained only on the OSDaR23 dataset due to reasons that will be described in the next section. Therefore, we also train our model on images from the RailSem19 dataset.
 In the following, we give a detailed description of the two datasets used in this thesis.
 
 
-\section{Mutli-sensor dataset by Deutsch Bahn}
+\section{OSDaR23 dataset}
 
-The images may contain up to 20 different object classes that are annotated
-using polylines, polygons, bounding boxes and cuboids. For our purposes (i.e., detecting tracks),
-we will focus on images of infrared, RGB and high resolution cameras.  
+\subsection{Overview}
+
+The OSDaR23 contains 21 video sequences captured around Hamburg, Germany between 09.09.2021 and 15.09.2021 (a map of the exact locations is given in Figure~\ref{fig:map}). 
+The sensor setup is very comprehensive including six RGB cameras, three
+IR cameras, six lidar sensors, a 2D radar sensor, and position and acceleration sensors. In this thesis, we focus on images by RGB high resolution, RGB low resolution, and infrared sensors with three orientation (left, right, and center), respectively. One example per sensor is given in Figure~\ref{fig:sensor_image}. A detailed description of the sensors can be found in Appendix~\ref{}.
 
 \begin{figure}[h]
-\caption{Example images of high resolution RGB, low resolution RGB, and infrared sensors \citep{tagiew2023osdar23} }
+\centering
+\includegraphics[width=0.5\textwidth]{images/datasets/db/map}
+\caption{Locations where images were captured around Hamburg, Germany. }
+\label{fig:map}
+\end{figure}
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{images/datasets/db/2024-01-29 19_50_46-2305.03001}
+\caption{Example images of high resolution RGB, low resolution RGB, and infrared sensors \citep{tagiew2023osdar23}. }
+\label{fig:sensor_image}
+\end{figure}
+
+
+The final number of images and labels after filtering the dataset, i.e., removing images that do not contain annotated tracks, is 7.421 and 27.386, respectively. The distribution of images and labels per sensor is displayed in Figure~\ref{fig:number_images}. The size of the images is given in Table~\ref{tab:1}. Figure~\ref{fig:labels_per_image} illustrates the number of track labels per image. Most images contain track pairs. However, there are also images with odd number of tracks. The largest group are images containing one pair of tracks.
+
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
+  \caption{Number of images per sensor}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
+  \caption{Number of labels per sensor}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Number of images and labels per sensor, respectively.}
+\label{fig:number_images}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_image}
+\caption{Track labels per image. Most images depict track pairs. However, there are also images with odd number of tracks. }
+\label{fig:labels_per_image}
+\end{figure}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c| c c c|} 
+  \hline
+ Sensor &	Widht [px] &	Height [px] &	Aspect ration \\
+ \hline
+RGB low resolution &	4112 &	2504 &	1.64 \\
+ \hline
+RGB high resolution &	2464 &	1600 &	1.54 \\
+ \hline
+Infrared	& 640 &	480 &	1.33 \\
+ \hline
+\end{tabular}
+\caption{Size of images per sensor.}
+\label{tab:1}
+\end{center}
+\end{table}
+
+
+All images were taken between 8AM and 17PM, so we cannot expect to test the effect of different sensors in the night. In particular, the RGB cameras fail to capture clear and detailed images in low-light conditions. 
+Infrared cameras on the other hand, detect infrared radiation emitted by objects based on their temperature rather than visible light and are, therefore, used in low-light conditions or complete darkness\footnote{All objects with a temperature greater than absolute zero emit infrared energy.}. The thermal radiation is converted into electrical signals which are then processed to a visual image that is visible to the human eye \citep{CLARK200283}. Warmer areas are displayed as brighter, while cooler areas appear as darker shades of gray.
+
+Emissivity, a material property that indicates how efficiently an object emits infrared radiation, plays a significant role in thermal imaging. Emissivity is measured on a scale from 0 to 1, where 0 indicates a perfect reflection of the radiation (no emission such as a mirror), and 1 indicates perfect emissivity (total emission in an object referred to as blackbody).  Detecting rail tracks in infrared images is based on the principle that polished metallic surfaces such as tracks have a low emissivity, whereas organic materials that appear often in the background have a high emissivity.  
+
+
+\subsection{Brightness of the images}
+
+
+In deep learning, the quality of the images can have a large impact on the efficiency. Image segmentation tasks, where the goal is to identify and classify each pixel in an image, are particularly sensitive to variations in pixel brightness and intensity.
+In this section, we analyze the brightness of the images for each type of sensor. Brightness is defined as the average pixel intensity $\frac{1}{N} \sum_{i=1}^{N} I_i $; $N$ is the number of pixels in the image, and $I_i$ is the intensity of pixel $i$. In Figure~\ref{fig:brightness} shows a series of box plots with brightness values per sensor.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/brightness}
+\caption{Brightness of images by sensor. }
+\label{fig:brightness}
+\end{figure}
+
+
+Among the three types of sensors, low resolution RGB cameras produce the darkest images (a black image has a value of 0, a white image has a value of 255). 
+High resolution images are brighter on average, which can be explained by different exposure settings such as shutter speed and ISO sensitivity. Both low and high-resolution cameras feature pixels of equal size ($3.45 \mu m$), so the amount of light per pixel is the same.
+Infrared cameras produce images with almost constant brightness as the non-visible infrared image is mapped on a visible spectrum.
+
+Figure~\ref{fig:brightness_examples} show one example of a bright and a dark image, respectively.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/dark}
+  \caption{Image with low brightness value.}
+%  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/bright}
+  \caption{Image with high brightness value}
+ % \label{fig:sub2}
+\end{subfigure}
+\caption{Examples of very bright and very dark image, respectively.}
+\label{fig:brightness_examples}
 \end{figure}
 
 
 
-\section{RailSem dataset}
+\subsection{Entropy of the images}
+
+
+Shannon entropy is a measure from information theory that reflects the uncertainty or randomness associated with a set of data \citep{6773024}. In the context of images, Shannon entropy can be used to quantify the complexity in the pixel values of an image. A high entropy value indicates higher complexity or randomness in the pixel values, while a low entropy value suggests more homogeneity. \cite{rahane2020measures} report a positive correlation between the entropy of the training data and the performance of semantic segmentation tasks, highlighting that more complex images are harder to learn by deep-learning networks.
+The Shannon entropy for a grayscale image is given by $H(X) = -\sum_{i=1}^{n} P(x_i) \cdot \log_2(P(x_i))$, where $P(x_i)$ is the probability of occurrence of pixel $x_i$ (i.e., the number of pixels with intensity $x_i$ divided by the total number of pixels). 
+A box-plot with the entropy distribution is given in Figure~\ref{fig:entropy_examples} for each sensor. The maximum entropy value is $8 = \log_2(256)$ as we convert the images to grayscale with 256 different intensity levels.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/entropy}
+\caption{Entropy of images by sensor. }
+\label{fig:entropy}
+\end{figure}
+
+Overall, the images seem to have a high complexity
+
+
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/low_entropy}
+  \caption{Image with low entropy value.}
+%  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/high_entropy}
+  \caption{Image with high entropy value}
+ % \label{fig:sub2}
+\end{subfigure}
+\caption{Examples of image with very low and very high entropy, respectively.}
+\label{fig:entropy_examples}
+\end{figure}
+
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
+  \caption{Number of images per sensor}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
+  \caption{Number of labels per sensor}
+  \label{fig:sub2}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
+  \caption{Number of images per sensor}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
+  \caption{Number of labels per sensor}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Number of images and labels per sensor, respectively.}
+\label{fig:examples}
+\end{figure}
+
+
+
+
+
+\section{RailSem19 dataset}
+
+
+
+
+\section{Transforming labels}
+
+
+
+\section{Data splitting}
 
 
 
@@ -189,10 +383,6 @@ we will focus on images of infrared, RGB and high resolution cameras.
 
 
 Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{WWW} und \ac{ROFL}.
-
-
-Literaturverweise sollten automatisch verwaltet werden, vor allem, wenn es viele Quellenverweise gibt. Beispiele sind  \cite{Ko05a}, \cite{Ko05b}, \cite{MiGo05}, \cite{TeGo14}, \cite{HuHa07}, \cite{HuZi10}, \cite{ZiKu07}, \cite{He07}, \cite{SIE11}, \cite{SIE14}, \cite{ISO98}, \cite{ATM11}, \cite{Hu11}, \cite{Po10}. Das verwendete Zitierformat (bzw.~das Format des Literaturverzeichnisses) ist entspechend der Vorgaben der Studiengänge zu wählen.
-
 
 
 \section{Algorithms}
@@ -254,6 +444,12 @@ Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.over
 \clearpage
 \appendix
 \chapter{Appendix A}
+
+\chapter{Sensors}
+
+
+
+
 \clearpage
 \chapter{Appendix B}
 \end{document}

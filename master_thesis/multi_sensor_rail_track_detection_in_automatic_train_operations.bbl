@@ -1,4 +1,4 @@
-\begin{thebibliography}{46}
+\begin{thebibliography}{50}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -49,6 +49,13 @@ Jieren Cheng, Hua Li, Dengbo Li, Shuai Hua, and Victor~S. Sheng.
 \newblock Automatic train operation (ato), 2022.
 \newblock URL
   \url{https://digitale-schiene-deutschland.de/en/Automatic-Train-Operation}.
+
+\bibitem[{Deutsche Bahn AG}(2023)]{DB2023}
+{Deutsche Bahn AG}.
+\newblock First freely available multi-sensor data set for machine learning for
+  the development of fully automated driving: Osdar23, 2023.
+\newblock URL
+  \url{https://digitale-schiene-deutschland.de/en/news/2023/OSDaR23-multi-sensor-data-set-for-machine-learning}.
 
 \bibitem[Duda and Hart(1972)]{10.1145/361237.361242}
 Richard~O. Duda and Peter~E. Hart.
@@ -250,6 +257,13 @@ P.K Sahoo, S~Soltani, and A.K.C Wong.
   <\url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}>
   {\lbrack}Zugang am 17.10.2014{\rbrack}.
 
+\bibitem[Tagiew et~al.(2023)Tagiew, K{\"o}ppel, Schwalbe, Denzler, Neumaier,
+  Klockau, Boekhoff, Klasek, and Tilly]{tagiew2023osdar23}
+Rustam Tagiew, Martin K{\"o}ppel, Karsten Schwalbe, Patrick Denzler, Philipp
+  Neumaier, Tobias Klockau, Martin Boekhoff, Pavel Klasek, and Roman Tilly.
+\newblock Osdar23: Open sensor data for rail 2023.
+\newblock \emph{arXiv preprint arXiv:2305.03001}, 2023.
+
 \bibitem[Tang et~al.(2021)Tang, Li, and Liu]{tang2021review}
 Jigang Tang, Songbin Li, and Peng Liu.
 \newblock A review of lane detection methods based on deep learning.
@@ -266,6 +280,16 @@ Susanne Teschl, Karl~Michael G{\"o}schka, and G{\"u}nter Essl.
 \newblock {Leitfaden zur Verfassung einer Bachelorarbeit oder Master Thesis},
   2014.
 \newblock URL \url{www.technikum-wien.at}.
+
+\bibitem[Toprak et~al.(2020)Toprak, Belenlioglu, Aydın, Guzelis, and
+  Selver]{9050835}
+Tugce Toprak, Burak Belenlioglu, Burak Aydın, Cuneyt Guzelis, and M.~Alper
+  Selver.
+\newblock Conditional weighted ensemble of transferred models for camera based
+  onboard pedestrian detection in railway driver support systems.
+\newblock \emph{IEEE Transactions on Vehicular Technology}, 69\penalty0
+  (5):\penalty0 5041--5054, 2020.
+\newblock \doi{10.1109/TVT.2020.2983825}.
 
 \bibitem[{TuSimple}(2017)]{TuSimple}
 {TuSimple}.
@@ -311,6 +335,15 @@ Syed Sahil~Abbas Zaidi, Mohammad~Samar Ansari, Asra Aslam, Nadia Kanwal,
 \newblock \doi{https://doi.org/10.1016/j.dsp.2022.103514}.
 \newblock URL
   \url{https://www.sciencedirect.com/science/article/pii/S1051200422001312}.
+
+\bibitem[Zendel et~al.(2019)Zendel, Murschitz, Zeilinger, Steininger, Abbasi,
+  and Beleznai]{9025646}
+Oliver Zendel, Markus Murschitz, Marcel Zeilinger, Daniel Steininger, Sara
+  Abbasi, and Csaba Beleznai.
+\newblock Railsem19: A dataset for semantic rail scene understanding.
+\newblock In \emph{2019 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition Workshops (CVPRW)}, pages 1221--1229, 2019.
+\newblock \doi{10.1109/CVPRW.2019.00161}.
 
 \bibitem[Zheng et~al.(2022)Zheng, Huang, Liu, Tang, Yang, Cai, and
   He]{zheng2022clrnet}

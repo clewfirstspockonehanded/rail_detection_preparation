@@ -33,7 +33,7 @@ def print_map(df):
         size="size",
         zoom=9,
         height=900,
-        width=900,
+        width=500,
     )
 
     fig.update_layout(mapbox_style="open-street-map")
@@ -197,7 +197,7 @@ def calculate_brightness(im_file):
     """
     im = Image.open(im_file).convert("L")
     stat = ImageStat.Stat(im)
-    return stat.rms[0]
+    return stat.mean[0]
 
 
 def calculate_entropy(im_file):
@@ -211,6 +211,18 @@ def calculate_entropy(im_file):
     prob_dist = hist / hist.sum()
     image_entropy = entropy(prob_dist, base=2)
     return image_entropy
+
+
+def calculate_entropy_rgb(im_file):
+    image_rgb = cv2.imread(im_file, cv2.IMREAD_COLOR)
+    image_float = image_rgb.astype(float)
+    image_normalized = image_float / 255.0
+    entropy_values = [
+        entropy(np.histogram(image_normalized[:, :, i], bins=256)[0])
+        for i in range(image_rgb.shape[2])
+    ]
+    average_entropy = np.mean(entropy_values)
+    return average_entropy
 
 
 def generate_train_val_test_split(df, seed=1, val_ratio=0.15, test_ratio=0.15):
