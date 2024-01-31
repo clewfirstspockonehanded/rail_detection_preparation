@@ -1,4 +1,4 @@
-\begin{thebibliography}{50}
+\begin{thebibliography}{39}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -27,13 +27,6 @@ Mostafa Arastounia.
 \newblock \doi{10.3390/rs71114916}.
 \newblock URL \url{https://www.mdpi.com/2072-4292/7/11/14916}.
 
-\bibitem[{Atmel Corporation}(2011)]{ATM11}
-{Atmel Corporation}.
-\newblock Atmel atmega16 -- 8-bit microcontroller with 16k bytes in-system
-  programmable flash, 2011.
-\newblock URL
-  \url{http://www.atmel.com/dyn/resources/prod\_documents/doc2466.pdf}.
-
 \bibitem[Cheng et~al.(2023)Cheng, Li, Li, Hua, and Sheng]{cmc.2023.032757}
 Jieren Cheng, Hua Li, Dengbo Li, Shuai Hua, and Victor~S. Sheng.
 \newblock A survey on image semantic segmentation using deep learning
@@ -43,6 +36,16 @@ Jieren Cheng, Hua Li, Dengbo Li, Shuai Hua, and Victor~S. Sheng.
 \newblock ISSN 1546-2226.
 \newblock \doi{10.32604/cmc.2023.032757}.
 \newblock URL \url{http://www.techscience.com/cmc/v74n1/49879}.
+
+\bibitem[Clark et~al.(2002)Clark, McCann, and Forde]{CLARK200283}
+M~Clark, D.M McCann, and M.C Forde.
+\newblock Infrared thermographic investigation of railway track ballast.
+\newblock \emph{NDT \& E International}, 35\penalty0 (2):\penalty0 83--94,
+  2002.
+\newblock ISSN 0963-8695.
+\newblock \doi{https://doi.org/10.1016/S0963-8695(01)00032-9}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0963869501000329}.
 
 \bibitem[{Deutsche Bahn AG}(2022)]{DB2024}
 {Deutsche Bahn AG}.
@@ -81,11 +84,6 @@ Xavier Giben, Vishal~M. Patel, and Rama Chellappa.
   (ICIP)}, pages 621--625, 2015.
 \newblock \doi{10.1109/ICIP.2015.7350873}.
 
-\bibitem[Goossens et~al.(2002)Goossens, Mittelbach, and Samarin]{MiGo05}
-Michel Goossens, Frank Mittelbach, and Alexander Samarin.
-\newblock \emph{Der LaTeX Begleiter}.
-\newblock Addison-Wesley Deutschland, Bonn, 2002.
-
 \bibitem[Grompone~von Gioi et~al.(2010)Grompone~von Gioi, Jakubowicz, Morel,
   and Randall]{4731268}
 Rafael Grompone~von Gioi, Jeremie Jakubowicz, Jean-Michel Morel, and Gregory
@@ -103,42 +101,10 @@ Rafael Grompone~von Gioi, Jérémie Jakubowicz, Jean-Michel Morel, and Gregory
 \newblock \emph{{Image Processing On Line}}, 2:\penalty0 35--55, 2012.
 \newblock \url{https://doi.org/10.5201/ipol.2012.gjmr-lsd}.
 
-\bibitem[Hemetsberger(2007)]{He07}
-H.~Hemetsberger.
-\newblock Ait stereo sensor im einsatz während der darpa urban challenge 2007,
-  2007.
-\newblock AIT Austrian Institute of Technology.
-
-\bibitem[Humenberger et~al.(2007)Humenberger, Hartermann, and Kubinger]{HuHa07}
-M.~Humenberger, D.~Hartermann, and W.~Kubinger.
-\newblock Evaluation of stereo matching systems for real world applications
-  using structured light for ground truth estimation.
-\newblock In \emph{Proceedings of the Tenth IAPR Conference on Machine Vision
-  Applications (MVA2007)}, pages 433--436. MVA Conference Committee, 2007.
-
-\bibitem[Humenberger(2011)]{Hu11}
-Martin Humenberger.
-\newblock Real-time stereo matching for embedded systems in robotic
-  applications, 2011.
-
-\bibitem[Humenberger et~al.(2010)Humenberger, Zinner, Weber, Kubinger, and
-  Vincze]{HuZi10}
-Martin Humenberger, Christian Zinner, Michael Weber, Wilfried Kubinger, and
-  Markus Vincze.
-\newblock A fast stereo matching algorithm suitable for embedded real-time
-  systems.
-\newblock \emph{Computer Vision and Image Understanding}, 114\penalty0
-  (11):\penalty0 1180--1202, 2010.
-
 \bibitem[{International Energy Agency}(2019)]{IEA2019}
 {International Energy Agency}.
 \newblock The future of rail, 2019.
 \newblock URL \url{https://www.iea.org/reports/the-future-of-rail}.
-
-\bibitem[{International Standards Office}(1998)]{ISO98}
-{International Standards Office}.
-\newblock Iso 690 -- information and documentation: Bibliographical references:
-  Electronic documents, 1998.
 
 \bibitem[Islam et~al.(2016)Islam, Ricci, and Nelldal]{islam2016make}
 Dewan Md~Zahurul Islam, Stefano Ricci, and Bo-Lennart Nelldal.
@@ -153,17 +119,6 @@ Fatih Kaleli and Yusuf~Sinan Akgul.
 \newblock In \emph{2009 12th International IEEE Conference on Intelligent
   Transportation Systems}, pages 1--6, 2009.
 \newblock \doi{10.1109/ITSC.2009.5309526}.
-
-\bibitem[Kopka(2005{\natexlab{a}})]{Ko05a}
-Helmut Kopka.
-\newblock \emph{{LaTeX, Band 1: Einf{\"u}hrung}}.
-\newblock Pearson Studium, {M{\"u}nchen}, 3 edition, 2005{\natexlab{a}}.
-
-\bibitem[Kopka(2005{\natexlab{b}})]{Ko05b}
-Helmut Kopka.
-\newblock \emph{{LaTeX, Band 1: Einf{\"u}hrung}}.
-\newblock Pearson Studium, {M{\"u}nchen}, 3 edition, 2005{\natexlab{b}}.
-\newblock URL \url{http://www.pearson-studium.de}.
 
 \bibitem[Le~Saux et~al.(2018)Le~Saux, Beaupère, Boulch, Brossard, Manier, and
   Villemin]{8517865}
@@ -214,11 +169,6 @@ Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
 \newblock In \emph{AAAI Conference on Artificial Intelligence (AAAI)}, February
   2018.
 
-\bibitem[Pohn(2010)]{Po10}
-Johannes Pohn.
-\newblock Condition monitoring systeme für die zustandorientierte
-  instandhaltung von windkraftanlagen, 2010.
-
 \bibitem[Purica et~al.(2017)Purica, Pesquet-Popescu, and Dufaux]{7952544}
 Andrei~I. Purica, Beatrice Pesquet-Popescu, and Frederic Dufaux.
 \newblock A railroad detection algorithm for infrastructure surveillance using
@@ -234,6 +184,12 @@ Zhiquan Qi, Yingjie Tian, and Yong Shi.
 \newblock \emph{Neural Computing and Applications}, 23:\penalty0 245--254,
   2013.
 
+\bibitem[Rahane and Subramanian(2020)]{rahane2020measures}
+Ameet~Annasaheb Rahane and Anbumani Subramanian.
+\newblock Measures of complexity for large scale image datasets.
+\newblock In \emph{2020 International Conference on Artificial Intelligence in
+  Information and Communication (ICAIIC)}, pages 282--287. IEEE, 2020.
+
 \bibitem[Sahoo et~al.(1988)Sahoo, Soltani, and Wong]{SAHOO1988233}
 P.K Sahoo, S~Soltani, and A.K.C Wong.
 \newblock A survey of thresholding techniques.
@@ -244,18 +200,12 @@ P.K Sahoo, S~Soltani, and A.K.C Wong.
 \newblock URL
   \url{https://www.sciencedirect.com/science/article/pii/0734189X88900229}.
 
-\bibitem[{Siemens Automation Technology}(2011)]{SIE11}
-{Siemens Automation Technology}.
-\newblock Simatic, 2011.
-\newblock URL
-  \url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}.
-
-\bibitem[{Siemens Automation Technology}(2014)]{SIE14}
-{Siemens Automation Technology}.
-\newblock Simatic, 2014.
-\newblock {\lbrack}Online{\rbrack} Verfügbar unter:
-  <\url{http://www.automation.siemens.com/mcms/topics/de/simatic/Seiten/Default.aspx}>
-  {\lbrack}Zugang am 17.10.2014{\rbrack}.
+\bibitem[Shannon(1948)]{6773024}
+C.~E. Shannon.
+\newblock A mathematical theory of communication.
+\newblock \emph{The Bell System Technical Journal}, 27\penalty0 (3):\penalty0
+  379--423, 1948.
+\newblock \doi{10.1002/j.1538-7305.1948.tb01338.x}.
 
 \bibitem[Tagiew et~al.(2023)Tagiew, K{\"o}ppel, Schwalbe, Denzler, Neumaier,
   Klockau, Boekhoff, Klasek, and Tilly]{tagiew2023osdar23}
@@ -274,12 +224,6 @@ Zhu Teng, Feng Liu, and Baopeng Zhang.
 \newblock Visual railway detection by superpixel based intracellular decisions.
 \newblock \emph{Multimedia Tools and Applications}, 75:\penalty0 2473--2486,
   2016.
-
-\bibitem[Teschl et~al.(2014)Teschl, G{\"o}schka, and Essl]{TeGo14}
-Susanne Teschl, Karl~Michael G{\"o}schka, and G{\"u}nter Essl.
-\newblock {Leitfaden zur Verfassung einer Bachelorarbeit oder Master Thesis},
-  2014.
-\newblock URL \url{www.technikum-wien.at}.
 
 \bibitem[Toprak et~al.(2020)Toprak, Belenlioglu, Aydın, Guzelis, and
   Selver]{9050835}
@@ -352,12 +296,5 @@ Tu~Zheng, Yifei Huang, Yang Liu, Wenjian Tang, Zheng Yang, Deng Cai, and
 \newblock Clrnet: Cross layer refinement network for lane detection.
 \newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision
   and pattern recognition}, pages 898--907, 2022.
-
-\bibitem[Zinner et~al.(2007)Zinner, Kubinger, and Isaacs]{ZiKu07}
-Christian Zinner, Wilfried Kubinger, and Richard Isaacs.
-\newblock Pfelib: a performance primitives library for embedded vision.
-\newblock \emph{EURASIP Journal on Embedded Systems}, 2007:\penalty0 1--14,
-  2007.
-\newblock URL \url{http://downloads.hindawi.com/journals/es/2007/049051.pdf}.
 
 \end{thebibliography}

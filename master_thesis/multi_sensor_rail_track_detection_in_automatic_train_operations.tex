@@ -114,7 +114,7 @@ In \cite{7350873}, the authors propose a CNN for localizing and inspecting the c
 \cite{8517865} detect rail tracks in aerial images by devising a CNN based approach and different traditional approaches such as thresholding. 
 
 \cite{8859360} propose the RailNet -- a deep-learning based rail track segmentation algorithm that combines the ResNet50 backbone with a fully convolutional network. In order to train the model, the authors compile a non-public dataset consisting of 3000 images from forward-facing on-board cameras. Experiments show that RailNet is able to outperform general purpose models for segmentation.
-
+In \cite{10.1145/3503161.3548050}, the authors compile a real-world railway dataset based on which a rail detection method referred to as Rail-Net is devised. Rail-Net outperforms traditional methods by around 51\% and other deep-learning methods by around 6\% based on accuracy when applied on the newly developed dataset. 
 
 A machine-learning based approach is proposed by \citep{teng2016visual} where features are extracted from super-pixels (i.e., a group of adjacent pixels with similar characteristics) and classified by applying a previously trained support vector machine.
 
@@ -167,7 +167,7 @@ IR cameras, six lidar sensors, a 2D radar sensor, and position and acceleration 
 \end{figure}
 
 
-The final number of images and labels after filtering the dataset, i.e., removing images that do not contain annotated tracks, is 7.421 and 27.386, respectively. The distribution of images and labels per sensor is displayed in Figure~\ref{fig:number_images}. The size of the images is given in Table~\ref{tab:1}. Figure~\ref{fig:labels_per_image} illustrates the number of track labels per image. Most images contain track pairs. However, there are also images with odd number of tracks. The largest group are images containing one pair of tracks.
+The final number of images and labels after filtering the dataset, i.e., removing images that do not contain annotated tracks, is 7.421 and 27.386, respectively. The distribution of images and labels per sensor is displayed in Figure~\ref{fig:number_images}. The size of the images is given in Table~\ref{tab:1}. Figure~\ref{fig:labels_per_image} illustrates the number of track labels per image. Most images contain track pairs. However, there are also images with odd number of tracks. The largest group are images containing one pair of tracks. Generally, the number of available images decreases as the rail network is getting more complicated.
 
 
 
@@ -280,7 +280,7 @@ A box-plot with the entropy distribution is given in Figure~\ref{fig:entropy_exa
 \label{fig:entropy}
 \end{figure}
 
-Overall, the images seem to have a high complexity
+Overall, the images have a high entropy -- the median values range from 5.9 to 6.8. High resolution images have the highest entropy. Infrared images do not seem to have lower entropy on average. However, certain images seem to have a very low randomness; and as it turns out also very low level of information when looking at Figure~\ref{fig:entropy_sub1}. Figure~\ref{fig:entropy_examples} highlight the visual difference between a very low and a very high entropy image.
 
 
 
@@ -292,17 +292,129 @@ Overall, the images seem to have a high complexity
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/low_entropy}
   \caption{Image with low entropy value.}
-%  \label{fig:sub1}
+  \label{fig:entropy_sub1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/high_entropy}
   \caption{Image with high entropy value}
- % \label{fig:sub2}
+ \label{fig:entropy_sub2}
 \end{subfigure}
-\caption{Examples of image with very low and very high entropy, respectively.}
+\caption{Examples of image with minimal and maximal entropy, respectively.}
 \label{fig:entropy_examples}
 \end{figure}
+
+
+\subsection{Occlusion}
+
+Certain track labels are hidden or occluded by other objects. One example is given in Figure~\ref{fig:entropy_sub2} where the train on the right covers the tracks.
+In this section, we analyze the occlusion of the labels and examine those occlusions visually.
+
+Figure~\ref{fig:occul_hist} shows the number of labels with a given occlusion level. Most of the labels, 20.069, are not occluded at all or have only a slight occlusion. However, 320 labels in 196 images are marked with an occlusion level of 100\%. Figure~\ref{fig:occlusion_examples} shows two examples where the track labels are fully covered.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/occlusion_hist}
+\caption{Histogram showing the occlusion level for track labels. }
+\label{fig:occul_hist}
+\end{figure}
+
+
+
+We keep all images in the dataset as the CNN might recognize that there has to be a track below a train and because most images with covered labels have visible labels as well.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/occlusion_example1}
+  \caption{Track on the right is hard to recognize due to poor lighting condition.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/occlusion_example2}
+  \caption{Track is covered by train \\ on the right. }
+\end{subfigure}
+\caption{Examples of track labels with 100\% occlusion.}
+\label{fig:occlusion_examples}
+\end{figure}
+
+
+\subsection{Images and video frames}
+
+The rail tracking systems aim to analyze video streams by treating each video frame as an independent image. Consequently, the images in the OSDaR23 dataset represent individual frames extracted from video sequences. 	Figure~\ref{fig:video} shows three examples of video sequences with seven frames each. It is clear to see that there is only minor variation in the images.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/video_1}
+  \label{fig:sub1}
+\end{subfigure}%
+\vskip\baselineskip
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/video_2}
+  \label{fig:sub2}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/db/video_3}
+  \label{fig:sub3}
+\end{subfigure}
+\caption{Three examples with seven video frames (i.e., images), respectively.}
+\label{fig:video}
+\end{figure}
+
+
+Two major issues when training a model on a dataset that consists of similar images is a lack of generalization (i.e., inability to generalize well on diverse and unseen images) and reduced robustness (i.e., vulnerability to variations in lighting conditions and backgrounds). 
+In order to mitigate the issues, we add images from the RailSem19 dataset to the training data.
+
+
+
+
+\section{RailSem19 dataset}
+
+The RailSem19 dataset \citep{9025646} is not the primary focus on of this thesis. However, the previous analysis reveals that among the 7,421 images within the OSDaR23 dataset, a significant number show high similarity. This similarity is due to the fact that the images are frames from a video sequence and the presence of three cameras for each orientation, respectively.
+The RailSem19 dataset is added to the training set in order to increase the performance of the segmentation approach.
+In the following, we will examine the RailSem19 dataset in more detail.
+
+The dataset consists of 8500 rail images, taken in different countries, and weather and lighting conditions. The number of rail annotations is 58.483.
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_image}
+\caption{Track labels per image. The images range from simple railroads with a pair of tracks to complicated networks with 26 pairs of tracks. }
+\label{fig:labels_per_image}
+\end{figure}
+
+
+
+
+The images have a size of 1920x1080. 
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Transforming labels}
+
+
+
+
 
 
 
@@ -340,19 +452,9 @@ Overall, the images seem to have a high complexity
 
 
 
-
-
-\section{RailSem19 dataset}
-
-
-
-
-\section{Transforming labels}
-
-
-
 \section{Data splitting}
 
+Also, care must be taken when dividing the dataset into training set, validation set, and test set -- the results will be strongly biased if frames from the same sequence are scattered among those subsets.
 
 
 \chapter{Experiments} % 4000 words

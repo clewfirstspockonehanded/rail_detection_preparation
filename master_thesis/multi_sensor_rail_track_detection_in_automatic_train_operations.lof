@@ -6,6 +6,10 @@
 \contentsline {figure}{\numberline {\small 5\normalsize }{\ignorespaces Brightness of images by sensor. }}{8}{figure.caption.12}%
 \contentsline {figure}{\numberline {\small 6\normalsize }{\ignorespaces Examples of very bright and very dark image, respectively.}}{8}{figure.caption.13}%
 \contentsline {figure}{\numberline {\small 7\normalsize }{\ignorespaces Entropy of images by sensor. }}{9}{figure.caption.14}%
-\contentsline {figure}{\numberline {\small 8\normalsize }{\ignorespaces Examples of image with very low and very high entropy, respectively.}}{10}{figure.caption.15}%
-\contentsline {figure}{\numberline {\small 9\normalsize }{\ignorespaces Number of images and labels per sensor, respectively.}}{10}{figure.caption.16}%
+\contentsline {figure}{\numberline {\small 8\normalsize }{\ignorespaces Examples of image with minimal and maximal entropy, respectively.}}{10}{figure.caption.15}%
+\contentsline {figure}{\numberline {\small 9\normalsize }{\ignorespaces Histogram showing the occlusion level for track labels. }}{11}{figure.caption.16}%
+\contentsline {figure}{\numberline {\small 10\normalsize }{\ignorespaces Examples of track labels with 100\% occlusion.}}{11}{figure.caption.17}%
+\contentsline {figure}{\numberline {\small 11\normalsize }{\ignorespaces Three examples with seven video frames (i.e., images), respectively.}}{12}{figure.caption.18}%
+\contentsline {figure}{\numberline {\small 12\normalsize }{\ignorespaces Track labels per image. The images range from simple railroads with a pair of tracks to complicated networks with 26 pairs of tracks. }}{12}{figure.caption.19}%
+\contentsline {figure}{\numberline {\small 13\normalsize }{\ignorespaces Number of images and labels per sensor, respectively.}}{13}{figure.caption.20}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

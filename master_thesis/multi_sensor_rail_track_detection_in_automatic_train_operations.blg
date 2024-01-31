@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: multi_sensor_rail_track_detection_in_automatic_train_operations.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: plainnat.bst
+Reallocating 'name_of_file' (item size: 1) to 10 items.
+Database file #1: Literatur.bib
+You've used 39 entries,
+            2773 wiz_defined-function locations,
+            863 strings with 13697 characters,
+and the built_in function-call counts, 21429 in all, are:
+= -- 1964
+> -- 1233
+< -- 31
++ -- 417
+- -- 378
+* -- 1713
+:= -- 3171
+add.period$ -- 155
+call.type$ -- 39
+change.case$ -- 243
+chr.to.int$ -- 39
+cite$ -- 78
+duplicate$ -- 966
+empty$ -- 1701
+format.name$ -- 431
+if$ -- 4646
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 33
+newline$ -- 238
+num.names$ -- 156
+pop$ -- 490
+preamble$ -- 1
+purify$ -- 204
+quote$ -- 0
+skip$ -- 825
+stack$ -- 0
+substring$ -- 875
+swap$ -- 206
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 429
+warning$ -- 0
+while$ -- 169
+width$ -- 0
+write$ -- 581
