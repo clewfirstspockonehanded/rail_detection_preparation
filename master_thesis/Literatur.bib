@@ -329,7 +329,6 @@ NUMBER = {2},
 ARTICLE-NUMBER = {16},
 URL = {https://www.mdpi.com/2410-387X/6/2/16},
 ISSN = {2410-387X},
-ABSTRACT = {In the 5G intelligent edge scenario, more and more accelerator-based single-board computers (SBCs) with low power consumption and high performance are being used as edge devices to run the inferencing part of the artificial intelligence (AI) model to deploy intelligent applications. In this paper, we investigate the inference workflow and performance of the You Only Look Once (YOLO) network, which is the most popular object detection model, in three different accelerator-based SBCs, which are NVIDIA Jetson Nano, NVIDIA Jetson Xavier NX and Raspberry Pi 4B (RPi) with Intel Neural Compute Stick2 (NCS2). Different video contents with different input resize windows are detected and benchmarked by using four different versions of the YOLO model across the above three SBCs. By comparing the inference performance of the three SBCs, the performance of RPi + NCS2 is more friendly to lightweight models. For example, the FPS of detected videos from RPi + NCS2 running YOLOv3-tiny is 7.6 times higher than that of YOLOv3. However, in terms of detection accuracy, we found that in the process of realizing edge intelligence, how to better adapt a AI model to run on RPi + NCS2 is much more complex than the process of Jetson devices. The analysis results indicate that Jetson Nano is a trade-off SBCs in terms of performance and cost; it achieves up to 15 FPSs of detected videos when running YOLOv4-tiny, and this result can be further increased by using TensorRT.},
 DOI = {10.3390/cryptography6020016}
 }
 
@@ -345,8 +344,8 @@ DOI = {10.3390/cryptography6020016}
   day       = {01},
   issn      = {1573-7721},
   doi       = {10.1007/s11042-022-13644-y},
-  url       = {https://doi.org/10.1007/s11042-022-13644-y},
-  abstract  = {Object detection is one of the predominant and challenging problems in computer vision. Over the decade, with the expeditious evolution of deep learning, researchers have extensively experimented and contributed in the performance enhancement of object detection and related tasks such as object classification, localization, and segmentation using underlying deep models. Broadly, object detectors are classified into two categories viz. two stage and single stage object detectors. Two stage detectors mainly focus on selective region proposals strategy via complex architecture; however, single stage detectors focus on all the spatial region proposals for the possible detection of objects via relatively simpler architecture in one shot. Performance of any object detector is evaluated through detection accuracy and inference time. Generally, the detection accuracy of two stage detectors outperforms single stag
+  url       = {https://doi.org/10.1007/s11042-022-13644-y}
+  }
 
 
 
@@ -359,7 +358,7 @@ journal = {Procedia Computer Science},
 volume = {199},
 pages = {1066-1073},
 year = {2022},
-note = {The 8th International Conference on Information Technology and Quantitative Management (ITQM 2020 & 2021): Developing Global Digital Economy after COVID-19},
+note = {The 8th International Conference on Information Technology and Quantitative Management (ITQM 2020 \& 2021): Developing Global Digital Economy after COVID-19},
 issn = {1877-0509},
 doi = {https://doi.org/10.1016/j.procs.2022.01.135},
 url = {https://www.sciencedirect.com/science/article/pii/S1877050922001363},
@@ -399,8 +398,7 @@ abstract = {Object detection techniques are the foundation for the artificial in
   month     = {October},
   doi       = {10.1007/s11042-021-10594-9},
   url       = {https://doi.org/10.1007/s11042-021-10594-9},
-  issn      = {1573-7721},
-  annotation = {Image segmentation is an essential phase of computer vision in which useful information is extracted from an image that can range from finding objects while moving across a room to detect abnormalities in a medical image. As image pixels are generally unlabelled, the commonly used approach for the same is clustering. This paper reviews various existing clustering based image segmentation methods. Two main clustering methods have been surveyed, namely hierarchical and partitional based clustering methods. As partitional clustering is computationally better, further study is done in the perspective of methods belonging to this class. Further, literature bifurcates the partitional based clustering methods into three categories, namely K-means based methods, histogram-based methods, and meta-heuristic based methods. The survey of various performance parameters for the quantitative evaluation of segmentation results is also included. Further, the publicly available benchmark datasets for image-segmentation are briefed.}
+  issn      = {1573-7721}
 }
 
 @article{MO2022626,
@@ -413,8 +411,7 @@ issn = {0925-2312},
 doi = {https://doi.org/10.1016/j.neucom.2022.01.005},
 url = {https://www.sciencedirect.com/science/article/pii/S0925231222000054},
 author = {Yujian Mo and Yan Wu and Xinneng Yang and Feilin Liu and Yujun Liao},
-keywords = {Deep learning, Convolutional neural networks, Semantic segmentation, Real-time, Domain adaptation, Multi-modal fusion, Weakly-supervised},
-abstract = {The goal of semantic segmentation is to segment the input image according to semantic information and predict the semantic category of each pixel from a given label set. With the gradual intellectualization of modern life, more and more applications need to infer relevant semantic information from images for subsequent processing, such as augmented reality, autonomous driving, video surveillance, etc. This paper reviews the state-of-the-art technologies of semantic segmentation based on deep learning. Because semantic segmentation requires a large number of pixel-level annotations, in order to reduce the fine-grained requirements of annotation and reduce the economic and time cost of manual annotation, this paper studies the works on weakly-supervised semantic segmentation. In order to enhance the generalization ability and robustness of the segmentation model, this paper investigates the works on domain adaptation in semantic segmentation. Many types of sensors are usually equipped in some practical applications, such as autonomous driving and medical image analysis. In order to mine the association between multi-modal data and improve the accuracy of the segmentation model, this paper investigates the works based on multi-modal data fusion semantic segmentation. The real-time performance of the model needs to be considered in practical application. This paper analyzes the key factors affecting the real-time performance of the segmentation model and investigates the works on real-time semantic segmentation. Finally, this paper summarizes the challenges and promising research directions of semantic segmentation tasks based on deep learning.}
+keywords = {Deep learning, Convolutional neural networks, Semantic segmentation, Real-time, Domain adaptation, Multi-modal fusion, Weakly-supervised}
 }
 
 @inproceedings{redmon2016you,
@@ -425,15 +422,45 @@ abstract = {The goal of semantic segmentation is to segment the input image acco
   year={2016}
 }
 
-@software{Jocher_Ultralytics_YOLO_2023,
-author = {Jocher, Glenn and Chaurasia, Ayush and Qiu, Jing},
-license = {AGPL-3.0},
-month = jan,
-title = {{Ultralytics YOLO}},
-url = {https://github.com/ultralytics/ultralytics},
-version = {8.0.0},
-year = {2023}
+@misc{Jocher_Ultralytics_YOLO_2023,
+  author = {Jocher, Glenn and Chaurasia, Ayush and Qiu, Jing},
+  title = {{Ultralytics YOLO}},
+  year = {2023},
+  month = jan,
+  version = {8.0.0},
+  howpublished = {\url{https://github.com/ultralytics/ultralytics}},
+  note = {AGPL-3.0 License}
 }
+
+
+
+@Article{agriculture13081643,
+AUTHOR = {Yue, Xiang and Qi, Kai and Na, Xinyi and Zhang, Yang and Liu, Yanhua and Liu, Cuihong},
+TITLE = {Improved YOLOv8-Seg Network for Instance Segmentation of Healthy and Diseased Tomato Plants in the Growth Stage},
+JOURNAL = {Agriculture},
+VOLUME = {13},
+YEAR = {2023},
+NUMBER = {8},
+ARTICLE-NUMBER = {1643},
+URL = {https://www.mdpi.com/2077-0472/13/8/1643},
+ISSN = {2077-0472},
+DOI = {10.3390/agriculture13081643}
+}
+
+@article{STRAKER2023100045,
+title = {Instance segmentation of individual tree crowns with YOLOv5: A comparison of approaches using the ForInstance benchmark LiDAR dataset},
+journal = {ISPRS Open Journal of Photogrammetry and Remote Sensing},
+volume = {9},
+pages = {100045},
+year = {2023},
+issn = {2667-3932},
+doi = {https://doi.org/10.1016/j.ophoto.2023.100045},
+url = {https://www.sciencedirect.com/science/article/pii/S2667393223000169},
+author = {Adrian Straker and Stefano Puliti and Johannes Breidenbach and Christoph Kleinn and Grant Pearse and Rasmus Astrup and Paul Magdon},
+keywords = {Individual tree crown segmentation, Deep learning, UAV laser scanning, Canopy height model, Yolov5, ForInstance},
+}
+
+
 
 @inproceedings{zheng2022clrnet,
   title={Clrnet: Cross layer refinement network for lane detection},
