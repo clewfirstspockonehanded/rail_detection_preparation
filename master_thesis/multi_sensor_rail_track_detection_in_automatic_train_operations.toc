@@ -12,21 +12,21 @@
 \contentsline {subsection}{\numberline {3.1.4}Occlusion}{9}{subsection.3.1.4}%
 \contentsline {subsection}{\numberline {3.1.5}Images and video frames}{10}{subsection.3.1.5}%
 \contentsline {section}{\numberline {3.2}RailSem19 dataset}{10}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Transforming labels}{11}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Data splitting}{11}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Experiments}{11}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Modeling and performance evaluation}{12}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Non-AI based segmentation}{12}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Deep-learning based segmentation}{12}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Results}{12}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusion}{14}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Algorithms}{14}{section.6.1}%
-\contentsline {chapter}{\nonumberline Bibliography}{15}{chapter*.24}%
-\contentsline {chapter}{\nonumberline List of Figures}{19}{chapter*.25}%
-\contentsline {chapter}{\nonumberline List of Tables}{20}{chapter*.26}%
-\contentsline {chapter}{\nonumberline List of source codes}{21}{chapter*.27}%
-\contentsline {chapter}{List of Abbreviations}{22}{section*.28}%
-\contentsline {chapter}{\numberline {A}Appendix A}{23}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Sensors}{23}{appendix.B}%
-\contentsline {chapter}{\numberline {C}Appendix B}{24}{appendix.C}%
+\contentsline {section}{\numberline {3.3}Data splitting}{12}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Solution approach and experiments}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Modeling and performance evaluation}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Transforming labels}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Non-AI based segmentation}{15}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Deep-learning based segmentation}{15}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Results}{15}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusion}{15}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Algorithms}{15}{section.6.1}%
+\contentsline {chapter}{\nonumberline Bibliography}{17}{chapter*.26}%
+\contentsline {chapter}{\nonumberline List of Figures}{21}{chapter*.27}%
+\contentsline {chapter}{\nonumberline List of Tables}{22}{chapter*.28}%
+\contentsline {chapter}{\nonumberline List of source codes}{23}{chapter*.29}%
+\contentsline {chapter}{List of Abbreviations}{24}{section*.30}%
+\contentsline {chapter}{\numberline {A}Appendix A}{25}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Dataset split}{25}{section.A.1}%
+\contentsline {chapter}{\numberline {B}Appendix B}{27}{appendix.B}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

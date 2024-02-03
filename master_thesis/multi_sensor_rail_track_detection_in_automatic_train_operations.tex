@@ -43,7 +43,7 @@
 \kurzfassung{\blindtext}
 \schlagworte{Deep Learning, Computer Vision, Segmentation, Automatic Train Operations}
 \outline{\blindtext}
-\keywords{Deep Learning, Computer Vision, Segmentation, Automatic Train Operations}
+\keywords{Deep Learning, Computer Vision, Rail Track Segmentation, YOLO, Automatic Train Operations}
 %\acknowledgements{\blindtext}
 \setListingsAndAcronyms % Definition der Namen für Quellcodeverzeichnis 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende des Headers
@@ -91,7 +91,7 @@ The following sections examine related research in track detection, considering 
 
 \section{Traditional rail track detection}
 
-While deep learning has shown remarkable success in track detection, non-AI segmentation techniques continue to play a role in this field as they allow the integration of domain-specific knowledge and rules into the algorithm and require less data for training. These methods are often referred to as line segment detectors and involve traditional computer vision techniques such as thresholding, edge/contour detection, template matching, and region growing \citep{4731268, ipol.2012.gjmr-lsd, 8100103, SAHOO1988233}.
+While deep learning has shown remarkable success in track detection, non-AI segmentation techniques continue to play a role in this field as they allow the integration of domain-specific knowledge and rules into the algorithm and require less data for training. These methods are often referred to as line segment detectors and involve traditional computer vision techniques such as thresholding, edge/contour detection, template matching, and region growing \citep{4731268, ipol.2012.gjmr-lsd, 8100103, SAHOO1988233, Mittal2022}.
 
 \cite{5309526} present a dynamic programming algorithm to extract the rail tracks in front of the train. The idea is to first identify the vanishing point which refers to the imaginary intersection of the tracks as the distance between the tracks decreases from the bottom of the image to the top.  This step is based on computing the gradient and applying Hough transform to detect the straight lines that indicate the tracks. Next, dynamic programming is used to extract the space between the two tracks.
  \cite{qi2013efficient} apply a method based on histogram of oriented gradients (HOG) to identify tracks and switches. First, HOG features are computed;  railway tracks are then identified by a region-growing algorithm. The proposed method is able to predict the patch the train will travel by detecting the setting of the switches. 
@@ -119,7 +119,7 @@ In \cite{10.1145/3503161.3548050}, the authors compile a real-world railway data
 A machine-learning based approach is proposed by \citep{teng2016visual} where features are extracted from super-pixels (i.e., a group of adjacent pixels with similar characteristics) and classified by applying a previously trained support vector machine.
 
 
-\section{Lane detection}
+\section{Lane detection} \label{sec:lane_detection}
 
 Lane detection for road vehicles is similar to rail track detection for locomotives in the sense that both tasks aim to identify and segment elongated shapes in complex environments that vary in lighting conditions, shadows, and occlusions. 
 The field of lane detection has a rich body of literature which is among others attributed to the existence of well-established benchmark datasets such as \cite{TuSimple} and CULane \citep{pan2018SCNN}. 
@@ -144,7 +144,7 @@ Preliminary experiments indicated that our model fails to generalize when traine
 In the following, we give a detailed description of the two datasets used in this thesis.
 
 
-\section{OSDaR23 dataset}
+\section{OSDaR23 dataset} \label{sec:OSDaR23}
 
 \subsection{Overview}
 
@@ -383,27 +383,127 @@ The RailSem19 dataset \citep{9025646} is not the primary focus on of this thesis
 The RailSem19 dataset is added to the training set in order to increase the performance of the segmentation approach.
 In the following, we will examine the RailSem19 dataset in more detail.
 
-The dataset consists of 8500 rail images, taken in different countries, and weather and lighting conditions. The number of rail annotations is 58.483.
+The dataset consists of 8500 rail images, taken in different countries, and weather and lighting conditions. The number of rail annotations is 58.483. All images have a size of 1920x1080 pixels. 
+Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the respective number of track labels. Most images contain 4 track labels (i.e., two pairs of tracks) but the dataset also contains complicated networks with 26 pairs of tracks. An example of a simple and an example of a complicated infrastructure is given in Figure~\ref{fig:railsem_complicated_vs_simple}.
 
 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_image}
-\caption{Track labels per image. The images range from simple railroads with a pair of tracks to complicated networks with 26 pairs of tracks. }
-\label{fig:labels_per_image}
+\includegraphics[width=0.9\textwidth]{images/datasets/railsem/labels_per_image}
+\caption{Track labels per image on a logarithmic scale. The images range from simple railroads with a single pair of tracks to complicated networks with 26 pairs of tracks. }
+\label{fig:labels_per_image_railsem}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_2_tracks}
+  \caption{Simple rail infrastructure.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_52_tracks}
+  \caption{Complicated rail infrastructure. }
+\end{subfigure}
+\caption{Examples of simple and complicated rail infrastructure.}
+\label{fig:railsem_complicated_vs_simple}
+\end{figure}
+
+
+Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show the distribution of the brightness values and the entropy values as defined in Section~\ref{sec:OSDaR23}, respectively. The RailSem19 images are mostly brighter than the OSDaR23; the distribution of the values ranges from almost black images to almost white images (see Figure~\ref{fig:railsem_sub1} and Figure~\ref{fig:railsem_sub1}). The entropy of the RailSem19 images is similar to the images in the OSDaR23 dataset. The outliers at the lower end of the entropy spectrum are associated with infrared images in the OSDaR23 dataset. Howerver, in RailSem19 low entropy images are often images that were generated in tunnels or at night. Figure~\ref{fig:railsem_sub2} and Figure~\ref{fig:railsem_sub4}) are images with a low entropy levels close to zero whereas Figure~\ref{fig:railsem_sub4}) has the highest entropy level in the data set with a score of 6.97.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/brightness}
+  \caption{Boxplot of brightness values.}
+   \label{fig:railsem_brightness}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/entropy}
+  \caption{Boxplot of entropy values. }
+  \label{fig:railsem_entropy}
+\end{subfigure}
+\caption{Brightness and entropy of RailSem19 images.}
+\label{fig:railsem_brightness_entropy}
 \end{figure}
 
 
 
 
-The images have a size of 1920x1080. 
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_bright}
+  \caption{Bright image.}
+  \label{fig:railsem_sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_dark}
+  \caption{Dark image.}
+  \label{railsem_sub2}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_high_entropy}
+  \caption{High entropy.}
+  \label{railsem_sub3}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_low_entropy}
+  \caption{Low entropy.}
+  \label{railsem_sub4}
+\end{subfigure}
+\caption{Extreme examples with regard to brightness and entropy.}
+\label{fig:examples}
+\end{figure}
+
+
+\section{Data splitting}
+
+Splitting a dataset into training, validation, and test sets is a standard practice in machine learning to evaluate and improve the performance of a model. 
+ Separating data into distinct sets and using them at different stages of development, prevents unintended data leakage where information from the test or validation set influences the training process.
+ 
+ The validation set assesses performance during training, refines hyperparameters, and guards against overfitting. Adjustments made based on validation set evaluations ensure the model generalizes effectively to new, unseen data. 
+
+The training set is used to train the model -- the model learns patterns and relationships within the training data.
+The validation set is used to evaluate the performance during the training process, fine-tune the hyperparameters of the model, and to prevent overfitting (i.e., a situation when a model performs well on the training data but fails to generalize to new data). We can make adjustments to the algorithm and optimize the performance on the validation set without compromising the model's ability to generalize to new data. 
+The test set is reserved for the final evaluation of the model. The test set allows for an unbiased assessment of the model's performance on data it has never seen before and provides, therefore, an estimate of how well the model is likely to perform on new, real-world data.
+
+Our approach is to perform a random split with a share of 70\%/15\%/15\% for train, validation, and test set respectively. Splitting the RailSem19 set is straightforward; we randomly assign images to each set resulting in 5.950, 1.275, and 1.275 images per set, respectively. However, the OSDaR23 comprises many images with high similar (e.g., frames from a video that was take when the locomotive was standing still), so we perform a random split not on individual images but on videos sequences. The approach results in 5.506 images for training, 987 images for validation, and 928 images for testing.
+The assignment of video sequences to the respective set and the split on sensor level is given in Appendix~\ref{app:data_split}
+
+
+
+\chapter{Solution approach and experiments} % 4000 words
+
+Given an image captured by an on-board camera on the locomotive, our objective is to precisely delineate the visible rail tracks. The output is  a polyline describing each track.
+
+\cite{meyer2021yolino} introduce YOLinO, a versatile and efficient algorithm inspired by single-shot object detection. It is designed to detect polylines in the context of lane detection, as discussed in Section~\ref{sec:lane_detection}. While the proposed approach is suitable for rail track detection, adapting the existing codebase from lane detection to rail track detection exceeds the scope of this thesis. Furthermore, our goal is to employ an off-the-shelf solution framework that can be readily utilized by a broader audience.
+
+
+Within computer vision, semantic segmentation is a well-studied domain focusing on classifying each pixel in an image into predefined categories \citep{MO2022626}. Conceptually, it 
+can be seen as an extension of object detection, a technique that recognizes and precisely locates objects within an image using bounding boxes.
+The pixel-level precision in object classification enables the understanding of the image context and is therefore often used in applications like autonomous driving and robotics.
+
+Our approach to the rail detection problem is based on two steps. First, we perform a semantic segmentation where each pixel is classified as either rail track or background. In a second step, the result of the segmentation task is used to define one polyline for each track. Segmentation is performed by the YOLOv8 algorithm \citep{Jocher_Ultralytics_YOLO_2023}.  YOLOv8, short for "You Only Look Once, version 8," is the latest version in the YOLO series of real-time object detectors, offering state-of-the-art performance in terms of accuracy and speed \citep{ultralytics_docs}. YOLOv8 builds upon the YOLO architecture, introduced in \cite{redmon2016you} -- a paper that has received more than 43.000 citations. Since the introduction of the original YOLO in 2016, the framework has been tested extensively with remarkable results \citep{JIANG20221066, cryptography6020016, Diwan2023}. The efficiency of the YOLO implementations by \cite{Jocher_Ultralytics_YOLO_2023} for segmentation tasks is examined in \cite{agriculture13081643} and \cite{STRAKER2023100045}.
 
 
 
 
 
 
+\section{Modeling and performance evaluation} 
 
 
 
@@ -417,49 +517,6 @@ The images have a size of 1920x1080.
 
 
 
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
-  \caption{Number of images per sensor}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
-  \caption{Number of labels per sensor}
-  \label{fig:sub2}
-\end{subfigure}
-\vskip\baselineskip
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
-  \caption{Number of images per sensor}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
-  \caption{Number of labels per sensor}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Number of images and labels per sensor, respectively.}
-\label{fig:examples}
-\end{figure}
-
-
-
-\section{Data splitting}
-
-Also, care must be taken when dividing the dataset into training set, validation set, and test set -- the results will be strongly biased if frames from the same sequence are scattered among those subsets.
-
-
-\chapter{Experiments} % 4000 words
-
-\section{Modeling and performance evaluation} 
 
 
 
@@ -544,11 +601,69 @@ Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.over
 \end{acronym}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier beginnt der Anhang.
 \clearpage
+
+
 \appendix
 \chapter{Appendix A}
 
-\chapter{Sensors}
+\section{Dataset split} \label{app:data_split}
 
+Splitting the OSDaR23 dataset in to train, validation, and test subsets is performed based on video sequences. Table~\ref{tab:dataset_split} lists the assignment of sequences to the respective subset. Figure~\ref{fig:data_split} show the split on an image level in total and for each sensor type.
+
+\begin{table}[ht]
+\centering
+\footnotesize
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Train} & \textbf{Validation} & \textbf{Test} \\
+\hline
+10\_station\_suelldorf\_10.1 & 16\_under\_bridge\_16.1 & 14\_signals\_station\_14.1 \\
+11\_main\_station\_11.1 & 18\_vegetation\_switch\_18.1 & 21\_station\_wedel\_21.1 \\
+12\_vegetation\_steady\_12.1 & 1\_calibration\_1.2 & 4\_station\_pedestrian\_bridge\_4.2 \\
+13\_station\_ohlsdorf\_13.1 & 3\_fire\_site\_3.3 & 4\_station\_pedestrian\_bridge\_4.5 \\
+14\_signals\_station\_14.2 & 9\_station\_ruebenkamp\_9.1 & 7\_approach\_underground\_station\_7.2 \\
+14\_signals\_station\_14.3 & 9\_station\_ruebenkamp\_9.2 & 8\_station\_altona\_8.3 \\
+15\_construction\_vehicle\_15.1 & & \\
+17\_signal\_bridge\_17.1 & & \\
+19\_vegetation\_curve\_19.1 & & \\
+1\_calibration\_1.1 & & \\
+20\_vegetation\_squirrel\_20.1 & & \\
+21\_station\_wedel\_21.2 & & \\
+21\_station\_wedel\_21.3 & & \\
+2\_station\_berliner\_tor\_2.1 & & \\
+3\_fire\_site\_3.1 & & \\
+3\_fire\_site\_3.2 & & \\
+3\_fire\_site\_3.4 & & \\
+4\_station\_pedestrian\_bridge\_4.1 & & \\
+4\_station\_pedestrian\_bridge\_4.3 & & \\
+4\_station\_pedestrian\_bridge\_4.4 & & \\
+5\_station\_bergedorf\_5.1 & & \\
+5\_station\_bergedorf\_5.2 & & \\
+6\_station\_klein\_flottbek\_6.1 & & \\
+6\_station\_klein\_flottbek\_6.2 & & \\
+7\_approach\_underground\_station\_7.1 & & \\
+7\_approach\_underground\_station\_7.3 & & \\
+8\_station\_altona\_8.1 & & \\
+8\_station\_altona\_8.2 & & \\
+9\_station\_ruebenkamp\_9.3 & & \\
+9\_station\_ruebenkamp\_9.4 & & \\
+9\_station\_ruebenkamp\_9.5 & & \\
+9\_station\_ruebenkamp\_9.6 & & \\
+9\_station\_ruebenkamp\_9.7 & & \\
+\hline
+\end{tabular}
+\caption{Dataset split: OSDaR23 }
+\label{tab:dataset_split}
+\end{table}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/datasets/db/data_split}
+\caption{OSDaR23 data split on image level in total and on sensor level. }
+\label{fig:data_split}
+\end{figure}
 
 
 

@@ -10,6 +10,9 @@
 \contentsline {figure}{\numberline {\small 9\normalsize }{\ignorespaces Histogram showing the occlusion level for track labels. }}{11}{figure.caption.16}%
 \contentsline {figure}{\numberline {\small 10\normalsize }{\ignorespaces Examples of track labels with 100\% occlusion.}}{11}{figure.caption.17}%
 \contentsline {figure}{\numberline {\small 11\normalsize }{\ignorespaces Three examples with seven video frames (i.e., images), respectively.}}{12}{figure.caption.18}%
-\contentsline {figure}{\numberline {\small 12\normalsize }{\ignorespaces Track labels per image. The images range from simple railroads with a pair of tracks to complicated networks with 26 pairs of tracks. }}{12}{figure.caption.19}%
-\contentsline {figure}{\numberline {\small 13\normalsize }{\ignorespaces Number of images and labels per sensor, respectively.}}{13}{figure.caption.20}%
+\contentsline {figure}{\numberline {\small 12\normalsize }{\ignorespaces Track labels per image on a logarithmic scale. The images range from simple railroads with a single pair of tracks to complicated networks with 26 pairs of tracks. }}{12}{figure.caption.19}%
+\contentsline {figure}{\numberline {\small 13\normalsize }{\ignorespaces Examples of simple and complicated rail infrastructure.}}{13}{figure.caption.20}%
+\contentsline {figure}{\numberline {\small 14\normalsize }{\ignorespaces Brightness and entropy of RailSem19 images.}}{13}{figure.caption.21}%
+\contentsline {figure}{\numberline {\small 15\normalsize }{\ignorespaces Extreme examples with regard to brightness and entropy.}}{14}{figure.caption.22}%
+\contentsline {figure}{\numberline {\small 16\normalsize }{\ignorespaces OSDaR23 data split on image level in total and on sensor level. }}{25}{figure.caption.33}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

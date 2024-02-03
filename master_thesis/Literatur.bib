@@ -176,6 +176,15 @@ series = {MM '22}
 	URLDate				={2024-01-26}
 }
 
+@misc{ultralytics_docs,
+	key					={},
+	author				={{Ultralytics Inc.}},
+	title				={YOLOv8},
+	year				={2023},
+	URL	  				={https://docs.ultralytics.com/models/yolov8/},
+	URLDate				={2024-02-03}
+}
+
 @misc{ERJU2019,
 	key					={},
 	author				={{Europe’s Rail Joint Undertaking}},
@@ -309,6 +318,56 @@ abstract = {Object Detection is the task of classification and localization of o
   publisher={Elsevier}
 }
 
+
+@Article{cryptography6020016,
+AUTHOR = {Feng, Haogang and Mu, Gaoze and Zhong, Shida and Zhang, Peichang and Yuan, Tao},
+TITLE = {Benchmark Analysis of YOLO Performance on Edge Intelligence Devices},
+JOURNAL = {Cryptography},
+VOLUME = {6},
+YEAR = {2022},
+NUMBER = {2},
+ARTICLE-NUMBER = {16},
+URL = {https://www.mdpi.com/2410-387X/6/2/16},
+ISSN = {2410-387X},
+ABSTRACT = {In the 5G intelligent edge scenario, more and more accelerator-based single-board computers (SBCs) with low power consumption and high performance are being used as edge devices to run the inferencing part of the artificial intelligence (AI) model to deploy intelligent applications. In this paper, we investigate the inference workflow and performance of the You Only Look Once (YOLO) network, which is the most popular object detection model, in three different accelerator-based SBCs, which are NVIDIA Jetson Nano, NVIDIA Jetson Xavier NX and Raspberry Pi 4B (RPi) with Intel Neural Compute Stick2 (NCS2). Different video contents with different input resize windows are detected and benchmarked by using four different versions of the YOLO model across the above three SBCs. By comparing the inference performance of the three SBCs, the performance of RPi + NCS2 is more friendly to lightweight models. For example, the FPS of detected videos from RPi + NCS2 running YOLOv3-tiny is 7.6 times higher than that of YOLOv3. However, in terms of detection accuracy, we found that in the process of realizing edge intelligence, how to better adapt a AI model to run on RPi + NCS2 is much more complex than the process of Jetson devices. The analysis results indicate that Jetson Nano is a trade-off SBCs in terms of performance and cost; it achieves up to 15 FPSs of detected videos when running YOLOv4-tiny, and this result can be further increased by using TensorRT.},
+DOI = {10.3390/cryptography6020016}
+}
+
+@article{Diwan2023,
+  author    = {Tausif Diwan and G. Anirudh and Jitendra V. Tembhurne},
+  title     = {Object detection using YOLO: challenges, architectural successors, datasets and applications},
+  journal   = {Multimedia Tools and Applications},
+  volume    = {82},
+  number    = {6},
+  pages     = {9243--9275},
+  year      = {2023},
+  month     = {03},
+  day       = {01},
+  issn      = {1573-7721},
+  doi       = {10.1007/s11042-022-13644-y},
+  url       = {https://doi.org/10.1007/s11042-022-13644-y},
+  abstract  = {Object detection is one of the predominant and challenging problems in computer vision. Over the decade, with the expeditious evolution of deep learning, researchers have extensively experimented and contributed in the performance enhancement of object detection and related tasks such as object classification, localization, and segmentation using underlying deep models. Broadly, object detectors are classified into two categories viz. two stage and single stage object detectors. Two stage detectors mainly focus on selective region proposals strategy via complex architecture; however, single stage detectors focus on all the spatial region proposals for the possible detection of objects via relatively simpler architecture in one shot. Performance of any object detector is evaluated through detection accuracy and inference time. Generally, the detection accuracy of two stage detectors outperforms single stag
+
+
+
+
+
+
+@article{JIANG20221066,
+title = {A Review of Yolo Algorithm Developments},
+journal = {Procedia Computer Science},
+volume = {199},
+pages = {1066-1073},
+year = {2022},
+note = {The 8th International Conference on Information Technology and Quantitative Management (ITQM 2020 & 2021): Developing Global Digital Economy after COVID-19},
+issn = {1877-0509},
+doi = {https://doi.org/10.1016/j.procs.2022.01.135},
+url = {https://www.sciencedirect.com/science/article/pii/S1877050922001363},
+author = {Peiyuan Jiang and Daji Ergu and Fangyao Liu and Ying Cai and Bo Ma},
+keywords = {Review, Yolo, Object Detection, Public Data Analysis},
+abstract = {Object detection techniques are the foundation for the artificial intelligence field. This research paper gives a brief overview of the You Only Look Once (YOLO) algorithm and its subsequent advanced versions. Through the analysis, we reach many remarks and insightful results. The results show the differences and similarities among the YOLO versions and between YOLO and Convolutional Neural Networks (CNNs). The central insight is the YOLO algorithm improvement is still ongoing.This article briefly describes the development process of the YOLO algorithm, summarizes the methods of target recognition and feature selection, and provides literature support for the targeted picture news and feature extraction in the financial and other fields. Besides, this paper contributes a lot to YOLO and other object detection literature.}
+}
+
 @inproceedings{meyer2021yolino,
   title={Yolino: Generic single shot polyline detection in real time},
   author={Meyer, Annika and Skudlik, Philipp and Pauls, Jan-Hendrik and Stiller, Christoph},
@@ -328,8 +387,53 @@ abstract = {Object Detection is the task of classification and localization of o
   pages={200-203},
   keywords={Roads;Clustering algorithms;Least squares methods;Data mining;Space technology;Curve fitting;Vehicle safety;Intelligent vehicles;Vehicle driving;Machine vision;lane detection;color clustering;curve fitting;least square},
   doi={10.1109/WKDD.2010.118}}
+  
+  @article{Mittal2022,
+  author    = {Mittal, Himanshu and Pandey, Avinash Chandra and Saraswat, Mukesh and Kumar, Sumit and Pal, Raju and Modwel, Garv},
+  title     = {A comprehensive survey of image segmentation: clustering methods, performance parameters, and benchmark datasets},
+  journal   = {Multimedia Tools and Applications},
+  year      = {2022},
+  volume    = {81},
+  number    = {24},
+  pages     = {35001--35026},
+  month     = {October},
+  doi       = {10.1007/s11042-021-10594-9},
+  url       = {https://doi.org/10.1007/s11042-021-10594-9},
+  issn      = {1573-7721},
+  annotation = {Image segmentation is an essential phase of computer vision in which useful information is extracted from an image that can range from finding objects while moving across a room to detect abnormalities in a medical image. As image pixels are generally unlabelled, the commonly used approach for the same is clustering. This paper reviews various existing clustering based image segmentation methods. Two main clustering methods have been surveyed, namely hierarchical and partitional based clustering methods. As partitional clustering is computationally better, further study is done in the perspective of methods belonging to this class. Further, literature bifurcates the partitional based clustering methods into three categories, namely K-means based methods, histogram-based methods, and meta-heuristic based methods. The survey of various performance parameters for the quantitative evaluation of segmentation results is also included. Further, the publicly available benchmark datasets for image-segmentation are briefed.}
+}
 
+@article{MO2022626,
+title = {Review the state-of-the-art technologies of semantic segmentation based on deep learning},
+journal = {Neurocomputing},
+volume = {493},
+pages = {626-646},
+year = {2022},
+issn = {0925-2312},
+doi = {https://doi.org/10.1016/j.neucom.2022.01.005},
+url = {https://www.sciencedirect.com/science/article/pii/S0925231222000054},
+author = {Yujian Mo and Yan Wu and Xinneng Yang and Feilin Liu and Yujun Liao},
+keywords = {Deep learning, Convolutional neural networks, Semantic segmentation, Real-time, Domain adaptation, Multi-modal fusion, Weakly-supervised},
+abstract = {The goal of semantic segmentation is to segment the input image according to semantic information and predict the semantic category of each pixel from a given label set. With the gradual intellectualization of modern life, more and more applications need to infer relevant semantic information from images for subsequent processing, such as augmented reality, autonomous driving, video surveillance, etc. This paper reviews the state-of-the-art technologies of semantic segmentation based on deep learning. Because semantic segmentation requires a large number of pixel-level annotations, in order to reduce the fine-grained requirements of annotation and reduce the economic and time cost of manual annotation, this paper studies the works on weakly-supervised semantic segmentation. In order to enhance the generalization ability and robustness of the segmentation model, this paper investigates the works on domain adaptation in semantic segmentation. Many types of sensors are usually equipped in some practical applications, such as autonomous driving and medical image analysis. In order to mine the association between multi-modal data and improve the accuracy of the segmentation model, this paper investigates the works based on multi-modal data fusion semantic segmentation. The real-time performance of the model needs to be considered in practical application. This paper analyzes the key factors affecting the real-time performance of the segmentation model and investigates the works on real-time semantic segmentation. Finally, this paper summarizes the challenges and promising research directions of semantic segmentation tasks based on deep learning.}
+}
 
+@inproceedings{redmon2016you,
+  title={You only look once: Unified, real-time object detection},
+  author={Redmon, Joseph and Divvala, Santosh and Girshick, Ross and Farhadi, Ali},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={779--788},
+  year={2016}
+}
+
+@software{Jocher_Ultralytics_YOLO_2023,
+author = {Jocher, Glenn and Chaurasia, Ayush and Qiu, Jing},
+license = {AGPL-3.0},
+month = jan,
+title = {{Ultralytics YOLO}},
+url = {https://github.com/ultralytics/ultralytics},
+version = {8.0.0},
+year = {2023}
+}
 
 @inproceedings{zheng2022clrnet,
   title={Clrnet: Cross layer refinement network for lane detection},
