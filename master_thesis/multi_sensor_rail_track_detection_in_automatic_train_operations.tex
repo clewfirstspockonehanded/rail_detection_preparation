@@ -22,6 +22,8 @@
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{siunitx}
+\usepackage{geometry}
+
 \captionsetup{compatibility=false}
 
 %\addbibresource{Literatur.bib}                              % Literatur-File definieren
@@ -152,7 +154,7 @@ In the following, we give a detailed description of the two datasets used in thi
 
 The OSDaR23 contains 21 video sequences captured around Hamburg, Germany between 09.09.2021 and 15.09.2021 (a map of the exact locations is given in Figure~\ref{fig:map}). 
 The sensor setup is very comprehensive including six RGB cameras, three
-IR cameras, six lidar sensors, a 2D radar sensor, and position and acceleration sensors. In this thesis, we focus on images by RGB high resolution, RGB low resolution, and infrared sensors with three orientation (left, right, and center), respectively. One example per sensor is given in Figure~\ref{fig:sensor_image}. A detailed description of the sensors can be found in Appendix~\ref{}.
+IR cameras, six lidar sensors, a 2D radar sensor, and position and acceleration sensors. In this thesis, we focus on images by RGB high resolution, RGB low resolution, and infrared sensors with three orientation (left, right, and center), respectively. One example per sensor is given in Figure~\ref{fig:sensor_image}. A detailed description of the sensors can be found in Appendix~\ref{app:sensors}.
 
 \begin{figure}[h]
 \centering
@@ -500,17 +502,110 @@ In order to compare the YOLO approach, we devise a track detection algorithm bas
 In the following, we describe the details of the YOLO and the FLD approach.
 
 
-\section{Modeling and performance evaluation} 
+\section{Transforming labels} 
+
+In semantic segmentation, labels are often represented as closed polygons. Each polygon corresponds to a specific semantic class, and the pixels enclosed within the polygon are assigned the label of that class.
+However, the track labels in both OSDaR23 and RailSem19 dataset are given as polylines. Therefore, we transform the labels as follows. First, we adjust the thickness of the polyline such that is covers the tracks. Second, we generate the mask -- a binary image where each pixel is assigned a value indicating the category it belongs to (i.e., track or background). Finally, the boundaries of the track label are exacted by using the $drawContours$ and $approxPolyDP$ functions in the OpenCV library, and the vectors defining the polygons are written to disk.  Figure~\ref{fig:labeling} illustrates the transformation process.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/polylines}
+  \caption{Estimate thickness of such that the lines \\ cover the tracks.}
+ % \label{fig:railsem_sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/mask}
+  \caption{Create mask (i.e., binary mapping of track labels and background).}
+%  \label{railsem_sub2}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/contour}
+  \caption{Extract contour of track label (see green boundary in mask).}
+%  \label{railsem_sub3}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/final}
+  \caption{Polygon is enclosing the \\ region of interest.}
+%  \label{railsem_sub4}
+\end{subfigure}
+\caption{Process of transforming the labels from  polyline to polygon.}
+\label{fig:labeling}
+\end{figure}
 
 
 
 
+\section{Performance evaluation}
+
+There is a number of performance metrics that are used in semantic segmentation to evaluate the effectiveness of the models \citep{Taha2015}. The choice of metrics typically depends on the specific requirements of the application and the nature of the dataset. In this section, we will introduce and examine different metrics. \\
 
 
-\section{Transforming labels}
+\noindent\textbf{Pixel Accuracy} provides a basic measure of overall accuracy by considering correctly predicted pixels. It is a quick evaluation method of how well the model is performing pixel-wise.
+
+
+\[
+\text{Pixel Accuracy} = \frac{\text{Number of Correctly Predicted Pixels}}{\text{Total Number of Pixels}}
+\]
+
+\noindent\textbf{Precision} measures the accuracy of positive predictions among all positive predictions. Important when minimizing false positives is critical, such as in medical diagnostics.
+
+\[
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
+\]
 
 
 
+\noindent\textbf{Recall} measures the ability to capture all positive instances. Important when it's crucial to identify all instances of a particular class, even at the cost of some false positives.
+
+\[
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\]
+
+
+\noindent\textbf{Dice Score or F1 Score}, balances precision and recall, particularly useful when dealing with imbalanced datasets (i.e., when one class has a much larger or smaller number of pixels compared to the other class such as background vs. tracks). 
+
+\[
+\text{Dice Score} = \frac{2 \times \text{TP}}{2 \times \text{TP} + \text{FP} + \text{FN}}
+\]
+
+\[
+\text{F1 Score} = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
+
+
+\noindent\textbf{Intersection over Union (IoU)}, measures the overlap between predicted and ground truth regions. Commonly used in evaluating the spatial accuracy of segmentation masks.
+
+
+\[
+\text{IoU} = \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}
+\]
+
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.9\textwidth}
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/performance/ground_truth}
+  \caption{Ground truth label selected randomly from training set.}
+\end{subfigure}%
+\vskip\baselineskip
+\begin{subfigure}{0.9\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{images/performance/examples}
+  \caption{Example predictions selected randomly from training set; last image is only background illustrating a case where no rail track was found}
+\end{subfigure}
+\caption{Example masks -- ground truth vs. prediction.}
+\label{fig:occlusion_examples}
+\end{figure}
 
 
 
@@ -594,6 +689,7 @@ The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result
 
 \chapter{Conclusion} % 500 words
 
+Future work might involve using instance segmentation rater than semantic segmentation to identify each track seperately.
 
 
 
@@ -661,7 +757,48 @@ Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.over
 
 
 \appendix
-\chapter{Appendix A}
+\chapter{Appendix}
+
+\section{Sensors used in OSDaR23} \label{app:sensors}
+
+In this thesis, we are focusing on images from the different sensor types. 
+
+
+\begin{table}[htbp]
+  \centering
+  \footnotesize
+  \begin{tabular}{|l|l|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Three 12MP RGB Cameras}}  \\
+    \hline
+    Type & Teledyne GenieNano 5GigE C4040  \\
+    Sensor data & RGB images (8 Bit, PNG)  \\
+    Resolution & 4,112 $\times$ 2,504 px  \\
+    Sampling frequency & 10 Hz (synchronized)  \\
+    Alignment & trident (in driving direction diagonal left, central and diagonal right)  \\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Three 5MP RGB Cameras}}  \\
+    \hline
+    Type & Teledyne GenieNano C2420  \\
+    Sensor data & RGB images (8 Bit, PNG)  \\
+    Resolution & 2,464 $\times$ 1,600 px \\
+    Sampling frequency & 10 Hz (synchronized)  \\
+    Alignment & trident  \\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Three IR Cameras}}  \\
+    \hline
+    Type & Teledyne Calibir DXM640  \\
+    Sensor data & Grayscale images (8 Bit, PNG)  \\
+    Resolution & 640 $\times$ 480 px  \\
+    Sampling frequency & 10 Hz (synchronized)  \\
+    Alignment & trident  \\
+    \hline
+  \end{tabular}
+  \caption{OSDaR23 sensor specifications}
+  \label{tab:cameras}
+\end{table}
+
+
 
 \section{Dataset split} \label{app:data_split}
 
@@ -751,6 +888,6 @@ rgb\_right & 2.522 & 1.890 & 0.143 & 0.951 & 5.515 & 1.329 & 4.101 & 8.476 \\
 
 
 \clearpage
-\chapter{Appendix B}
+\chapter{Appendix}
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende des Inhalts
