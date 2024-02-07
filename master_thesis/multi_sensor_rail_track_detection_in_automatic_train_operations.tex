@@ -547,48 +547,54 @@ However, the track labels in both OSDaR23 and RailSem19 dataset are given as pol
 There is a number of performance metrics that are used in semantic segmentation to evaluate the effectiveness of the models \citep{Taha2015}. The choice of metrics typically depends on the specific requirements of the application and the nature of the dataset. In this section, we will introduce and examine different metrics. \\
 
 
-\noindent\textbf{Pixel Accuracy} provides a basic measure of overall accuracy by considering correctly predicted pixels. It is a quick evaluation method of how well the model is performing pixel-wise.
+\noindent\textbf{Pixel Accuracy} provides a simple measure of the overall accuracy by considering correctly predicted pixels. 
 
 
 \[
 \text{Pixel Accuracy} = \frac{\text{Number of Correctly Predicted Pixels}}{\text{Total Number of Pixels}}
 \]
 
-\noindent\textbf{Precision} measures the accuracy of positive predictions among all positive predictions. Important when minimizing false positives is critical, such as in medical diagnostics.
+\noindent\textbf{Precision} measures the accuracy of positive predictions among all positive predictions. The metric is important when minimizing false positives is critical such as in medical diagnostics.
 
 \[
 \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
 \]
+True Positives (TP) are the instances where the model correctly predicts the positive class (i.e., it correctly identifies the track).
+False Positives (FP) are the instances where the model incorrectly predicts the positive class (i.e., it incorrectly identifies a track when it is actually absent). \\
 
 
-
-\noindent\textbf{Recall} measures the ability to capture all positive instances. Important when it's crucial to identify all instances of a particular class, even at the cost of some false positives.
+\noindent\textbf{Recall} measures the ability to capture all positive instances. Recall is optimized when it is crucial to identify all instances of a particular class, even at the cost of some false positives.
 
 \[
 \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
 \]
+False Negatives are the instances where the model incorrectly predicts the negative class (i.e., it incorrectly identifies background even when the there is a track). \\
 
+\noindent\textbf{Dice score or F1 score}, balances precision and recall which is particularly useful when dealing with umbalanced datasets, i.e., when one class has a much larger or smaller number of pixels compared to the other class (in our case background vs. tracks). Some authors use the Dice score while others use the F1 score with the respective formulas. However, it can be shown that one reduces to the other. Dice is the most used metric in segmentation when the dataset is unbalanced (e.g., medical imaging). 
 
-\noindent\textbf{Dice Score or F1 Score}, balances precision and recall, particularly useful when dealing with imbalanced datasets (i.e., when one class has a much larger or smaller number of pixels compared to the other class such as background vs. tracks). 
 
 \[
 \text{Dice Score} = \frac{2 \times \text{TP}}{2 \times \text{TP} + \text{FP} + \text{FN}}
 \]
 
-\[
-\text{F1 Score} = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
-\]
+\begin{align*}
+    \text{F1 Score} &= \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \\
+    \vspace{1em}
+     &= \frac{2 \cdot \frac{\text{TP}}{\text{TP} + \text{FP}} \cdot \frac{\text{TP}}{\text{TP} + \text{FN}}}{\frac{\text{TP}}{\text{TP} + \text{FP}} + \frac{\text{TP}}{\text{TP} + \text{FN}}} \\
+    \vspace{1em}
+     &= \frac{2 \cdot \text{TP}}{2 \cdot \text{TP} + \text{FP} + \text{FN}}
+\end{align*}
 
-
-\noindent\textbf{Intersection over Union (IoU)}, measures the overlap between predicted and ground truth regions. Commonly used in evaluating the spatial accuracy of segmentation masks.
-
+\noindent\textbf{Intersection over Union (IoU) or Jaccard index}, measures the overlap between predicted and ground truth regions. The metric is commonly used to evaluate the spatial accuracy of segmentation masks. Apart from the boundary values \{0,1\}, the IoU score is consistently smaller than the Dice score.
 
 \[
 \text{IoU} = \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}
 \]
 
 
+In Figure~\ref{fig:example_metrcis} we illustrate the concept of performace metric based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct pixels of the image being analyzed. Figure~\ref{fig:ex_sub1}, shows five potential predictions, where Image 5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i..e, all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
 
+Based on the literature and the example, we choose the Dice score to analyze the performance of different models.
 
 \begin{figure}
 \centering
@@ -596,20 +602,37 @@ There is a number of performance metrics that are used in semantic segmentation 
   \centering
   \includegraphics[width=0.5\textwidth]{images/performance/ground_truth}
   \caption{Ground truth label selected randomly from training set.}
+   \label{fig:gt_sub1}
 \end{subfigure}%
 \vskip\baselineskip
 \begin{subfigure}{0.9\textwidth}
   \centering
   \includegraphics[width=\textwidth]{images/performance/examples}
   \caption{Example predictions selected randomly from training set; last image is only background illustrating a case where no rail track was found}
+\label{fig:ex_sub1}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}{0.9\textwidth}
+  \centering
+    \footnotesize
+  \begin{tabular}{|c|ccccc|}
+       \hline
+      Image & Pixel Accuracy & Precision & Recall & Dice & IoU \\
+      \hline
+      1 & 0.927 & 0.013 & 0.005 & 0.007 & 0.004 \\
+      2 & 0.956 & 0.706 & 0.249 & 0.369 & 0.226 \\
+      3 & 0.916 & 0.197 & 0.201 & 0.199 & 0.111 \\
+      4 & 0.999 & 0.992 & 0.991 & 0.991 & 0.983 \\
+      5 & 0.948 & -$^{\mathrm{a}}$ & 0.0 & 0.0 & 0.0 \\
+       \hline
+       \multicolumn{6}{l}{$^{\mathrm{a}}$Division by zero as there are no positive classifications.} \\
+  \end{tabular}
+  \caption{Performance Metrics}
+  \label{tab:metrics}
 \end{subfigure}
 \caption{Example masks -- ground truth vs. prediction.}
-\label{fig:occlusion_examples}
+\label{fig:example_metrcis}
 \end{figure}
-
-
-
-
 
 
 \section{Non-AI based segmentation}
