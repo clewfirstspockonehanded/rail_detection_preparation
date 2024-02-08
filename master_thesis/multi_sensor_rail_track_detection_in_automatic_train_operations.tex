@@ -23,6 +23,8 @@
 \usepackage{multirow}
 \usepackage{siunitx}
 \usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
 
 \captionsetup{compatibility=false}
 
@@ -267,7 +269,7 @@ Figure~\ref{fig:brightness_examples} show one example of a bright and a dark ima
 
 
 
-\subsection{Entropy of the images}
+\subsection{Entropy of the images} \label{sec:entropy}
 
 
 Shannon entropy is a measure from information theory that reflects the uncertainty or randomness associated with a set of data \citep{6773024}. In the context of images, Shannon entropy can be used to quantify the complexity in the pixel values of an image. A high entropy value indicates higher complexity or randomness in the pixel values, while a low entropy value suggests more homogeneity. \cite{rahane2020measures} report a positive correlation between the entropy of the training data and the performance of semantic segmentation tasks, highlighting that more complex images are harder to learn by deep-learning networks.
@@ -696,6 +698,67 @@ The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result
 
 \section{Parameter tuning}
 
+The performance of our traditional rail detection algorithm depends on a number of parameters. In order to choose the best parameter setting for each combination of sensor and orientation, we tune the parameters according to the grid search technique. Grid search involves specifying a grid of parameter values and exhaustively evaluating the performance of the algorithm for each combination of values. The parameter combination that yields the best performance is selected. Grid search is a simple technique that thoroughly   explores the parameter space but it is also computationally expensive in multi-dimensional spaces.
+
+In total, we test 22.680 parameter settings on 196 images\footnote{The idea is to select one image for each combination of sensor, sensor orientation, and video sequence in the train set (i.e., $3\times3\times33 = 297$). However, there are combinations with no track labels.} from the Os dataset. The images are sampled randomly from the train set such that there is at most one image per sensor per video sequence. 
+ 
+\begin{table}[htbp]
+    \centering
+    \tiny
+    \caption{Sensor Parameters}
+    \label{tab:sensor_parameters}
+    \begin{tabular}{|@{}lll@{}|}
+        \hline
+        \textbf{Parameter} & \textbf{Description} & \textbf{Values} \\
+        \hline
+        Sensors & Combination of sensor and orientation & rgb\_highres\_left, rgb\_highres\_right, rgb\_highres\_center,  \\
+                & & rgb\_left, rgb\_right, rgb\_center, ir\_left, ir\_right, ir\_center \\
+                 & &  ir\_left, ir\_right, ir\_center \\
+        \hline
+        Kernel & Kernel for Gaussian blur & 0, 3, 5, 7 \\
+        \hline
+        Length Threshold & Segment shorter than this will be discarded & 25, 50, 100, 200, 300 \\
+        \hline
+        Canny Threshold 1 & First threshold for hysteresis procedure in Canny;  & 5, 10, 20, 50, 100, 150 \\
+         & second threshold is threshold 1 times 3 &  \\
+        \hline
+        Aspect Ratio Quantile & Filtering out lines with depending on bounding  & 1, 5, 10 \\
+          &  box aspect ratio quantile &  \\
+        \hline
+        Noise Threshold & Removing small segments that are classified as noise & 0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+Table~\ref{tab:sensor_parameters} presents the best parameter configurations based on the average Dice score. The varying parameter settings across different sensors demonstrates the algorithm's sensitivity to the selected parameters.
+The left-oriented camera images seem to benefit from a higher level of blurring with a kernel size of seven. 
+The filtering criteria for lines with uncharacteristic bounding box aspect ratios appear to be relatively loose in most cases -- only the most extreme outliers are being removed. Left and right-oriented high-resolution camera images, on the other hand, seem require a more restrictive filtering. 
+The "Avg. Time" column indicates the average inference time in seconds. The inference times seem to be strongly correlated with the entropy metrics discussed in Section~\ref{sec:entropy}; higher entropy values tend to be associated with longer inference times.
+
+
+\begin{table}[htbp]
+\footnotesize
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Sensor} & \textbf{Kernel} & \textbf{Length}  & \textbf{Aspect Ratio } & \textbf{Canny } & \textbf{Canny } & \textbf{Noise} & \textbf{Avg. Time } \\
+         &  & \textbf{Threshold} & \textbf{Quantile} & \textbf{Th1} & \textbf{Th2} & \textbf{Threshold} & \textbf{(sec)} \\
+        \hline
+        rgb\_highres\_center & 5 & 50 & 1 & 50 & 150 & 0.25 & 0.052 \\
+        rgb\_highres\_right & 0 & 100 & 5 & 10 & 30 & 0.25 & 0.074 \\
+        rgb\_center & 3 & 100 & 1 & 10 & 30 & 0.2 & 0.014 \\
+        rgb\_highres\_left & 7 & 50 & 5 & 50 & 150 & 0.25 & 0.069 \\
+        rgb\_right & 3 & 50 & 1 & 5 & 15 & 0.1 & 0.032 \\
+        ir\_left & 7 & 25 & 1 & 5 & 15 & 0.2 & 0.003 \\
+        rgb\_left & 7 & 100 & 1 & 20 & 60 & 0.25 & 0.026 \\
+        ir\_center & 3 & 25 & 1 & 5 & 15 & 0.2 & 0.003 \\
+        ir\_right & 5 & 25 & 1 & 10 & 30 & 0.2 & 0.004 \\
+        \hline
+    \end{tabular}
+      \caption{Best parameter settings and associated performance metrics.}
+    \label{tab:sensor_parameters}
+\end{table}
 
 
 
@@ -908,6 +971,17 @@ rgb\_right & 2.522 & 1.890 & 0.143 & 0.951 & 5.515 & 1.329 & 4.101 & 8.476 \\
 \caption{Bounding box aspect ratios for different sensors; Q* denotes quantile.}
 \label{tab:sensor_stats}
 \end{table}
+
+
+Figure~\ref{fig:fld_params} shows the effect on the performance measured by the Dice score. The results are averaged over 196 images. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/fld/parameter_tuning}
+\caption{Heatmap of Dice scores for selected parameter pairs. The Dice scores are average values of 196 images. }
+\label{fig:fld_params}
+\end{figure}
+
 
 
 \clearpage
