@@ -501,7 +501,14 @@ Our approach to the rail detection problem is based on two steps. First, we perf
 
 
 In order to compare the YOLO approach, we devise a track detection algorithm based on the fast line detector (FLD) by \cite{FLD}.
-In the following, we describe the details of the YOLO and the FLD approach.
+In the following, we describe the YOLO and the FLD approach, and give details of the infrastructure for running the experiments.
+
+\section{Infrastructure}
+
+Experiments are run on the High Performance Lab Cluster (HPL) of the UAS Technikum Wien. 
+The HPL comprises 19 PCs connected through a 10-GBit-Network. The PCs have the following setup, respectively: AMD Ryzen 9 3900X 12-Core Processor, NVIDIA GeForce RTX 2080 Ti GPU, 32 GB RAM, and 80 GB Hard Disk.
+
+All nodes are running Linux Ubuntu 20. CUDA libraries are installed for GPU management; the programming language is Python 3.8.10. 
 
 
 \section{Transforming labels} 
@@ -572,7 +579,7 @@ False Positives (FP) are the instances where the model incorrectly predicts the 
 \]
 False Negatives are the instances where the model incorrectly predicts the negative class (i.e., it incorrectly identifies background even when the there is a track). \\
 
-\noindent\textbf{Dice score or F1 score}, balances precision and recall which is particularly useful when dealing with umbalanced datasets, i.e., when one class has a much larger or smaller number of pixels compared to the other class (in our case background vs. tracks). Some authors use the Dice score while others use the F1 score with the respective formulas. However, it can be shown that one reduces to the other. Dice is the most used metric in segmentation when the dataset is unbalanced (e.g., medical imaging). 
+\noindent\textbf{Dice score or F1 score}, balances precision and recall which is particularly useful when dealing with unbalanced datasets, i.e., when one class has a much larger or smaller number of pixels compared to the other class (in our case background vs. tracks). Some authors use the Dice score while others use the F1 score with the respective formulas. However, it can be shown that one reduces to the other. Dice is the most used metric in segmentation when the dataset is unbalanced (e.g., medical imaging). 
 
 
 \[
@@ -594,7 +601,7 @@ False Negatives are the instances where the model incorrectly predicts the negat
 \]
 
 
-In Figure~\ref{fig:example_metrcis} we illustrate the concept of performace metric based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct pixels of the image being analyzed. Figure~\ref{fig:ex_sub1}, shows five potential predictions, where Image 5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i..e, all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
+In Figure~\ref{fig:example_metrcis} we illustrate the concept of performance metric based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct pixels of the image being analyzed. Figure~\ref{fig:ex_sub1}, shows five potential predictions, where Image 5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i..e, all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
 
 Based on the literature and the example, we choose the Dice score to analyze the performance of different models.
 
@@ -663,7 +670,7 @@ The results of the FLD algorithm are post-processed to incorporate domain specif
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/aspect_ratio_wide}
-  \caption{Left camera: wide bounding box aspect ratio. }
+  \caption{Left camera: wide bounding box \\ aspect ratio. }
   \label{fig:bb_wide}
 \end{subfigure}
 \caption{Different bounding box aspect ratios depending on camera orientation.}
@@ -765,6 +772,97 @@ The "Avg. Time" column indicates the average inference time in seconds. The infe
 
 \section{Deep-learning based segmentation}
 
+In this section, we will describe the deep-learning based segmentation in more detail. The applied model is YOLOv8 which is the latest version of YOLO models by \cite{Jocher_Ultralytics_YOLO_2023}.  YOLOv8 is distributed under the GNU General Public License, which authorizes the users to freely share, modify and distribute the software. The accessibility of the code as well as high performance on many applications led to a large community and much resources for developing and tuning YOLO models. 
+
+YOLOv8 is used to detect objects in images with a single forward pass through the network. The models are pre-trained on large datasets like COCO and ImageNet which enables the prediction of everyday objects \citep{Krishnakumar}. Additionally, in line with the transfer learning technique, the  model can be fine-tuned on new datasets related to the problem at hand (i.e., rail track detection).
+The model architecture is presented in Appendix~\ref{app:yolo}.
+YOLOv8-Seg model is an extension of the YOLOv8 object detection model that performs semantic segmentation of the input image. The  model has been shown to achieve state-of-the-art results on a variety of object detection and semantic segmentation benchmarks while maintaining high speed and efficiency \citep{Krishnakumar}. 
+
+YOLOv8-seg uses a weighted loss function comprising bounding box loss, objectness loss, and segmentation loss \citep{loss_function}. Bounding box loss calculates the error between the geometry of the predicted and the ground truth box. It is a measure of how well the model predicts the size and location of the bounding boxes. Objectness loss determines how confident the model is about the presence of an object in the bounding box. It compares the probability of an object being present in the prediction with the ground truth value.
+Finally, segmentation loss quantifies how close the predicted segmentation map is to the ground truth map. It measures how effectively the model performs the semantic segmentation task.
+
+
+\subsection{Models}
+
+In order to identify the best model setup for the rail track detection task, we experiment with nine different models that are validated against different datasets. The models differ in the data the model is trained on and the size of the input image. All models are trained for 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
+Hyper-parameters are either set to default values or automatically chosen in the initialization phase by YOLO.
+
+Table~\ref{tab:training} summarizes the setup of the different models. The column ``Train Set'' gives the images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results. The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
+The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process. 
+ 
+\begin{table}[htbp]
+    \centering
+    \tiny
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Model} & \textbf{Train Set} & \textbf{Image Size} & \textbf{Batch Size} & \textbf{Optimizer} & \textbf{Epochs} & \textbf{Duration} \\
+         &  &  &  &  &  &  \textbf{(HH:MM:SS)} \\
+        \hline
+        data\_rgb\_640 & OSDaR23 RGB images & 640 & 23 & AdamW & 121 & 00:37:57 \\
+        data\_ir\_640 & OSDaR23 infrared images & 640 & 23 & AdamW & 196 & 00:51:51 \\
+        data\_rgb\_1280 & OSDaR23 RGB images & 1280 & 5 & AdamW & 117 & 01:39:58 \\
+        data\_rgb\_railsem\_640 & OSDaR23 RGB + Railsem19 images & 640 & 23 & SGD & 138 & 02:44:37 \\
+        data\_highres\_1280 & OSDaR23 high resolution images & 1280 & 5 & AdamW & 81 & 04:20:46 \\
+        data\_highres\_railsem\_640 & OSDaR23 high resolution + Railsem19 images & 640 & 23 & SGD & 110 & 13:36:26 \\
+        data\_highres\_640 & OSDaR23 high resolution images & 640 & 23 & AdamW & 130 & 13:53:44 \\
+        data\_all\_640 & All OSDaR23 images & 640 & 23 & SGD & 189 & 23:27:11 \\
+        data\_all\_railsem\_640 & All OSDaR23 + Railsem19 images & 640 & 23 & SGD & 224 & 23:42:53 \\
+        \hline
+    \end{tabular}
+    \caption{Training Details}
+    \label{tab:training}
+\end{table}
+ 
+When looking at the table, it becomes apparent that the size of the input images has a large impact on the batch size. With images of size $640\times640$ 23 images can be processed per iteration. If the images have $1280\times1280$ pixels, only 5 images can be processed at once with the given computational resources. The automatic selection of optimizers seems to depend on whether or not the Railsem19 images are added to the train set. With Railsem19 data YOLO selects the SGD optimizer, without Railsem19 data the AdamW optimizer is used.   All models stopped early as no improvement was observed for 50 epochs. 
+In terms of computational time, it appears that the high-resolution images significantly influence the duration of processing. Among the experiments with $640\times640$ images, the presence of high-resolution images causes at least a five-fold increase in the computation time per epoch.
+
+Figure~\ref{fig:yolo_models}, presents the results of the experiments. On the y-axis, we list the nine models introduced above. The y-axis shows the validation sets on which the models are tested. The models are compared based on the average Dice score.
+
+ The model that performs best on all OSDaR23 images is data\_all\_railsem\_640, on OSDaR23 high-resolution images data\_highres\_railsem\_640, on OSDaR23 infrared images data\_all\_640, and on OSDaR23 regular RGB images data\_highres\_railsem\_640. This means that all models benefited from adding images from the Railsem19 dataset to the training set, except when applied to the infrared images. This exception comes at no surprise as the Railsem19 dataset comprises only RGB images.
+ The lack of generalization of the models trained exclusively on the OSDaR23 data becomes apparent when validated against the Railsem19 dataset: the best dice score is 0.35 with the data\_all\_640 model compared to 0.77 with the data\_rgb\_railsem\_640.
+It is also interesting to observe the models trained on and validated against infrared images. While all models fail to predict tracks in infrared images except of models that are trained on infrared images, models trained on infrared images exclusively can predict tracks in RGB images with a Dice score of 0.3. This indicates that training on infrared images support the prediction on RGB images but not the other way round. 
+
+In general, the results clearly indicate that the performance of the segmentation approach depends on the availability of appropriate training data. 
+
+
+ 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/models}
+\caption{Models with different train and validation set.  }
+\label{fig:yolo_models}
+\end{figure}
+
+
+The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_highres, data\_railsem) the Dice score even decrease when using 1280 images rather than 640 pixel images. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the inference speed from under $2 ms$ to around $7 ms$. 
+
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \begin{tabular}{|c|cc|}
+        \hline
+		 & \multicolumn{2}{|c|}{\textbf{Inference speed [ms]}} \\
+        \textbf{Train Set} & \textbf{data\_highres} & \textbf{data\_rgb} \\
+        \hline
+        data\_highres\_1280 & 7,286 & 7,478 \\
+        data\_highres\_640 & 1,696 & 1,745 \\
+        data\_rgb\_1280 & 5,371 & 6,755 \\
+        data\_rgb\_640 & 2,019 & 1,867 \\
+        \hline
+    \end{tabular}
+        \caption{Inference speed in milliseconds}
+    \label{tab:inference_speed}
+\end{table}
+
+Going forward, we will focus on the models data\_highres\_railsem\_640 and data\_all\_640 for further analysis and refinement as those two models provided the best results on the OSDaR23 validation sets. The detailed training results are given in Appending~\ref{app:yolo}.
+
+
+\subsection{Parameter tuning}
+
+Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO uses genetic algorithms to optimize hyperparameters. Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
+
+
 
 
 \chapter{Results} % 2000 words
@@ -775,9 +873,6 @@ The "Avg. Time" column indicates the average inference time in seconds. The infe
 
 \chapter{Conclusion} % 500 words
 
-Future work might involve using instance segmentation rater than semantic segmentation to identify each track seperately.
-
-
 
 
 Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{WWW} und \ac{ROFL}.
@@ -786,9 +881,6 @@ Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{
 \section{Algorithms}
 
 
-Use a defined environment for algorithms.
-
-Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.overleaf.com/latex/examples/euclids-algorithm-an-example-of-how-to-write-algorithms-in-latex/mbysznrmktqf}) .
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{algorithm}
 \caption{Euclid’s algorithm}\label{alg:euclid}
@@ -848,7 +940,6 @@ Algorithm \ref{alg:euclid} is an example from the gallery (\url{https://www.over
 \section{Sensors used in OSDaR23} \label{app:sensors}
 
 In this thesis, we are focusing on images from the different sensor types. 
-
 
 \begin{table}[htbp]
   \centering
@@ -983,6 +1074,150 @@ Figure~\ref{fig:fld_params} shows the effect on the performance measured by the 
 \end{figure}
 
 
+\section{YOLOv8} \label{app:yolo}
+
+Figure~\ref{fig:yolo_architecture} presents the model architecture of YOLOv8 \citep{RangeKing}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/architecture}
+\caption{Model structure of YOLOv8 detection models. }
+\label{fig:yolo_architecture}
+\end{figure}
+
+\subsection{Results of data\_highres\_railsem\_640 model}
+
+Figure~\ref{fig:training_all} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example} gives and example of a training batch and a validation batch, respectively.
+Figure~\ref{fig:mosaic_augmentation} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
+Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/highres/results}
+\caption{Training results of data\_highres\_railsem\_640 model. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\label{fig:training_highres}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/train_batch0}
+  \caption{Example of training batch.\\ Images are augmented.}
+  \label{fig:mosaic_augmentation}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/val_batch1_pred}
+  \caption{Example of validation batch. }
+\end{subfigure}
+\caption{Example of training and validation batch during training model data\_highres\_railsem\_640.}
+\label{fig:yolo_highres_example}
+\end{figure}
+
+
+
+\subsection{Results of data\_all\_640 model}
+
+Figure~\ref{fig:training_all} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example} gives and example of a training batch and a validation batch, respectively.
+Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/all/results}
+\caption{Training results of data\_all\_640 model. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\label{fig:training_all}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/train_batch0}
+  \caption{Example of training batch.\\ Images are augmented.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/val_batch2_pred}
+  \caption{Example of validation batch.\\ Images are frames of video sequence.}
+  \label{fig:images_from_videos}
+\end{subfigure}
+\caption{Example of training and validation batch during training model data\_all\_640.}
+\label{fig:yolo_all_example}
+\end{figure}
+
+
+\subsection{Parameter tuning}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/adam/tune_scatter_plots}
+  \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/adam/tune_fitness}
+  \caption{Evolution of fitness value over 160 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
+  \label{fig:images_from_videos}
+\end{subfigure}
+\caption{Parameter tuning of model data\_highres\_railsem\_640 with AdamW optimizer.}
+\label{fig:yolo_tune_highres_adam}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/sgd/tune_scatter_plots}
+  \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres/sgd/tune_fitness}
+  \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
+  \label{fig:images_from_videos}
+\end{subfigure}
+\caption{Parameter tuning of model data\_highres\_railsem\_640 with SGD optimizer. \\ }
+\label{fig:yolo_tune_highres_sgd}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/adam/tune_scatter_plots}
+  \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/adam/tune_fitness}
+  \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
+  \label{fig:images_from_videos}
+\end{subfigure}
+\caption{Parameter tuning of model data\_all\_640 with AdamW optimizer.}
+\label{fig:yolo_tune_all_adam}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/sgd/tune_scatter_plots}
+  \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all/sgd/tune_fitness}
+  \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
+  \label{fig:images_from_videos}
+\end{subfigure}
+\caption{Parameter tuning of model data\_all\_640 with SGD optimizer. \\ }
+\label{fig:yolo_tune_all_sgd}
+\end{figure}
 
 \clearpage
 \chapter{Appendix}
