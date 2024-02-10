@@ -703,7 +703,7 @@ The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result
 \end{figure}
 
 
-\section{Parameter tuning}
+\subsection{Parameter tuning}
 
 The performance of our traditional rail detection algorithm depends on a number of parameters. In order to choose the best parameter setting for each combination of sensor and orientation, we tune the parameters according to the grid search technique. Grid search involves specifying a grid of parameter values and exhaustively evaluating the performance of the algorithm for each combination of values. The parameter combination that yields the best performance is selected. Grid search is a simple technique that thoroughly   explores the parameter space but it is also computationally expensive in multi-dimensional spaces.
 
@@ -787,7 +787,8 @@ Finally, segmentation loss quantifies how close the predicted segmentation map i
 In order to identify the best model setup for the rail track detection task, we experiment with nine different models that are validated against different datasets. The models differ in the data the model is trained on and the size of the input image. All models are trained for 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
 Hyper-parameters are either set to default values or automatically chosen in the initialization phase by YOLO.
 
-Table~\ref{tab:training} summarizes the setup of the different models. The column ``Train Set'' gives the images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results. The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
+Table~\ref{tab:training} summarizes the setup of the different models. The column ``Train Set'' gives the images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results; the model resizes the input image such that the larger dimension scaled to 640 pixels while maintaining the original aspect ratio (e.g., the RGB low resolution images are resized from 2464x1600 to 640x416 as the image length and width have to be a multiples of 32).
+The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
 The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process. 
  
 \begin{table}[htbp]
@@ -862,11 +863,61 @@ Going forward, we will focus on the models data\_highres\_railsem\_640 and data\
 
 Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO uses genetic algorithms to optimize hyperparameters. Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
 
+Parameter tuning is an iterative process where in each iteration the fitness of the current setting is assessed by training the model for a given number of epochs. We set the number of iterations to 300 and the number of epochs per iteration to 30.  Preliminary experiments revealed that the tuning process is computationally expensive. Therefore, the tuning is performed on 10\% of the training data. 
+Table~\ref{tab:model_duration} summarizes the tuning runs. The tuning is very resource intensive despite the reduced training set. The tuning on the high-resolution  OSDaR23 images plus Railsem19 images took at 146 hours with the SGD optimizer and could not be finished within 148 hours with the AdamW optimizer.  
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{tabular}{|llc|}
+\toprule
+\textbf{Model} & \textbf{Optimizer} & \textbf{Duration [h]} \\ 
+\midrule
+\multirow{2}{*}{data\_highres\_railsem\_640} & AdamW & $148^\mathrm{a}$\\
+& SGD & $146$ \\
+\midrule
+\multirow{2}{*}{data\_all\_640} & AdamW & $50$ \\
+& SGD & $51$ \\
+\bottomrule
+\multicolumn{3}{l}{$^{\mathrm{a}}$Tuning run was aborted by the system after 160 iterations.} \\
+\end{tabular}
+\caption{Parameter tuning.}
+\label{tab:model_duration}
+\end{table}
+
+Table~\ref{tab:tuning_comparison} compare the results generated by automatically setting the parameters by YOLO, tuning with SGD, and tuning with AdamW. The data\_all\_640 model is used for the infrared images and data\_highres\_railsem\_640 model is used for the RGB images.
+The results indicate that the automatically chosen parameters outperform the tuned parameters on two out of four tests. This is a surprising result but it can probably be explained by the reduced training set that was used during the parameter tuning. For example, if the subset of the training data used for tuning contained less infrared images relative to the entire training set, then the parameters of the data\_all\_640 model would be tuned towards performing better on RGB images. Detailed results of the tuning are given in Appendix~\ref{app:yolo_parameters}.
+
+Given the good overall performance of the automatically tuned parameters and the poor performance of the tuned parameters on the data\_rgb set, we use the models  with the automatically chosen parameters for the final analysis.   
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{tabular}{|l|l|ccc|cc|}
+\hline
+\textbf{} & \textbf{Validation } & \textbf{  } & \textbf{Dice  } & \textbf{  } & \textbf{SGD vs. } & \textbf{AdamW } \\ 
+\textbf{Model} & \textbf{Set} & \textbf{ Auto } & \textbf{Tuned SGD} & \textbf{Tuned AdamW} & \textbf{ Auto [\%]} & \textbf{ Auto [\%]} \\ 
+\hline
+data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\ \hline
+\multirow{3}{*}{\shortstack{data\_highres\_\\railsem\_640}} & data\_highres & 0.587 & \textbf{0.596} & 0.558 & 1.480 & -4.913 \\
+ & data\_railsem & 0.758 & 0.765 & \textbf{0.766} & 0.879 & 1.057 \\
+ & data\_rgb & \textbf{0.818} & 0.774 & 0.752 & -5.440 & -8.140 \\
+\hline
+\end{tabular}
+\caption{Comparison of automatically chosen parameters and tuned parameters based on Dice score.}
+\label{tab:tuning_comparison}
+\end{table}
+
 
 
 
 \chapter{Results} % 2000 words
 
+
+\section{Comparison baseline vs. YOLO}
+
+\section{Streaming}
 
 
 
@@ -1149,7 +1200,40 @@ Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many si
 \end{figure}
 
 
-\subsection{Parameter tuning}
+\subsection{Parameter tuning} \label{app:yolo_parameters}
+
+Figure~\ref{fig:yolo_tune_highres_adam} and Figure~\ref{fig:yolo_tune_highres_sgd} visualize the tuning process on the data\_highres\_railsem\_640 model  with AdamW and SGD optimizer, respectively.
+The parameters are described in Table~\ref{tab:yolo_parameters}. Certain parameters, such as degrees, translate, etc. are fixed at zero throughout the tuning process as it is unlikely that the resulting images appear in the real-world.
+
+
+\begin{table}[h]
+\footnotesize
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parameter} & \textbf{Description} \\ \hline
+lr0 & initial learning rate \\ 
+lrf & final learning rate \\ 
+momentum & SGD momentum/Adam beta1 \\ 
+weight\_decay & optimizer weight decay \\ 
+warmup\_momentum & warmup initial momentum \\ 
+box & box loss gain \\ 
+cls & classification loss gain \\ 
+dfl & dual focal loss gain \\ 
+hsv\_s & image Hue Saturation Value augmentation (fraction) \\ 
+hsv\_v & image Hue Saturation Value augmentation (fraction) \\ 
+degrees & image rotation (+/- deg) \\ 
+translate & image translation (+/- fraction) \\ 
+shear & image shear (+/- deg) \\ 
+perspective & image perspective (+/- fraction),\\ 
+flipud & image flip up-down (probability) \\ 
+fliplr & image flip left-right (probability) \\ 
+mixup & image mixup (probability) \\ 
+copy\_paste & segment copy-paste (probability) \\ \hline
+\end{tabular}
+\caption{Description of YOLO parameters}
+\label{tab:yolo_parameters}
+\end{table}
 
 \begin{figure}
 \centering
@@ -1184,6 +1268,9 @@ Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many si
 \caption{Parameter tuning of model data\_highres\_railsem\_640 with SGD optimizer. \\ }
 \label{fig:yolo_tune_highres_sgd}
 \end{figure}
+
+
+Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visualize the tuning process on the data\_highres\_railsem\_640 model  with AdamW and SGD optimizer, respectively.
 
 \begin{figure}
 \centering
