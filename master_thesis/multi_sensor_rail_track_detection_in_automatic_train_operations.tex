@@ -703,7 +703,7 @@ The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result
 \end{figure}
 
 
-\subsection{Parameter tuning}
+\subsection{Parameter tuning} \label{sec:fld_parameter}
 
 The performance of our traditional rail detection algorithm depends on a number of parameters. In order to choose the best parameter setting for each combination of sensor and orientation, we tune the parameters according to the grid search technique. Grid search involves specifying a grid of parameter values and exhaustively evaluating the performance of the algorithm for each combination of values. The parameter combination that yields the best performance is selected. Grid search is a simple technique that thoroughly   explores the parameter space but it is also computationally expensive in multi-dimensional spaces.
 
@@ -914,6 +914,73 @@ data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\
 
 \chapter{Results} % 2000 words
 
+In this section, we perform a detailed analysis of the proposed solution approaches on the test set.  The test set was not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
+Both approaches, FLD and YOLOv8, are used to predict tracks in the test images. The evaluation is based on the Dice score. 
+
+%YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
+
+In Figure~\ref{fig:yolo_vs_fld}, shows the comparison between FLD and YOLOv8 based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line, where points along this line signify that both, YOLOv8 and FLD solutions, are equal good or bad. If a points is above the line then YOLOv8 performed better on that image; if a point is below the line FLD outperformed YOLOv8. It is easy to see that YOLOv8 outperforms FLD on most images. However, it is interesting to observe that on certain RGB images FLD provides predictions with a Dice score of up to 0.37. A closer look reveals that all images where YOLOv8 could not provide a prediction are frames from the same sequence -- an example is given in Figure~\ref{fig:res_example1}. Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example1}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/example1}
+\caption{Example image showing the prediction by FLD; YOLOv8 fails to detect tracks at all.}
+\label{fig:res_example1}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example2}
+  \caption{FLD provides good prediction for main tracks; the side tracks are only partially segmented.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example3}
+  \caption{YOLOv8 has many False Negative pixels -- confidence values are given for each bounding box. }
+ % \label{fig:bb_wide}
+\end{subfigure}
+\caption{Example image on which FLD outperforms YOLOv8.}
+\label{fig:res_example2}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/dice_fld_vs_yolo}
+\caption{Comparison between YOLOv8 and FLD based on Dice score. Sensor types are distinguished by color. }
+\label{fig:yolo_vs_fld}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/dice_vs_entropy}
+\caption{Dice scores vs. entropy scores -- FLD and YOLOv8 are distinguished by color.  }
+\label{fig:yolo_models}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/violin_plot}
+\caption{Violin plot indicating the difference between YOLOv8 and FLD on sensor level.  }
+\label{fig:yolo_models}
+\end{figure}
+
+
+
+In Section~\ref{sec:fld_parameter}, we observed that higher entropy leades
 
 \section{Comparison baseline vs. YOLO}
 
