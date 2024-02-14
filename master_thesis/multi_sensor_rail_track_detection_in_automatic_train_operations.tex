@@ -25,7 +25,7 @@
 \usepackage{geometry}
 \usepackage{booktabs}
 \usepackage{multirow}
-
+\usepackage{microtype} 
 \captionsetup{compatibility=false}
 
 %\addbibresource{Literatur.bib}                              % Literatur-File definieren
@@ -46,13 +46,17 @@
 
 \place{Wien}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Danksagung/Kurzfassung/Schlagworte
-\kurzfassung{\blindtext}
+\kurzfassung{Die Erhöhung des Automatisierungsgrades im Bahnbetrieb ist ein Schlüsselfaktor für die Erreichung eines effizienteren und wettbewerbsfähigeren Eisenbahnsystems. Automatische Zugbetriebssysteme (ATO) nutzen fortschrittliche Technologien, um die Eisenbahnumgebung wahrzunehmen und zu interpretieren und um autonome Betriebsabläufe mit minimalem menschlichem Eingriff zu ermöglichen. Die präzise Identifizierung und Lokalisierung von Eisenbahngleisen sind grundlegend für eine sichere Zugnavigation. Daher besteht Bedarf an robusten automatisierten Methoden zur Gleiserkennung.
+
+Diese Masterarbeit befasst sich mit der Aufgabe der Mehrsensorschienenverfolgung im Rahmen von ATO durch die Nutzung von Deep-Learning-Techniken, insbesondere der semantischen Segmentierung. Durch die Erforschung eines Mehrsensordatensatzes, der Bilder von hoch-/niedrigauflösenden RGB-Kameras und Infrarotkameras mit unterschiedlichen Orientierungen umfasst, zielt diese Forschung darauf ab die Genauigkeit und Robustheit der Gleiserkennung unter verschiedenen Bedingungen zu verbessern. Die Studie vergleicht die Leistung der Deep-Learning-basierten Segmentierung mit traditionellen nicht KI-basierten Methoden, führt umfassende Bewertungen verschiedener Sensorinputs durch und erforscht die Integration in realen Anwendungen. Die Ergebnisse liefern wertvolle Erkenntnisse auf dem Gebiet der Eisenbahnautomatisierung und bieten Implikationen zur Verbesserung der Sicherheit und Effizienz des automatischen Zugbetriebs.}
 
 
 
 
 \schlagworte{Deep Learning, Computer Vision, Segmentation, Automatic Train Operations}
-\outline{The automation of train operations (ATO) stands as a pivotal advancement in achieving a more efficient and competitive railway system. ATO systems leverage advanced technologies to perceive and interpret the railway environment, facilitating autonomous operations with minimal human intervention. Precise identification and localization of railway tracks are fundamental for safe train navigation, prompting the need for robust track detection methods. This master's thesis addresses the task of multi-sensor rail track detection within the ATO framework, utilizing deep learning techniques, particularly convolutional neural networks (CNNs). By exploring a multi-sensor dataset comprising images from RGB, high-resolution, and infrared cameras, with varying orientations, this research aims to improve the accuracy and robustness of track detection in diverse conditions. The study compares the performance of deep learning-based segmentation with traditional non-AI-based methods, conducts comprehensive evaluations on different sensor inputs, and explores real-world application integration. The findings contribute valuable insights to the field of railway automation, offering implications for enhancing the safety and efficiency of automatic train operations.}
+\outline{Increasing the level of automation in train operations is an enabler in achieving a more efficient and competitive railway system. Automatic train operations (ATO) systems use advanced technologies to perceive and interpret the railway environment in order to facilitate autonomous operations with minimal human intervention. Precise identification and localization of railway tracks are fundamental for safe train navigation. Hence there is a need for robust automated track detection methods. 
+
+This master's thesis addresses the task of multi-sensor rail track detection within the ATO framework by utilizing deep learning techniques, particularly semantic segmentation. By exploring a multi-sensor dataset comprising images from high/low-resolution RGB cameras and infrared cameras with varying orientations, this research aims to improve the accuracy and robustness of track detection in diverse conditions. The study compares the performance of deep learning-based segmentation with traditional non-AI-based methods, conducts comprehensive evaluations on different sensor inputs, and explores real-world application integration. The findings contribute valuable insights to the field of railway automation, offering implications for enhancing the safety and efficiency of automatic train operations.}
 \keywords{Deep Learning, Computer Vision, Rail Track Segmentation, YOLO, Automatic Train Operations}
 %\acknowledgements{\blindtext}
 \setListingsAndAcronyms % Definition der Namen für Quellcodeverzeichnis 
@@ -1007,9 +1011,6 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 \end{figure}
 
 
-
-\section{Comparison baseline vs. YOLO}
-
 \section{Streaming}
 
 
@@ -1017,15 +1018,16 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 
 \chapter{Conclusion} % 500 words
 
-This master's thesis delves into the realm of railway automation, specifically focusing on the task of multi-sensor rail track detection within the context of Automatic Train Operations (ATO). Leveraging deep learning techniques, particularly convolutional neural networks (CNNs), the study aims to enhance the accuracy and robustness of track detection systems, thereby contributing to the efficiency and safety of railway operations.
+This master's thesis addresses a challenge in the area of railway automation. The focus is on multi-sensor rail track detection within the context of Automatic Train Operations (ATO). Leveraging deep learning techniques, particularly semantic segmentation, the study aims to enhance the accuracy and robustness of track detection systems thereby contributing to the efficiency and safety of railway operations.
 
 The research compares deep learning-based segmentation with traditional non-AI-based methods, exploring the effectiveness of different sensor inputs and orientations. By conducting a comprehensive performance evaluation and integrating the developed model into real-world applications, valuable insights are gained into the feasibility and practical implications of automated track detection systems.
 
-The results showcase the superiority of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 demonstrates robust performance across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the study sheds light on the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy.
+The results demonstrate the advantages of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 performs robustly across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the highlights the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy.
 
 Overall, this research advances the field of railway automation by providing valuable insights, methodologies, and tools for improving the safety, efficiency, and competitiveness of automatic train operations. The findings hold significant implications for railway infrastructure management and contribute to the ongoing efforts towards sustainable transportation systems.
 
-
+Future research could involve applying other deep-learning techniques instead of semantic segmentation. Give the fact that desired output are polylines marking tracks, it would be interesting to adjust the YOLinO approach proposed by \cite{meyer2021yolino} for lane detection. Furthermore, distinguishing the tracks the locomotive occupies currently from the surrounding tracks would support the navigation in the network. 
+The devised approach performs well on images from infrared sensors. Therefore, research could focus on more detailed analysis on track detection in adverse weather and low lighting conditions. 
 
 
 
@@ -1035,24 +1037,8 @@ Overall, this research advances the field of railway automation by providing val
 Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{WWW} und \ac{ROFL}.
 
 
-\section{Algorithms}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{algorithm}
-\caption{Euclid’s algorithm}\label{alg:euclid}
-\begin{algorithmic}[1]
-\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
-\State $r\gets a\bmod b$
-\While{$r\not=0$}\Comment{We have the answer if r is 0}
-\State $a\gets b$
-\State $b\gets r$
-\State $r\gets a\bmod b$
-\EndWhile\label{euclidendwhile}
-\State \textbf{return} $b$\Comment{The gcd is b}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier beginnen die Verzeichnisse.
 \clearpage                                                       % Beginne neue Seite
 
