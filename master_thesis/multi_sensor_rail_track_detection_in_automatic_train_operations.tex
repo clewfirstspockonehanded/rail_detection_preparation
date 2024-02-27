@@ -188,12 +188,12 @@ The final number of images and labels after filtering the dataset, i.e., removin
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
   \caption{Number of images per sensor}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/labels_per_sensor}
   \caption{Number of labels per sensor}
@@ -259,13 +259,13 @@ Figure~\ref{fig:brightness_examples} show one example of a bright and a dark ima
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/dark}
   \caption{Image with low brightness value.}
 %  \label{fig:sub1}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/bright}
   \caption{Image with high brightness value}
@@ -300,13 +300,13 @@ Overall, the images have a high entropy -- the median values range from 5.9 to 6
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/low_entropy}
   \caption{Image with low entropy value.}
   \label{fig:entropy_sub1}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/high_entropy}
   \caption{Image with high entropy value}
@@ -339,12 +339,12 @@ We keep all images in the dataset as the CNN might recognize that there has to b
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/occlusion_example1}
   \caption{Track on the right is hard to recognize due to poor lighting condition.}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/occlusion_example2}
   \caption{Track is covered by train \\ on the right. }
@@ -361,17 +361,17 @@ The rail tracking systems aim to analyze video streams by treating each video fr
 
 \begin{figure}
 \centering
-\begin{subfigure}{\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/video_1}
 \end{subfigure}%
 \vskip\baselineskip
-\begin{subfigure}{\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/video_2}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}{\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/video_3}
   \label{fig:sub3}
@@ -408,12 +408,12 @@ Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the r
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_2_tracks}
   \caption{Simple rail infrastructure.}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_52_tracks}
   \caption{Complicated rail infrastructure. }
@@ -428,13 +428,13 @@ Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show t
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/brightness}
   \caption{Boxplot of brightness values.}
    \label{fig:railsem_brightness}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/entropy}
   \caption{Boxplot of entropy values. }
@@ -449,26 +449,26 @@ Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show t
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_bright}
   \caption{Bright image.}
   \label{fig:railsem_sub1}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_dark}
   \caption{Dark image.}
   \label{railsem_sub2}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_high_entropy}
   \caption{High entropy.}
   \label{railsem_sub3}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/railsem/example_low_entropy}
   \caption{Low entropy.}
@@ -527,26 +527,26 @@ However, the track labels in both OSDaR23 and RailSem19 dataset are given as pol
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/labeling/polylines}
   \caption{Estimate thickness of such that the lines \\ cover the tracks.}
  % \label{fig:railsem_sub1}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/labeling/mask}
   \caption{Create mask (i.e., binary mapping of track labels and background).}
 %  \label{railsem_sub2}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/labeling/contour}
   \caption{Extract contour of track label (see green boundary in mask).}
 %  \label{railsem_sub3}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/labeling/final}
   \caption{Polygon is enclosing the \\ region of interest.}
@@ -556,6 +556,28 @@ However, the track labels in both OSDaR23 and RailSem19 dataset are given as pol
 \label{fig:labeling}
 \end{figure}
 
+
+The presented approach generates polygons based on the segmentation mask. In order to test the effect of the labeling strategy, we also generate labels for each rail track label separately. Figure~\ref{fig:labeling2} illustrates the two labeling approaches. The unified polygon base on the mask is shown on the left; on the right, each track is labeled separately.
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/label_union}
+  \caption{All tracks are labeled by two closed polygons.}
+ % \label{fig:railsem_sub1}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/labeling/label_single}
+  \caption{Each track is labeled by a separate polygon.}
+%  \label{railsem_sub2}
+\end{subfigure}
+\caption{Two different approaches for labeling tracks.}
+\label{fig:labeling2}
+\end{figure}
 
 
 
@@ -615,21 +637,21 @@ Based on the literature and the example, we choose the Dice score to analyze the
 
 \begin{figure}
 \centering
-\begin{subfigure}{.9\textwidth}
+\begin{subfigure}[t]{.9\textwidth}
   \centering
   \includegraphics[width=0.5\textwidth]{images/performance/ground_truth}
   \caption{Ground truth label selected randomly from training set.}
    \label{fig:gt_sub1}
 \end{subfigure}%
 \vskip\baselineskip
-\begin{subfigure}{0.9\textwidth}
+\begin{subfigure}[t]{0.9\textwidth}
   \centering
   \includegraphics[width=\textwidth]{images/performance/examples}
   \caption{Example predictions selected randomly from training set; last image is only background illustrating a case where no rail track was found}
 \label{fig:ex_sub1}
 \end{subfigure}
 \vskip\baselineskip
-\begin{subfigure}{0.9\textwidth}
+\begin{subfigure}[t]{0.9\textwidth}
   \centering
     \footnotesize
   \begin{tabular}{|c|ccccc|}
@@ -658,8 +680,13 @@ To assess the performance of the YOLO approach, we establish a baseline using a 
 In this section, we describe the baselining approach in detail.
  
  \subsection{Fast line detection}
- 
-The fast line detection algorithm operates as follows: First, edges in the image are detected using a Canny edge detector. The Hough transform is then applied in order to represent lines in a parameter space known as the Hough space. For each edge pixel (i.e., points where the intensity changes along a line), a set of potential lines in the Hough space is generated by varying slope and intercept. Each edge pixel effectively "votes" for the lines it might belong to in the Hough space. After the voting process, lines that receive a sufficient number of votes are considered potential lines in the image. Finally, the identified lines are extracted based on the parameters slope and intercept that receive more votes than a predefined threshold.
+
+
+The fast line detection algorithm as proposed by \cite{fld_inproceedings} operates as follows: 
+First, edges in the image are detected using a Canny edge detector. The system then extracts line segments by connecting edge pixels with straight lines and extending them until they satisfy co-linearity conditions (i.e., whether or not the newly added pixels align well with the existing segment in terms of forming a straight line). Points that deviate from forming a straigt line are considered endpoints of segments. 
+
+%First, edges in the image are detected using a Canny edge detector. The Hough transform is then applied in order to represent lines in a parameter space known as the Hough space. For each edge pixel (i.e., points where the intensity changes along a line), a set of potential lines in the Hough space is generated by varying slope and intercept. Each edge pixel effectively "votes" for the lines it might belong to in the Hough space. After the voting process, lines that receive a sufficient number of votes are considered potential lines in the image. Finally, the identified lines are extracted based on the parameters slope and intercept that receive more votes than a predefined threshold.
+FLD is suitable for applications where speed is crucial such as real-time systems or applications where processing resources are limited.
 The exact implementation details vary based on the specific version of OpenCV and underlying optimizations applied.
 
 \subsection{Postprocessing}
@@ -669,13 +696,13 @@ The results of the FLD algorithm are post-processed to incorporate domain specif
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/aspect_ratio_long}
   \caption{Center camera: elongated bounding box aspect ratio.}
    \label{fig:bb_long}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/aspect_ratio_wide}
   \caption{Left camera: wide bounding box \\ aspect ratio. }
@@ -799,26 +826,32 @@ Table~\ref{tab:training} summarizes the setup of the different models. The colum
 The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
 The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process. 
  
+ 
+ 
+ !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
+ 
+ 
 \begin{table}[htbp]
     \centering
     \tiny
-    \begin{tabular}{|c|c|c|c|c|c|c|}
-        \hline
-        \textbf{Model} & \textbf{Train Set} & \textbf{Image Size} & \textbf{Batch Size} & \textbf{Optimizer} & \textbf{Epochs} & \textbf{Duration} \\
-         &  &  &  &  &  &  \textbf{(HH:MM:SS)} \\
-        \hline
-        data\_rgb\_640 & OSDaR23 RGB images & 640 & 23 & AdamW & 121 & 00:37:57 \\
-        data\_ir\_640 & OSDaR23 infrared images & 640 & 23 & AdamW & 196 & 00:51:51 \\
-        data\_rgb\_1280 & OSDaR23 RGB images & 1280 & 5 & AdamW & 117 & 01:39:58 \\
-        data\_rgb\_railsem\_640 & OSDaR23 RGB + Railsem19 images & 640 & 23 & SGD & 138 & 02:44:37 \\
-        data\_highres\_1280 & OSDaR23 high resolution images & 1280 & 5 & AdamW & 81 & 04:20:46 \\
-        data\_highres\_railsem\_640 & OSDaR23 high resolution + Railsem19 images & 640 & 23 & SGD & 110 & 13:36:26 \\
-        data\_highres\_640 & OSDaR23 high resolution images & 640 & 23 & AdamW & 130 & 13:53:44 \\
-        data\_all\_640 & All OSDaR23 images & 640 & 23 & SGD & 189 & 23:27:11 \\
-        data\_all\_railsem\_640 & All OSDaR23 + Railsem19 images & 640 & 23 & SGD & 224 & 23:42:53 \\
-        \hline
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    &  &  & & \multicolumn{2}{c|}{\textbf{Unified labels}}   & \multicolumn{2}{c|}{\textbf{Separate labels}}   \\ \cline{5-8}
+    \textbf{Train Set} & \textbf{Image Size} & \textbf{Batch Size} & \textbf{Optimizer} & \textbf{Epochs} & \textbf{Duration (HH:MM:SS)} & \textbf{Epoch} & \textbf{Duration (HH:MM:SS)} \\
+    \hline
+    OSDaR23 RGB & 640 & 23 & AdamW & 121 & 00:37:57 & 93 & 00:35:29 \\
+    OSDaR23 infrared & 640 & 23 & AdamW & 196 & 00:51:51 & 223 & 01:01:10 \\
+    OSDaR23 RGB & 1280 & 5 & AdamW & 117 & 01:39:58 & 247 & 03:54:41 \\
+    OSDaR23 RGB + Railsem19 & 640 & 23 & SGD & 138 & 02:44:37 & 300 & 08:45:13 \\
+    OSDaR23 high-res & 1280 & 5 & AdamW & 81 & 04:20:46 & 119 & 17:36:20 \\
+    OSDaR23 high-res + Railsem19 & 640 & 23 & SGD & 110 & 13:36:26 & 300 & 60:03:41 \\
+    OSDaR23 high-res & 640 & 23 & AdamW & 130 & 13:53:44 & 285 & 43:27:41 \\
+    All OSDaR23 & 640 & 23 & SGD & 189 & 23:27:11 & 172 & 36:45:33 \\
+    All OSDaR23 + Railsem19 & 640 & 23 & SGD & 224 & 23:42:53 & 300 & 64:51:24 \\
+    \hline
     \end{tabular}
-    \caption{Training Details}
+    \caption{Training details}
     \label{tab:training}
 \end{table}
  
@@ -836,12 +869,24 @@ In general, the results clearly indicate that the performance of the segmentatio
 
  
 
-\begin{figure}[h]
+
+\begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{images/yolo/models}
-\caption{Models with different train and validation set.  }
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/models}
+  \caption{Models with unified labels.}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/models_new_label}
+  \caption{Models with separate labels. }
+\end{subfigure}
+\caption{Models with different train and validation set.}
 \label{fig:yolo_models}
 \end{figure}
+
+ !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_highres, data\_railsem) the Dice score even decrease when using 1280 images rather than 640 pixel images. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the inference speed from under $2 ms$ to around $7 ms$. 
@@ -849,15 +894,15 @@ The comparison between using 1200 pixel images as input and 600 pixel images rev
 \begin{table}[htbp]
     \centering
     \footnotesize
-    \begin{tabular}{|c|cc|}
+    \begin{tabular}{|c|cc|cc|}
         \hline
-		 & \multicolumn{2}{|c|}{\textbf{Inference speed [ms]}} \\
-        \textbf{Train Set} & \textbf{data\_highres} & \textbf{data\_rgb} \\
+		 & \multicolumn{2}{|c|}{\textbf{Inference speed unified labels [ms]}} & \multicolumn{2}{|c|}{\textbf{Inference speed separate labels [ms]}} \\
+        \textbf{Train Set} & \textbf{data\_highres} & \textbf{data\_rgb}  & \textbf{data\_highres} & \textbf{data\_rgb} \\
         \hline
-        data\_highres\_1280 & 7,286 & 7,478 \\
-        data\_highres\_640 & 1,696 & 1,745 \\
-        data\_rgb\_1280 & 5,371 & 6,755 \\
-        data\_rgb\_640 & 2,019 & 1,867 \\
+        data\_highres\_1280 & 7,286 & 7,478 & 10.768 & 11.624 \\
+        data\_highres\_640 & 1,696 & 1,745 & 4.138 & 3.001 \\
+        data\_rgb\_1280 & 5,371 & 6,755 & 8.306 & 8.869 \\
+        data\_rgb\_640 & 2,019 & 1,867 & 1.716 & 1.931 \\
         \hline
     \end{tabular}
         \caption{Inference speed in milliseconds}
@@ -868,6 +913,9 @@ Going forward, we will focus on the models data\_highres\_railsem\_640 and data\
 
 
 \subsection{Parameter tuning}
+
+
+ !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO uses genetic algorithms to optimize hyperparameters. Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
 
@@ -913,7 +961,7 @@ data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\
  & data\_rgb & \textbf{0.818} & 0.774 & 0.752 & -5.440 & -8.140 \\
 \hline
 \end{tabular}
-\caption{Comparison of automatically chosen parameters and tuned parameters based on Dice score.}
+\caption{Comparison of automatically chosen parameters and tuned parameters based on Dice score with unified labels.}
 \label{tab:tuning_comparison}
 \end{table}
 
@@ -927,6 +975,51 @@ Both approaches, FLD and YOLOv8, are used to predict tracks in the test images. 
 
 %YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
 
+
+COMPARE BOTH YOLO models!!!!!!!!!!!!!!!!!!!!!!!!
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/violin_plot_yolo}
+\caption{Comparison between YOLOv8 models with unified label and separate labels by sensor type. }
+\label{fig:yolo_vs_yolo}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/example_ul/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
+  \caption{Prediction image with unified labels.}
+ % \label{fig:railsem_sub1}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/example_ul/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
+  \caption{Prediction mask with unified labels.}
+%  \label{railsem_sub2}
+\end{subfigure}
+\vskip\baselineskip
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/example_sl/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
+  \caption{Prediction image with separate labels.}
+%  \label{railsem_sub3}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/example_sl/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
+  \caption{Prediction mask with separate labels.}
+%  \label{railsem_sub4}
+\end{subfigure}
+\caption{Example results of different labeling approaches.}
+\label{fig:labeling}
+\end{figure}
+
+
+
+
 In Figure~\ref{fig:yolo_vs_fld}, shows the comparison between FLD and YOLOv8 based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line, where points along this line signify that both, YOLOv8 and FLD solutions, are equal good or bad. If a points is above the line then YOLOv8 performed better on that image; if a point is below the line FLD outperformed YOLOv8. It is easy to see that YOLOv8 outperforms FLD on most images. However, it is interesting to observe that on certain RGB images FLD provides predictions with a Dice score of up to 0.37. A closer look reveals that all images where YOLOv8 could not provide a prediction are frames from the same sequence. An example is given in Figure~\ref{fig:res_example1}; predictions are colored red. Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example1}
 An other interesting observation is that infrared images have the highest Dice scores among the images segmented with YOLOv8. Figure~\ref{fig:res_example4} illustrates the difference between FLD and YOLOv8 on an infrared image.
 
@@ -934,53 +1027,84 @@ An other interesting observation is that infrared images have the highest Dice s
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{images/results/dice_fld_vs_yolo}
-\caption{Comparison between YOLOv8 and FLD based on Dice score. Sensor types are distinguished by color. }
+\includegraphics[width=0.9\textwidth]{images/results/dice_fld_vs_yolo_nl}
+\caption{Comparison between YOLOv8 (separate labels) and FLD based on Dice score. Sensor types are distinguished by color. }
 \label{fig:yolo_vs_fld}
 \end{figure}
 
-
-\begin{figure}[h]
+\begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{images/results/example1}
-\caption{Example image showing the prediction by FLD; prediction is colored red. YOLOv8 fails to detect tracks in this image. }
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example1_gt}
+  \caption{Image with ground truth label in green.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example1_fld}
+  \caption{FLD provides better prediction for main tracks; the side tracks are only partially segmented.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example1_yolo}
+  \caption{YOLOv8 has many False Negative pixels and low confidence in the result (confidence values are given for each bounding box). }
+ % \label{fig:bb_wide}
+\end{subfigure}
+\caption{Example image where FLD performs better than YOLOv8; predictions are colored red. }
 \label{fig:res_example1}
 \end{figure}
 
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example2_gt}
+  \caption{Image with ground truth label in green.}
+ % \label{fig:bb_wide}
+\end{subfigure}
+\begin{subfigure}[t]{.33\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/results/example2}
   \caption{FLD provides good prediction for main tracks; the side tracks are only partially segmented.}
 %   \label{fig:bb_long}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.33\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/results/example3}
   \caption{YOLOv8 has many False Negative pixels -- confidence values are given for each bounding box. }
  % \label{fig:bb_wide}
 \end{subfigure}
-\caption{Extreme example where FLD outperforms YOLOv8.}
+\caption{Example where FLD slightly outperforms YOLOv8.}
 \label{fig:res_example2}
 \end{figure}
 
+
+
+
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/results/example_4_gt}
+  \caption{Image with ground truth label in green.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.33\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/results/example_4_fld}
   \caption{FLD approach cannot detect tracks efficiently in the example image.}
 %   \label{fig:bb_long}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.33\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/results/example_4_yolo}
   \caption{YOLOv8 provides precise segmentation with high confidence. }
  % \label{fig:bb_wide}
 \end{subfigure}
-\caption{Extreme example where YOLOv8 outperforms FLD.}
+\caption{Extreme example where YOLOv8 clearly outperforms FLD.}
 \label{fig:res_example4}
 \end{figure}
 
@@ -991,7 +1115,7 @@ In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an e
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{images/results/dice_vs_entropy}
+\includegraphics[width=0.9\textwidth]{images/results/dice_vs_entropy_nl}
 \caption{Dice scores vs. entropy scores -- FLD and YOLOv8 are distinguished by color.  }
 \label{fig:dice_vs_entropy}
 \end{figure}
@@ -1005,13 +1129,39 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{images/results/violin_plot}
+\includegraphics[width=0.9\textwidth]{images/results/violin_plot_nl}
 \caption{Violin plot indicating the difference between YOLOv8 and FLD on sensor level.  }
 \label{fig:yolo_models}
 \end{figure}
 
 
-\section{Streaming}
+
+\section{Post-processing and application}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
+  \caption{Segmented image.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
+  \caption{Segmentation mask comprising four tracks.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.33\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_line}
+  \caption{Each track can be identified separately. }
+ % \label{fig:bb_wide}
+\end{subfigure}
+\caption{Lines. }
+\label{fig:postprocessing1}
+\end{figure}
 
 
 
@@ -1034,7 +1184,7 @@ The devised approach performs well on images from infrared sensors. Therefore, r
 
 
 
-Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{WWW} und \ac{ROFL}.
+%Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{WWW} und \ac{ROFL}.
 
 
 
@@ -1056,23 +1206,22 @@ Etwas Text... Hier kommen noch einige Abkürzunge vor zum Beispiel \ac{ABC},\ac{
 \listoftables                                                    % Tabellenverzeichnis
 \clearpage
 
-\listoflistings                                                  % Quellcodeverzeichnis
-\clearpage
+%\listoflistings                                                  % Quellcodeverzeichnis
+%\clearpage
+%\phantomsection
+%\addcontentsline{toc}{chapter}{\listacroname}
+%\chapter*{\listacroname}
+%\begin{acronym}[XXXXX]
+  %  \acro{ABC}[ABC]{Alphabet}
+ %   \acro{WWW}[WWW]{world wide web}
+ %   \acro{ROFL}[ROFL]{Rolling on floor laughing}
+    
+    
+    
+ %   \acro{ATO}[ATO]{Automatic Train Operations}
+ %   \acro{CNN}[CNN]{Convolutional Neural Network}
+%\end{acronym}
 
-\phantomsection
-\addcontentsline{toc}{chapter}{\listacroname}
-\chapter*{\listacroname}
-\begin{acronym}[XXXXX]
-    \acro{ABC}[ABC]{Alphabet}
-    \acro{WWW}[WWW]{world wide web}
-    \acro{ROFL}[ROFL]{Rolling on floor laughing}
-    
-    
-    
-    \acro{ATO}[ATO]{Automatic Train Operations}
-    \acro{CNN}[CNN]{Convolutional Neural Network}
-    
-\end{acronym}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier beginnt der Anhang.
 \clearpage
 
@@ -1228,71 +1377,138 @@ Figure~\ref{fig:yolo_architecture} presents the model architecture of YOLOv8 \ci
 \label{fig:yolo_architecture}
 \end{figure}
 
-\subsection{Results of data\_highres\_railsem\_640 model}
+\subsection{Results of data\_highres\_railsem\_640 model with unified labels}
 
-Figure~\ref{fig:training_all} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example} gives and example of a training batch and a validation batch, respectively.
-Figure~\ref{fig:mosaic_augmentation} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
+Figure~\ref{fig:training_highres} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_highres_example} gives and example of a training batch and a validation batch, respectively.
+Figure~\ref{fig:mosaic_augmentation_highres} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
 Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{images/yolo/highres/results}
-\caption{Training results of data\_highres\_railsem\_640 model. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\caption{Training results of data\_highres\_railsem\_640 model with unified labels. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
 \label{fig:training_highres}
 \end{figure}
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/train_batch0}
   \caption{Example of training batch.\\ Images are augmented.}
-  \label{fig:mosaic_augmentation}
+  \label{fig:mosaic_augmentation_highres}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/val_batch1_pred}
   \caption{Example of validation batch. }
 \end{subfigure}
-\caption{Example of training and validation batch during training model data\_highres\_railsem\_640.}
+\caption{Example of training and validation batch during training model data\_highres\_railsem\_640 with unified labels.}
 \label{fig:yolo_highres_example}
 \end{figure}
 
 
 
-\subsection{Results of data\_all\_640 model}
+\subsection{Results of data\_all\_640 model with unified labels}
 
 Figure~\ref{fig:training_all} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example} gives and example of a training batch and a validation batch, respectively.
-Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
+Figure~\ref{fig:mosaic_augmentation_all} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{images/yolo/all/results}
-\caption{Training results of data\_all\_640 model. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\caption{Training results of data\_all\_640 model with unified labels. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
 \label{fig:training_all}
 \end{figure}
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/train_batch0}
   \caption{Example of training batch.\\ Images are augmented.}
+    \label{fig:mosaic_augmentation_all}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/val_batch2_pred}
   \caption{Example of validation batch.\\ Images are frames of video sequence.}
-  \label{fig:images_from_videos}
 \end{subfigure}
-\caption{Example of training and validation batch during training model data\_all\_640.}
+\caption{Example of training and validation batch during training model data\_all\_640 with unified labels.}
 \label{fig:yolo_all_example}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%
 
-\subsection{Parameter tuning} \label{app:yolo_parameters}
+\subsection{Results of data\_highres\_railsem\_640 model with separate labels}
+
+Figure~\ref{fig:training_highres_nl} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_highres_example_nl} gives and example of a training batch and a validation batch, respectively.
+Figure~\ref{fig:mosaic_augmentation_nl} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
+Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/highres/results}
+\caption{Training results of data\_highres\_railsem\_640 model with separate labels. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\label{fig:training_highres_nl}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres_nl/train_batch1}
+  \caption{Example of training batch.\\ Images are augmented.}
+  \label{fig:mosaic_augmentation_highres_nl}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/highres_nl/val_batch1_pred}
+  \caption{Example of validation batch. }
+\end{subfigure}
+\caption{Example of training and validation batch during training model data\_highres\_railsem\_640 with separate labels.}
+\label{fig:yolo_highres_example_nl}
+\end{figure}
+
+
+
+\subsection{Results of data\_all\_railsem\_640 model with separate labels}
+
+Figure~\ref{fig:training_all_nl} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example_nl} gives and example of a training batch and a validation batch, respectively.
+Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/yolo/all_nl/results}
+\caption{Training results of data\_al\_railsem\_640 model with separate labels. (B) stands for the results of the bounding box and (M) stands for the result of the segmentation mask.}
+\label{fig:training_all_nl}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all_nl/train_batch2}
+  \caption{Example of training batch.\\ Images are augmented.}
+    \label{fig:mosaic_augmentation_highres_all}
+\end{subfigure}%
+\begin{subfigure}[t]{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/yolo/all_nl/val_batch2_pred}
+  \caption{Example of validation batch.\\ Images are frames of video sequence.}
+\end{subfigure}
+\caption{Example of training and validation batch during training model data\_all\_railsem\_640 with separate labels.}
+\label{fig:yolo_all_example_nl}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Parameter tuning with unified labels} \label{app:yolo_parameters}
 
 Figure~\ref{fig:yolo_tune_highres_adam} and Figure~\ref{fig:yolo_tune_highres_sgd} visualize the tuning process on the data\_highres\_railsem\_640 model  with AdamW and SGD optimizer, respectively.
 The parameters are described in Table~\ref{tab:yolo_parameters}. Certain parameters, such as degrees, translate, etc. are fixed at zero throughout the tuning process as it is unlikely that the resulting images appear in the real-world.
@@ -1329,12 +1545,12 @@ copy\_paste & segment copy-paste (probability) \\ \hline
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/adam/tune_scatter_plots}
   \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/adam/tune_fitness}
   \caption{Evolution of fitness value over 160 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
@@ -1346,12 +1562,12 @@ copy\_paste & segment copy-paste (probability) \\ \hline
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/sgd/tune_scatter_plots}
   \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/highres/sgd/tune_fitness}
   \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
@@ -1366,12 +1582,12 @@ Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visua
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/adam/tune_scatter_plots}
   \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/adam/tune_fitness}
   \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
@@ -1383,12 +1599,12 @@ Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visua
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/sgd/tune_scatter_plots}
   \caption{Search space for different parameters. Density is distinguished by color: yellow shades indicate higher density}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/sgd/tune_fitness}
   \caption{Evolution of fitness value over 300 iterations. Model fitness is a weighted combination of different metrics (e.g., precision, recall, mAP@0.5).}
@@ -1398,7 +1614,7 @@ Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visua
 \label{fig:yolo_tune_all_sgd}
 \end{figure}
 
-\clearpage
-\chapter{Appendix}
+%\clearpage
+%\chapter{Appendix}
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende des Inhalts
