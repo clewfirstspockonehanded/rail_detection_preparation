@@ -749,7 +749,7 @@ In total, we test 22.680 parameter settings on 196 images\footnote{The idea is t
     \tiny
     \caption{Sensor Parameters}
     \label{tab:sensor_parameters}
-    \begin{tabular}{|@{}lll@{}|}
+    \begin{tabular}{|l|l|l|}
         \hline
         \textbf{Parameter} & \textbf{Description} & \textbf{Values} \\
         \hline
@@ -819,23 +819,20 @@ Finally, segmentation loss quantifies how close the predicted segmentation map i
 
 \subsection{Models}
 
-In order to identify the best model setup for the rail track detection task, we experiment with nine different models that are validated against different datasets. The models differ in the data the model is trained on and the size of the input image. All models are trained for 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
+In order to identify the best model setup for the rail track detection task, we experiment with 18 different models that are validated against different datasets. The models differ in the data the model is trained on, the size of the input image, and the labeling approach. All models are trained for 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
 Hyper-parameters are either set to default values or automatically chosen in the initialization phase by YOLO.
 
-Table~\ref{tab:training} summarizes the setup of the different models. The column ``Train Set'' gives the images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results; the model resizes the input image such that the larger dimension scaled to 640 pixels while maintaining the original aspect ratio (e.g., the RGB low resolution images are resized from 2464x1600 to 640x416 as the image length and width have to be a multiples of 32).
+Table~\ref{tab:training} summarizes the setup of the different models. 
+The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process with unified labels and separate labels, respectively. The remaining specifications in the table are the regardless of the labeling approach. 
+The column ``Train Set'' gives the set of images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results; the model resizes the input image such that the larger dimension scaled to 640 pixels while maintaining the original aspect ratio (e.g., the RGB low resolution images are resized from 2464x1600 to 640x416 as the image length and width have to be a multiples of 32).
 The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
-The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process. 
  
- 
- 
- !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- 
- 
+
  
 \begin{table}[htbp]
     \centering
     \tiny
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|}
     \hline
     &  &  & & \multicolumn{2}{c|}{\textbf{Unified labels}}   & \multicolumn{2}{c|}{\textbf{Separate labels}}   \\ \cline{5-8}
     \textbf{Train Set} & \textbf{Image Size} & \textbf{Batch Size} & \textbf{Optimizer} & \textbf{Epochs} & \textbf{Duration (HH:MM:SS)} & \textbf{Epoch} & \textbf{Duration (HH:MM:SS)} \\
@@ -855,16 +852,17 @@ The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the 
     \label{tab:training}
 \end{table}
  
-When looking at the table, it becomes apparent that the size of the input images has a large impact on the batch size. With images of size $640\times640$ 23 images can be processed per iteration. If the images have $1280\times1280$ pixels, only 5 images can be processed at once with the given computational resources. The automatic selection of optimizers seems to depend on whether or not the Railsem19 images are added to the train set. With Railsem19 data YOLO selects the SGD optimizer, without Railsem19 data the AdamW optimizer is used.   All models stopped early as no improvement was observed for 50 epochs. 
-In terms of computational time, it appears that the high-resolution images significantly influence the duration of processing. Among the experiments with $640\times640$ images, the presence of high-resolution images causes at least a five-fold increase in the computation time per epoch.
+When looking at the table, it becomes apparent that the size of the input images has a large impact on the batch size. With images of size $640\times640$ 23 images can be processed per iteration. If the images have $1280\times1280$ pixels, only 5 images can be processed at once with the given computational resources (i.e., GPU memory). The automatic selection of optimizers seems to depend on whether or not the Railsem19 images are added to the train set. With Railsem19 data YOLO selects the SGD optimizer, without Railsem19 data the AdamW optimizer is used.   
+In terms of computational time, it appears that the high-resolution images significantly influence the duration of processing. Among the experiments with $640\times640$ images, the presence of high-resolution images in the training set causes at least a five-fold increase in the computation time per epoch. The labeling approach is another factor that has a large effect on the computational time; training the model with all images (OSDaR23 and RailSem19) with separate labels took almost three days whereas with unified labels the training stopped after less than a day.
+Also all models with unified labels stopped early as no improvement was observed for 50 epochs. With separate labels  the maximum number of iterations was reached in models that incorporated the RailSem19 dataset. 
 
-Figure~\ref{fig:yolo_models}, presents the results of the experiments. On the y-axis, we list the nine models introduced above. The y-axis shows the validation sets on which the models are tested. The models are compared based on the average Dice score.
+Figure~\ref{fig:yolo_models}, presents the results of the experiments with unified labels on the left and with separate labels on the right. On the y-axis, we list the nine models introduced above. The x-axis shows the validation sets on which the models are tested. The models are compared based on the average Dice score.
 
- The model that performs best on all OSDaR23 images is data\_all\_railsem\_640, on OSDaR23 high-resolution images data\_highres\_railsem\_640, on OSDaR23 infrared images data\_all\_640, and on OSDaR23 regular RGB images data\_highres\_railsem\_640. This means that all models benefited from adding images from the Railsem19 dataset to the training set, except when applied to the infrared images. This exception comes at no surprise as the Railsem19 dataset comprises only RGB images.
- The lack of generalization of the models trained exclusively on the OSDaR23 data becomes apparent when validated against the Railsem19 dataset: the best dice score is 0.35 with the data\_all\_640 model compared to 0.77 with the data\_rgb\_railsem\_640.
-It is also interesting to observe the models trained on and validated against infrared images. While all models fail to predict tracks in infrared images except of models that are trained on infrared images, models trained on infrared images exclusively can predict tracks in RGB images with a Dice score of 0.3. This indicates that training on infrared images support the prediction on RGB images but not the other way round. 
+ The model that performs best on all OSDaR23 images is data\_all\_railsem\_640, on OSDaR23 high-resolution images data\_highres\_railsem\_640, on OSDaR23 infrared images data\_all\_640 with unified labels and  data\_all\_railsem\_640 with separate labels, and on OSDaR23 regular RGB images data\_highres\_railsem\_640. This means that all models benefited from adding images from the Railsem19 dataset to the training set, except when applied to the infrared images with unified labels. This outcome comes at no surprise as the Railsem19 dataset comprises a large variety of different images and deep-learning models are known to perform better with more training data. 
+ The lack of generalization of the models trained exclusively on the OSDaR23 data becomes apparent when validated against the Railsem19 dataset: the best dice score is 0.35 with the data\_all\_640 model compared to 0.76 with the data\_highres\_railsem\_640 model when labels are unified; with separate labels the difference is 0.44 versus 0.71.
+It is also interesting to observe the models trained on and validated against infrared images. While all models with unified labels fail to predict tracks in infrared images except of models that are trained on infrared images, models trained on infrared images exclusively can predict tracks in RGB images with a Dice score of 0.3. This indicates that training on infrared images support the prediction on RGB images but not the other way round. The picture is different when each track is labeled separately. Even if the training set does not contain infrared images, track can be predicted in infrared images with a dice score of 0.25.
 
-In general, the results clearly indicate that the performance of the segmentation approach depends on the availability of appropriate training data. 
+In general, the results clearly indicate that the performance of the segmentation approach depends on the availability of appropriate training data. The comparison between the different labeling approaches is not straight forward because the dice score is calculated differently. We will perform a comparison based on the same metrics in Section~\ref{sec:results}.
 
 
  
@@ -886,10 +884,8 @@ In general, the results clearly indicate that the performance of the segmentatio
 \label{fig:yolo_models}
 \end{figure}
 
- !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_highres, data\_railsem) the Dice score even decrease when using 1280 images rather than 640 pixel images. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the inference speed from under $2 ms$ to around $7 ms$. 
+The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_railsem) the Dice score even decrease when using 1280 images rather than 640 pixel images which might be caused by the smaller batch size that fits into the memory in each training step. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the average inference speed by a factor of around 4. %from under $2 ms$ to around $7 ms$. 
 
 \begin{table}[htbp]
     \centering
@@ -899,28 +895,25 @@ The comparison between using 1200 pixel images as input and 600 pixel images rev
 		 & \multicolumn{2}{|c|}{\textbf{Inference speed unified labels [ms]}} & \multicolumn{2}{|c|}{\textbf{Inference speed separate labels [ms]}} \\
         \textbf{Train Set} & \textbf{data\_highres} & \textbf{data\_rgb}  & \textbf{data\_highres} & \textbf{data\_rgb} \\
         \hline
-        data\_highres\_1280 & 7,286 & 7,478 & 10.768 & 11.624 \\
-        data\_highres\_640 & 1,696 & 1,745 & 4.138 & 3.001 \\
-        data\_rgb\_1280 & 5,371 & 6,755 & 8.306 & 8.869 \\
-        data\_rgb\_640 & 2,019 & 1,867 & 1.716 & 1.931 \\
+        data\_highres\_1280 & 7.286 & 7.478 & 10.768 & 11.624 \\
+        data\_highres\_640 & 1.696 & 1.745 & 4.138 & 3.001 \\
+        data\_rgb\_1280 & 5.371 & 6.755 & 8.306 & 8.869 \\
+        data\_rgb\_640 & 2.019 & 1.867 & 1.716 & 1.931 \\
         \hline
     \end{tabular}
         \caption{Inference speed in milliseconds}
     \label{tab:inference_speed}
 \end{table}
 
-Going forward, we will focus on the models data\_highres\_railsem\_640 and data\_all\_640 for further analysis and refinement as those two models provided the best results on the OSDaR23 validation sets. The detailed training results are given in Appending~\ref{app:yolo}.
+Going forward, we will focus on the models data\_highres\_railsem\_640 and data\_all\_640 with unified labels, and models data\_highres\_railsem\_640 and data\_all\_railsem\_640 with separate labels  for further analysis and refinement as these models provided the best results on the OSDaR23 validation sets. The detailed training results are given in Appending~\ref{app:yolo}.
 
 
 \subsection{Parameter tuning}
 
-
- !!!!!!!CHANGE TEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO uses genetic algorithms to optimize hyperparameters. Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
 
 Parameter tuning is an iterative process where in each iteration the fitness of the current setting is assessed by training the model for a given number of epochs. We set the number of iterations to 300 and the number of epochs per iteration to 30.  Preliminary experiments revealed that the tuning process is computationally expensive. Therefore, the tuning is performed on 10\% of the training data. 
-Table~\ref{tab:model_duration} summarizes the tuning runs. The tuning is very resource intensive despite the reduced training set. The tuning on the high-resolution  OSDaR23 images plus Railsem19 images took at 146 hours with the SGD optimizer and could not be finished within 148 hours with the AdamW optimizer.  
+Table~\ref{tab:model_duration} summarizes the tuning runs with unified labels. The tuning is very resource intensive despite the reduced training set. The tuning on the high-resolution  OSDaR23 images plus Railsem19 images took at 146 hours with the SGD optimizer and could not be finished within 148 hours with the AdamW optimizer.  
 
 \begin{table}[htbp]
 \centering
@@ -937,14 +930,15 @@ Table~\ref{tab:model_duration} summarizes the tuning runs. The tuning is very re
 \bottomrule
 \multicolumn{3}{l}{$^{\mathrm{a}}$Tuning run was aborted by the system after 160 iterations.} \\
 \end{tabular}
-\caption{Parameter tuning.}
+\caption{Parameter tuning with unified labels.}
 \label{tab:model_duration}
 \end{table}
 
-Table~\ref{tab:tuning_comparison} compare the results generated by automatically setting the parameters by YOLO, tuning with SGD, and tuning with AdamW. The data\_all\_640 model is used for the infrared images and data\_highres\_railsem\_640 model is used for the RGB images.
+Table~\ref{tab:tuning_comparison} compare the results with unified labels that are generated by automatically setting the parameters by YOLO, tuning with SGD, and tuning with AdamW. The data\_all\_640 model is used for the infrared images and data\_highres\_railsem\_640 model is used for the RGB images.
 The results indicate that the automatically chosen parameters outperform the tuned parameters on two out of four tests. This is a surprising result but it can probably be explained by the reduced training set that was used during the parameter tuning. For example, if the subset of the training data used for tuning contained less infrared images relative to the entire training set, then the parameters of the data\_all\_640 model would be tuned towards performing better on RGB images. Detailed results of the tuning are given in Appendix~\ref{app:yolo_parameters}.
 
-Given the good overall performance of the automatically tuned parameters and the poor performance of the tuned parameters on the data\_rgb set, we use the models  with the automatically chosen parameters for the final analysis.   
+Given the good overall performance of the automatically tuned parameters and the poor performance of the tuned parameters on the data\_rgb set, we use the models with the automatically chosen parameters for the final analysis.
+The parameter tuning was omitted for the models with separate labels due to the poor cost/benefit ratio.   
 
 
 \begin{table}[htbp]
@@ -968,15 +962,19 @@ data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\
 
 
 
-\chapter{Results} % 2000 words
+\chapter{Results} \label{sec:results} % 2000 words
 
-In this section, we perform a detailed analysis of the proposed solution approaches on the test set.  The test set was not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
-Both approaches, FLD and YOLOv8, are used to predict tracks in the test images. The evaluation is based on the Dice score. 
+In this section, we perform a detailed analysis of the proposed solution approaches on the test set.  The test set is not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
+All approaches, FLD, YOLOv8 with unified labels, and YOLOv8 with separate labels are used to predict tracks in the test images. The evaluation is based on the Dice score of the resulting segmentation mask. 
 
 %YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
 
+First, we compare the YOLOv8 models with unified labels and with separate lables. Figure~\ref{fig:yolo_vs_yolo} visualizes the distrubution of the dice scores by sensort type and orientation. Both approaches seem to provide results of similar quality. 
+For the left oriented RGB camera and the right oriented high-resolution camera there is a clear adavantage of the separate labeling comapred to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
 
-COMPARE BOTH YOLO models!!!!!!!!!!!!!!!!!!!!!!!!
+Apart from performing similarly well, we continue the analysis on the model with separate labels as this model provides advantages when applying the results in the real-world. Figure~\res{ fig:labeling} illustrates the result of the two labelling approaches. On the top, we give the segmenetation result when the labels are unified. In this case, the output is a single bounding box and a single mask marking all pixles that are classified as track. On the otherhand, the example on the bottom shows the result when the model is trained with separate labels. In this case, the output is a bounding box and a mask for each track which makes it easier in interpret the environment.
+
+ 
 
 \begin{figure}[h]
 \centering
@@ -992,26 +990,26 @@ COMPARE BOTH YOLO models!!!!!!!!!!!!!!!!!!!!!!!!
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/example_ul/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
   \caption{Prediction image with unified labels.}
- % \label{fig:railsem_sub1}
+  \label{fig:labeling_a}
 \end{subfigure}%
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/example_ul/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
   \caption{Prediction mask with unified labels.}
-%  \label{railsem_sub2}
+ \label{fig:labeling_b}
 \end{subfigure}
 \vskip\baselineskip
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/example_sl/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
   \caption{Prediction image with separate labels.}
-%  \label{railsem_sub3}
+ \label{fig:labeling_c}
 \end{subfigure}%
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/example_sl/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
   \caption{Prediction mask with separate labels.}
-%  \label{railsem_sub4}
+ \label{fig:labeling_d}
 \end{subfigure}
 \caption{Example results of different labeling approaches.}
 \label{fig:labeling}
@@ -1020,7 +1018,7 @@ COMPARE BOTH YOLO models!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
-In Figure~\ref{fig:yolo_vs_fld}, shows the comparison between FLD and YOLOv8 based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line, where points along this line signify that both, YOLOv8 and FLD solutions, are equal good or bad. If a points is above the line then YOLOv8 performed better on that image; if a point is below the line FLD outperformed YOLOv8. It is easy to see that YOLOv8 outperforms FLD on most images. However, it is interesting to observe that on certain RGB images FLD provides predictions with a Dice score of up to 0.37. A closer look reveals that all images where YOLOv8 could not provide a prediction are frames from the same sequence. An example is given in Figure~\ref{fig:res_example1}; predictions are colored red. Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example1}
+Figure~\ref{fig:yolo_vs_fld}, shows the comparison between FLD and YOLOv8 (with separate labels) based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line, where points along this line signify that both, YOLOv8 and FLD solutions, are equal good or bad. If a points is above the line then YOLOv8 performed better on that image; if a point is below the line FLD outperformed YOLOv8. It is easy to see that YOLOv8 outperforms FLD on most images. However, it is interesting to observe that on certain RGB images FLD provides predictions with a Dice score of up to 0.37. A closer look reveals that all images where YOLOv8 could not provide a prediction are frames from the same sequence. An example is given in Figure~\ref{fig:res_example1}; predictions are colored red. Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example1}
 An other interesting observation is that infrared images have the highest Dice scores among the images segmented with YOLOv8. Figure~\ref{fig:res_example4} illustrates the difference between FLD and YOLOv8 on an infrared image.
 
 
