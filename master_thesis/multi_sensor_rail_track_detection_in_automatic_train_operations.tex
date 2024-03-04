@@ -48,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Danksagung/Kurzfassung/Schlagworte
 \kurzfassung{Die Erhöhung des Automatisierungsgrades im Bahnbetrieb ist ein Schlüsselfaktor für die Erreichung eines effizienteren und wettbewerbsfähigeren Eisenbahnsystems. Automatische Zugbetriebssysteme (ATO) nutzen fortschrittliche Technologien, um die Eisenbahnumgebung wahrzunehmen und zu interpretieren und um autonome Betriebsabläufe mit minimalem menschlichem Eingriff zu ermöglichen. Die präzise Identifizierung und Lokalisierung von Eisenbahngleisen sind grundlegend für eine sichere Zugnavigation. Daher besteht Bedarf an robusten automatisierten Methoden zur Gleiserkennung.
 
-Diese Masterarbeit befasst sich mit der Aufgabe der Mehrsensorschienenverfolgung im Rahmen von ATO durch die Nutzung von Deep-Learning-Techniken, insbesondere der semantischen Segmentierung. Durch die Erforschung eines Mehrsensordatensatzes, der Bilder von hoch-/niedrigauflösenden RGB-Kameras und Infrarotkameras mit unterschiedlichen Orientierungen umfasst, zielt diese Forschung darauf ab die Genauigkeit und Robustheit der Gleiserkennung unter verschiedenen Bedingungen zu verbessern. Die Studie vergleicht die Leistung der Deep-Learning-basierten Segmentierung mit traditionellen nicht KI-basierten Methoden, führt umfassende Bewertungen verschiedener Sensorinputs durch und erforscht die Integration in realen Anwendungen. Die Ergebnisse liefern wertvolle Erkenntnisse auf dem Gebiet der Eisenbahnautomatisierung und bieten Implikationen zur Verbesserung der Sicherheit und Effizienz des automatischen Zugbetriebs.}
+Diese Masterarbeit befasst sich mit der Aufgabe der Mehrsensorschienenverfolgung im Rahmen von ATO durch die Nutzung von Deep-Learning-Techniken, insbesondere der semantischen Segmentierung. Durch die Erforschung eines Mehrsensordatensatzes, der Bilder von hoch-/niedrigauflösenden RGB-Kameras und Infrarotkameras mit unterschiedlichen Orientierungen umfasst, zielt diese Forschung darauf ab die Genauigkeit und Robustheit der Gleiserkennung unter verschiedenen Bedingungen zu verbessern. Die Studie vergleicht die Leistung der Deep-Learning-basierten Segmentierung mit traditionellen nicht-KI-basierten Methoden, führt umfassende Bewertungen verschiedener Sensorinputs durch und erforscht die Integration in realen Anwendungen. Die Ergebnisse liefern wertvolle Erkenntnisse auf dem Gebiet der Eisenbahnautomatisierung und bieten Implikationen zur Verbesserung der Sicherheit und Effizienz des automatischen Zugbetriebs.}
 
 
 
@@ -71,25 +71,25 @@ This master's thesis addresses the task of multi-sensor rail track detection wit
 
 
 According to the International Energy Agency (IEA), the global demand for passenger and freight transportation will more than double by 2050 compared to 2019 \citep{IEA2019}. However, a greater demand entails higher energy consumption as well as increased CO2 emissions and atmospheric pollutants.  
-Given the fact that railway is one of the most efficient and reliable modes of transportation there seems to be consensus between politicians and researchers that a greater reliance of rail has the potential to counterbalance the negative impacts of transportation \citep{islam2016make, pagand2020fostering}.
-The IEA lists minimizing costs per passenger-kilometer or ton-kilometer moved as one of three pillars that are essential to increase the market share of rail transportation\footnote {The other pillars are maximizing revenues from rail systems, and ensuring that all forms of transport (especially road transportation) pay not only for the use of the infrastructure they need, but also for the adverse impacts they generate.}.
+Given the fact that railway is one of the most efficient and reliable modes of transportation, there seems to be consensus between politicians and researchers that a greater share of rail transportation has the potential to counterbalance the negative impacts of transportation \citep{islam2016make, pagand2020fostering}.
+The IEA lists minimizing costs per passenger-kilometer or ton-kilometer moved as one of three pillars that are essential to increase the market share of rail transportation\footnote {The other pillars are maximizing revenues from rail systems and ensuring that all forms of transport (especially road transportation) pay not only for the use of the infrastructure they need, but also for the adverse impacts they generate.}.
 
 Automatic Train Operations (ATO) which refers to a system that automates different aspects of train operations is expected be one of the key drivers of a more efficient and competitive railway system \citep{ERJU2019, ALSTOM2021}. ATO is estimated to reduce energy consumption by up to 45\%, increase the level of punctuality, increase operational flexibility, and allow for a 50\% better utilization of the infrastructure when combined with other technologies.
 
 ATO relies on advanced technologies that are used to perceive and interpret the railway environment in order to allow autonomous operations with minimal or no human intervention \citep{DB2024}. 
 One aspect of ATO is the precise identification and localization of railway tracks. The ability to detect and isolate tracks based on video images is essential for ensuring the safe navigation of trains through the railway network or in shunting yards. Accurate track detection ensures that the train can make informed decisions, such as adjusting speed, navigating turns, and responding to potential obstacles.
 
-Traditional methods of track detection often rely on rule-based algorithms and image processing techniques, but these approaches may face challenges in diverse environmental conditions such as bad weather, complex background, lighting variations (e.g., day and night), and dirty cameras.
+Traditional methods of track detection often rely on rule-based algorithms and image processing techniques but these approaches may face challenges in diverse environmental conditions such as bad weather, complex background, lighting variations (e.g., day and night), and dirty cameras.
 This master's thesis addresses the task of multi-sensor rail track detection in the context of ATO. We explore deep learning techniques, particularly convolutional neural networks (CNNs), that have demonstrated great success in computer vision tasks, including image segmentation. The application of deep learning to track detection is expected to outperform conventional non-AI-based techniques and thereby improving the accuracy and robustness of the system.
-Our analysis is based on a multi-sensors dataset, including images of normal RGB cameras, high-resolution cameras, and infrared cameras, with different orientations, respectively. This multi-sensor approach allows to compare the the effectiveness of different cameras and informs the deployment of those in order to improve the robustness of track detection in diverse conditions. 
+Our analysis is based on a multi-sensors dataset, including images of normal RGB cameras, high-resolution cameras, and infrared cameras with different orientations, respectively. This multi-sensor approach allows us to compare the effectiveness of different camera types and informs the deployment of those in order to improve the robustness of track detection in diverse conditions. 
 
 In the context of rail track detection, researchers have explored various areas. Yet, applying deep learning techniques to detect rail tracks is a relatively raw field. In particular, there is no research that is focusing on comparing different input images such as RGB and infrared cameras and images that are oriented to the left, center, and right of the locomotive. 
-The contribution of this thesis to the literature is three-fold: First, we select and train a deep learning model capable of accurately detecting and segmenting railway tracks using data from RGB cameras, high-resolution cameras, and infrared cameras. In contrast to approaches that have been specifically tailored to the task, we apply a general framework that is easier to use by practitioners without elaborate software engineering skills.
+The contribution of this thesis to the literature is three-fold: First, we select and train different deep learning models capable of accurately detecting and segmenting railway tracks using data from RGB cameras, high-resolution cameras, and infrared cameras. In contrast to approaches that have been specifically tailored to the task, we apply a general framework that is easier to use by practitioners without elaborate software engineering skills.
 The results of the deep learning model are compared to a non-AI based method specialized in identifying lines in images. 
 Second, we conduct a comprehensive performance evaluation to assess the accuracy and computational efficiency of the proposed track detection system on images generated by different cameras.
 Third, we explore the integration of the developed model into real-world applications by applying to identify tracks in video streams. 
 
-By achieving these objectives, this research provides valuable insights and advancements to the field of railway automation, with implications for improving the safety and efficiency of automatic train operations.
+By achieving these objectives, this research provides valuable insights and advancements to the field of railway automation with implications for improving the safety and efficiency of automatic train operations.
 
 
 
@@ -108,29 +108,29 @@ The following sections examine related research in track detection, considering 
 While deep learning has shown remarkable success in track detection, non-AI segmentation techniques continue to play a role in this field as they allow the integration of domain-specific knowledge and rules into the algorithm and require less data for training. These methods are often referred to as line segment detectors and involve traditional computer vision techniques such as thresholding, edge/contour detection, template matching, and region growing \citep{4731268, ipol.2012.gjmr-lsd, 8100103, SAHOO1988233, Mittal2022}.
 
 \cite{5309526} present a dynamic programming algorithm to extract the rail tracks in front of the train. The idea is to first identify the vanishing point which refers to the imaginary intersection of the tracks as the distance between the tracks decreases from the bottom of the image to the top.  This step is based on computing the gradient and applying Hough transform to detect the straight lines that indicate the tracks. Next, dynamic programming is used to extract the space between the two tracks.
- \cite{qi2013efficient} apply a method based on histogram of oriented gradients (HOG) to identify tracks and switches. First, HOG features are computed;  railway tracks are then identified by a region-growing algorithm. The proposed method is able to predict the patch the train will travel by detecting the setting of the switches. 
+ \cite{qi2013efficient} apply a method based on histogram of oriented gradients (HOG) to identify tracks and switches. First, HOG features are computed.  Railway tracks are then identified by a region-growing algorithm. The proposed method is able to predict the patch the train will travel by detecting the setting of the switches. 
 \cite{5940410} introduce an approach that performs rail extraction by matching edge features to candidate templates.
 
 While the previously mentioned approaches focus on images by on-board cameras, \cite{7952544} examines the detection of tracks in aerial images taken by drones. The solution approach is based on Hough transform.
 
-\citep{rs71114916} and \citep{6783695} develop methods to recognize railroad infrastructure from 3D LIDAR data.
-In \citep{rs71114916}, railway components such as rail tracks, contact cables, catenary cables, masts, and cantilevers are classified based on local neighborhood structure, shape of objects, and topological relationships among objects. 
-\citep{6783695} focus on the detection of tracks. The authors utilize the geometry and reflection intensity of the tracks to
+\cite{rs71114916} and \cite{6783695} develop methods to recognize railroad infrastructure from 3D LIDAR data.
+In \cite{rs71114916}, railway components such as rail tracks, contact cables, catenary cables, masts, and cantilevers are classified based on local neighborhood structure, shape of objects, and topological relationships among objects. 
+\cite{6783695} focus on the detection of tracks. The authors utilize the geometry and reflection intensity of the tracks to
 extract features and identify tracks.
 
 
 \section{Deep-learning based rail track detection}
 
-Deep-learning based techniques such as semantic segmentation incorporate convolutional neural networks (CNNs) and other deep architectures to automatically learn features from raw image data. Semantic segmentation aims to assign a label to each pixel in the image, distinguishing between the pixels that belong to the rail tracks and those that represent the background and is therefore particularly well suited for rail track detection. 
+Deep-learning based techniques such as semantic segmentation incorporate convolutional neural networks (CNNs) and other deep architectures to automatically learn features from raw image data. Semantic segmentation aims to assign a label to each pixel in the image, distinguishing between the pixels that belong to the rail tracks and those that represent the background. The approach is therefore particularly well suited for rail track detection. 
 
 \cite{7350873} and \cite{8517865} were among the first authors who evaluated the performance of deep learning-based segmentation against traditional segmentation techniques in rail track detection. 
 In \cite{7350873}, the authors propose a CNN for localizing and inspecting the condition of railway component based on gray-scale images. The authors report that the CNN model is better suited to capture complex patters compared to approaches that rely on traditional texture features (e.g., discrete Fourier transforms of local binary pattern histograms). 
 \cite{8517865} detect rail tracks in aerial images by devising a CNN based approach and different traditional approaches such as thresholding. 
 
 \cite{8859360} propose the RailNet -- a deep-learning based rail track segmentation algorithm that combines the ResNet50 backbone with a fully convolutional network. In order to train the model, the authors compile a non-public dataset consisting of 3000 images from forward-facing on-board cameras. Experiments show that RailNet is able to outperform general purpose models for segmentation.
-In \cite{10.1145/3503161.3548050}, the authors compile a real-world railway dataset based on which a rail detection method referred to as Rail-Net is devised. Rail-Net outperforms traditional methods by around 51\% and other deep-learning methods by around 6\% based on accuracy when applied on the newly developed dataset. 
+\cite{10.1145/3503161.3548050} compile a real-world railway dataset based on which a rail detection method referred to as Rail-Net is devised. Rail-Net outperforms traditional methods by around 51\% and other deep-learning methods by around 6\% based on accuracy when applied on the newly compiled dataset. 
 
-A machine-learning based approach is proposed by \citep{teng2016visual} where features are extracted from super-pixels (i.e., a group of adjacent pixels with similar characteristics) and classified by applying a previously trained support vector machine.
+A machine-learning based approach is proposed by \cite{teng2016visual} where features are extracted from super-pixels (i.e., a group of adjacent pixels with similar characteristics) and classified by applying a previously trained support vector machine.
 
 
 \section{Lane detection} \label{sec:lane_detection}
@@ -145,16 +145,16 @@ Early work on lane detection is based on traditional approaches such as Hough tr
 \chapter{Datasets} %2000 words
 
 Labeled images are an essential prerequisite for training deep-learning algorithms to detect objects accurately.
-With the growing popularity of deep-learning, we have observed the creation of new datasets specifically designed for railway applications.
+With the growing popularity of deep-learning, there has been an ongoing effort to create new datasets specifically designed for railway applications.
 
 The rail semantics dataset 2019 (RailSem19) is the first publicly available
 dataset for detecting objects (including rail tracks) in the railway domain \citep{9025646}. 
-The French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights \citep{9025646}, whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection methods \citep{9050835}. The dataset proposed by \cite{8859360} -- railroad segmentation dataset -- has been compiled for the development railroad segmentation algorithms but it is not available to the public. The Rail-DB dataset is available upon request \citep{10.1145/3503161.3548050}. The dataset comprises 7.432 annotated images, featuring different scenarios (e.g., weather conditions). 
+The French railway signaling dataset (FRSign) is a dataset focusing only on traffic lights \citep{9025646}, whereas the Railway Pedestrian Dataset (RAWPED) is focusing on pedestrian detection methods \citep{9050835}. The dataset proposed by \cite{8859360} -- railroad segmentation dataset -- has been compiled for the development of railroad segmentation algorithms but it is not available to the public. The Rail-DB dataset comprises 7.432 annotated images, featuring different scenarios (e.g., weather conditions), and is available upon request \citep{10.1145/3503161.3548050}.  
 
 This thesis is based on the first freely available multi-sensor dataset ``Open Sensor Data for Rail 2023'' (OSDaR23) for the development of fully automated driving in the railway sector \citep{DB2023, tagiew2023osdar23}.
-Unlike the previously mentioned dataset that involve a limited number of sensors and perspectives, the system on the locomotive used to create the OSDaR23 dataset includes multiple infrared cameras, RGB cameras with different resolution, lidar, radar, positioning, and acceleration sensors.
+Unlike the previously mentioned dataset that involve a limited number of sensors and perspectives, the system on the locomotive used to create the OSDaR23 dataset includes multiple infrared cameras, RGB cameras with different resolutions, lidar, radar, positioning, and acceleration sensors.
 
-Preliminary experiments indicated that our model fails to generalize when trained only on the OSDaR23 dataset due to reasons that will be described in the next section. Therefore, we also train our model on images from the RailSem19 dataset.
+Preliminary experiments indicated that our segmentation model fails to generalize when trained only on the OSDaR23 dataset due to reasons that will be described in the next section. Therefore, we also train our model on images from the RailSem19 dataset.
 In the following, we give a detailed description of the two datasets used in this thesis.
 
 
@@ -163,7 +163,7 @@ In the following, we give a detailed description of the two datasets used in thi
 \subsection{Overview}
 
 The OSDaR23 contains 21 video sequences captured around Hamburg, Germany between 09.09.2021 and 15.09.2021 (a map of the exact locations is given in Figure~\ref{fig:map}). 
-The sensor setup is very comprehensive including six RGB cameras, three
+The sensor setup is comprehensive including six RGB cameras, three
 IR cameras, six lidar sensors, a 2D radar sensor, and position and acceleration sensors. In this thesis, we focus on images by RGB high resolution, RGB low resolution, and infrared sensors with three orientation (left, right, and center), respectively. One example per sensor is given in Figure~\ref{fig:sensor_image}. A detailed description of the sensors can be found in Appendix~\ref{app:sensors}.
 
 \begin{figure}[h]
@@ -191,7 +191,7 @@ The final number of images and labels after filtering the dataset, i.e., removin
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/images_per_sensor}
-  \caption{Number of images per sensor}
+  \caption{Number of images per sensor.}
 \end{subfigure}%
 \begin{subfigure}[t]{.5\textwidth}
   \centering
@@ -230,7 +230,7 @@ Infrared	& 640 &	480 &	1.33 \\
 
 
 All images were taken between 8AM and 17PM, so we cannot expect to test the effect of different sensors in the night. In particular, the RGB cameras fail to capture clear and detailed images in low-light conditions. 
-Infrared cameras on the other hand, detect infrared radiation emitted by objects based on their temperature rather than visible light and are, therefore, used in low-light conditions or complete darkness\footnote{All objects with a temperature greater than absolute zero emit infrared energy.}. The thermal radiation is converted into electrical signals which are then processed to a visual image that is visible to the human eye \citep{CLARK200283}. Warmer areas are displayed as brighter, while cooler areas appear as darker shades of gray.
+Infrared cameras on the other hand, detect infrared radiation emitted by objects based on their temperature rather than visible light and are used in low-light conditions or complete darkness\footnote{All objects with a temperature greater than absolute zero emit infrared energy.}. The thermal radiation is converted into electrical signals which are then processed to a visual image that is visible to the human eye \citep{CLARK200283}. Warmer areas are displayed as brighter shades of gray while cooler areas appear as darker shades of gray.
 
 Emissivity, a material property that indicates how efficiently an object emits infrared radiation, plays a significant role in thermal imaging. Emissivity is measured on a scale from 0 to 1, where 0 indicates a perfect reflection of the radiation (no emission such as a mirror), and 1 indicates perfect emissivity (total emission in an object referred to as blackbody).  Detecting rail tracks in infrared images is based on the principle that polished metallic surfaces such as tracks have a low emissivity, whereas organic materials that appear often in the background have a high emissivity.  
 
@@ -238,8 +238,8 @@ Emissivity, a material property that indicates how efficiently an object emits i
 \subsection{Brightness of the images}
 
 
-In deep learning, the quality of the images can have a large impact on the efficiency. Image segmentation tasks, where the goal is to identify and classify each pixel in an image, are particularly sensitive to variations in pixel brightness and intensity.
-In this section, we analyze the brightness of the images for each type of sensor. Brightness is defined as the average pixel intensity $\frac{1}{N} \sum_{i=1}^{N} I_i $; $N$ is the number of pixels in the image, and $I_i$ is the intensity of pixel $i$. In Figure~\ref{fig:brightness} shows a series of box plots with brightness values per sensor.
+In deep learning, the quality of the images can have a large impact on the efficiency. In image segmentation tasks, where the goal is to identify and classify each pixel in an image, are particularly sensitive to variations in pixel brightness and intensity.
+In this section, we analyze the brightness of the images for each type of sensor. Brightness is defined as the average pixel intensity $\frac{1}{N} \sum_{i=1}^{N} I_i $ ($N$ is the number of pixels in the image and $I_i$ is the intensity of pixel $i$). Figure~\ref{fig:brightness} shows a series of box plots with brightness values per sensor.
 
 
 \begin{figure}[h]
@@ -268,7 +268,7 @@ Figure~\ref{fig:brightness_examples} show one example of a bright and a dark ima
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/bright}
-  \caption{Image with high brightness value}
+  \caption{Image with high brightness value.}
  % \label{fig:sub2}
 \end{subfigure}
 \caption{Examples of very bright and very dark image, respectively.}
@@ -282,7 +282,7 @@ Figure~\ref{fig:brightness_examples} show one example of a bright and a dark ima
 
 Shannon entropy is a measure from information theory that reflects the uncertainty or randomness associated with a set of data \citep{6773024}. In the context of images, Shannon entropy can be used to quantify the complexity in the pixel values of an image. A high entropy value indicates higher complexity or randomness in the pixel values, while a low entropy value suggests more homogeneity. \cite{rahane2020measures} report a positive correlation between the entropy of the training data and the performance of semantic segmentation tasks, highlighting that more complex images are harder to learn by deep-learning networks.
 The Shannon entropy for a grayscale image is given by $H(X) = -\sum_{i=1}^{n} P(x_i) \cdot \log_2(P(x_i))$, where $P(x_i)$ is the probability of occurrence of pixel $x_i$ (i.e., the number of pixels with intensity $x_i$ divided by the total number of pixels). 
-A box-plot with the entropy distribution is given in Figure~\ref{fig:entropy_examples} for each sensor. The maximum entropy value is $8 = \log_2(256)$ as we convert the images to grayscale with 256 different intensity levels.
+A box-plot with the entropy distribution is given in Figure~\ref{fig:entropy} for each sensor. The maximum entropy value is $8 = \log_2(256)$ as we convert the images to grayscale with 256 different intensity levels.
 
 
 \begin{figure}[h]
@@ -292,7 +292,7 @@ A box-plot with the entropy distribution is given in Figure~\ref{fig:entropy_exa
 \label{fig:entropy}
 \end{figure}
 
-Overall, the images have a high entropy -- the median values range from 5.9 to 6.8. High resolution images have the highest entropy. Infrared images do not seem to have lower entropy on average. However, certain images seem to have a very low randomness; and as it turns out also very low level of information when looking at Figure~\ref{fig:entropy_sub1}. Figure~\ref{fig:entropy_examples} highlight the visual difference between a very low and a very high entropy image.
+Overall, the images have a high entropy -- the median values range from 5.9 to 6.8. High resolution images have the highest entropy. Infrared images do not seem to have lower entropy on average. However, certain images have a very low randomness and as it turns out also very low level of information when looking at Figure~\ref{fig:entropy_sub1}. Figure~\ref{fig:entropy_examples} highlight the visual difference between a very low and a very high entropy image.
 
 
 
@@ -309,7 +309,7 @@ Overall, the images have a high entropy -- the median values range from 5.9 to 6
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/datasets/db/high_entropy}
-  \caption{Image with high entropy value}
+  \caption{Image with high entropy value.}
  \label{fig:entropy_sub2}
 \end{subfigure}
 \caption{Examples of image with minimal and maximal entropy, respectively.}
@@ -334,7 +334,7 @@ Figure~\ref{fig:occul_hist} shows the number of labels with a given occlusion le
 
 
 
-We keep all images in the dataset as the CNN might recognize that there has to be a track below a train and because most images with covered labels have visible labels as well.
+We keep all images in the dataset as the CNN might recognize that there has to be a track below a train and because most images with covered labels contain visible labels as well.
 
 
 \begin{figure}
@@ -356,7 +356,7 @@ We keep all images in the dataset as the CNN might recognize that there has to b
 
 \subsection{Images and video frames}
 
-The rail tracking systems aim to analyze video streams by treating each video frame as an independent image. Consequently, the images in the OSDaR23 dataset represent individual frames extracted from video sequences. 	Figure~\ref{fig:video} shows three examples of video sequences with seven frames each. It is clear to see that there is only minor variation in the images.
+The rail tracking systems aim to analyze video streams by treating each video frame as an independent image. Consequently, the images in the OSDaR23 dataset represent individual frames extracted from video sequences. 	Figure~\ref{fig:video} shows three examples of video sequences with seven frames each. It is clear that there is only minor variation in the images.
 
 
 \begin{figure}
@@ -389,12 +389,12 @@ In order to mitigate the issues, we add images from the RailSem19 dataset to the
 
 \section{RailSem19 dataset}
 
-The RailSem19 dataset \citep{9025646} is not the primary focus on of this thesis. However, the previous analysis reveals that among the 7,421 images within the OSDaR23 dataset, a significant number show high similarity. This similarity is due to the fact that the images are frames from a video sequence and the presence of three cameras for each orientation, respectively.
+The RailSem19 dataset \citep{9025646} is not the primary focus of this thesis. However, the previous analysis reveals that among the 7.421 images within the OSDaR23 dataset, a significant number show high similarity. This similarity is due to the fact that the images are frames from a video sequence and the presence of three cameras for each orientation.
 The RailSem19 dataset is added to the training set in order to increase the performance of the segmentation approach.
 In the following, we will examine the RailSem19 dataset in more detail.
 
-The dataset consists of 8500 rail images, taken in different countries, and weather and lighting conditions. The number of rail annotations is 58.483. All images have a size of 1920x1080 pixels. 
-Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the respective number of track labels. Most images contain 4 track labels (i.e., two pairs of tracks) but the dataset also contains complicated networks with 26 pairs of tracks. An example of a simple and an example of a complicated infrastructure is given in Figure~\ref{fig:railsem_complicated_vs_simple}.
+The dataset consists of 8500 rail images taken in different countries, and weather and lighting conditions. The number of rail annotations is 58.483. All images have a size of 1920x1080 pixels. 
+Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the respective number of track labels on a log scale. Most images contain 4 track labels (i.e., two pairs of tracks) but the dataset also contains complicated networks with 26 pairs of tracks. An example of a simple and an example of a complicated infrastructure is given in Figure~\ref{fig:railsem_complicated_vs_simple}.
 
 
 
@@ -423,7 +423,7 @@ Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the r
 \end{figure}
 
 
-Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show the distribution of the brightness values and the entropy values as defined in Section~\ref{sec:OSDaR23}, respectively. The RailSem19 images are mostly brighter than the OSDaR23; the distribution of the values ranges from almost black images to almost white images (see Figure~\ref{fig:railsem_sub1} and Figure~\ref{fig:railsem_sub1}). The entropy of the RailSem19 images is similar to the images in the OSDaR23 dataset. The outliers at the lower end of the entropy spectrum are associated with infrared images in the OSDaR23 dataset. Howerver, in RailSem19 low entropy images are often images that were generated in tunnels or at night. Figure~\ref{fig:railsem_sub2} and Figure~\ref{fig:railsem_sub4}) are images with a low entropy levels close to zero whereas Figure~\ref{fig:railsem_sub4}) has the highest entropy level in the data set with a score of 6.97.
+Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show the distribution of the brightness values and the entropy values as defined in Section~\ref{sec:OSDaR23}, respectively. The RailSem19 images are mostly brighter than the OSDaR23; the distribution of the values ranges from almost black images to almost white images (see Figure~\ref{fig:railsem_sub1} and Figure~\ref{fig:railsem_sub2}). The entropy of the RailSem19 images is similar to the images in the OSDaR23 dataset. The outliers at the lower end of the entropy spectrum are associated with infrared images in the OSDaR23 dataset. Howerver, in RailSem19 low entropy images are often images that were generated in tunnels or at night. Figure~\ref{fig:railsem_sub2} and Figure~\ref{fig:railsem_sub4} are images with a low entropy levels close to zero whereas Figure~\ref{fig:railsem_sub3} has the highest entropy level in the data set with a score of 6.97.
 
 
 \begin{figure}
@@ -482,47 +482,49 @@ Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show t
 \section{Data splitting}
 
 Splitting a dataset into training, validation, and test sets is a standard practice in machine learning to evaluate and improve the performance of a model. 
- Separating data into distinct sets and using them at different stages of development, prevents unintended data leakage where information from the test or validation set influences the training process.
+ Separating data into distinct sets and using them at different stages of development prevents unintended data leakage where information from the test or validation set influences the training process.
  
- The validation set assesses performance during training, refines hyperparameters, and guards against overfitting. Adjustments made based on validation set evaluations ensure the model generalizes effectively to new, unseen data. 
+%The validation set assesses performance during training, refines hyperparameters, and guards against overfitting. Adjustments made based on validation set evaluations ensure the model generalizes effectively to new, unseen data. 
 
 The training set is used to train the model -- the model learns patterns and relationships within the training data.
-The validation set is used to evaluate the performance during the training process, fine-tune the hyperparameters of the model, and to prevent overfitting (i.e., a situation when a model performs well on the training data but fails to generalize to new data). We can make adjustments to the algorithm and optimize the performance on the validation set without compromising the model's ability to generalize to new data. 
-The test set is reserved for the final evaluation of the model. The test set allows for an unbiased assessment of the model's performance on data it has never seen before and provides, therefore, an estimate of how well the model is likely to perform on new, real-world data.
+The validation set is used to evaluate the performance during the training process, fine-tune the hyperparameters of the model, and to prevent overfitting (i.e., a situation when a model performs well on the training data but fails to generalize to new data). Adjustments to the algorithm without compromising the model's ability to generalize to new data can be made by evaluating the performance on the validation set. 
+The test set is reserved for the final evaluation of the model. The test set allows for an unbiased assessment of the model's performance on data it has never seen before and provides, therefore, an estimate of how well the model is likely to perform in real-world applications.
 
-Our approach is to perform a random split with a share of 70\%/15\%/15\% for train, validation, and test set respectively. Splitting the RailSem19 set is straightforward; we randomly assign images to each set resulting in 5.950, 1.275, and 1.275 images per set, respectively. However, the OSDaR23 comprises many images with high similar (e.g., frames from a video that was take when the locomotive was standing still), so we perform a random split not on individual images but on videos sequences. The approach results in 5.506 images for training, 987 images for validation, and 928 images for testing.
+We perform a random split with a share of 70\%/15\%/15\% for train, validation, and test set respectively. Splitting the RailSem19 set is straightforward; we randomly assign images to each set resulting in 5.950, 1.275, and 1.275 images per set, respectively. However, the OSDaR23 comprises many images that are very similar (e.g., frames from a video that were taken when the locomotive was standing still), so we perform a random split not on individual images but on videos sequences. The approach results in 5.506 images for training, 987 images for validation, and 928 images for testing.
 The assignment of video sequences to the respective set and the split on sensor level is given in Appendix~\ref{app:data_split}
 
 
 
 \chapter{Solution approach and experiments} % 4000 words
 
-Given an image captured by an on-board camera on the locomotive, our objective is to precisely delineate the visible rail tracks. The output is  a polyline describing each track.
-
-\cite{meyer2021yolino} introduce YOLinO, a versatile and efficient algorithm inspired by single-shot object detection. It is designed to detect polylines in the context of lane detection, as discussed in Section~\ref{sec:lane_detection}. While the proposed approach is suitable for rail track detection, adapting the existing codebase from lane detection to rail track detection exceeds the scope of this thesis. Furthermore, our goal is to employ an off-the-shelf solution framework that can be readily utilized by a broader audience.
+Given an image captured by an on-board camera on the locomotive, our objective is to precisely segment the visible rail tracks. %The output is  a polyline describing each track.
 
 Within computer vision, semantic segmentation is a well-studied domain focusing on classifying each pixel in an image into predefined categories \citep{MO2022626}. Conceptually, it 
 can be seen as an extension of object detection, a technique that recognizes and precisely locates objects within an image using bounding boxes.
 The pixel-level precision in object classification enables the understanding of the image context and is therefore often used in applications like autonomous driving and robotics.
 
-Our approach to the rail detection problem is based on two steps. First, we perform a semantic segmentation where each pixel is classified as either rail track or background. In a second step, the result of the segmentation task is used to define one polyline for each track. Segmentation is performed by the YOLOv8 algorithm \citep{Jocher_Ultralytics_YOLO_2023}.  YOLOv8, short for "You Only Look Once, version 8," is the latest version in the YOLO series of real-time object detectors, offering state-of-the-art performance in terms of accuracy and speed \citep{ultralytics_docs}. YOLOv8 builds upon the YOLO architecture, introduced in \cite{redmon2016you} -- a paper that has received more than 43.000 citations. Since the introduction of the original YOLO in 2016, the framework has been tested extensively with remarkable results \citep{JIANG20221066, cryptography6020016, Diwan2023}. The efficiency of the YOLO implementations by \cite{Jocher_Ultralytics_YOLO_2023} for segmentation tasks is examined in \cite{agriculture13081643} and \cite{STRAKER2023100045}.
+%Our approach to the rail detection problem is based on two steps. First, we perform a semantic segmentation where each pixel is classified as either rail track or background. 
+%In a second step, the result of the segmentation task is used to define one polyline for each track.
+ The segmentation is performed by the YOLOv8 algorithm \citep{Jocher_Ultralytics_YOLO_2023}.  YOLOv8, short for "You Only Look Once, version 8," is the latest version in the YOLO series of real-time object detectors, offering state-of-the-art performance in terms of accuracy and speed \citep{ultralytics_docs}. YOLOv8 builds upon the YOLO architecture, introduced in \cite{redmon2016you} -- a paper that has received more than 43.000 citations at the time of writing. Since the introduction of the original YOLO in 2016, the framework has been tested extensively with remarkable results (e.g., \cite{JIANG20221066, cryptography6020016, Diwan2023}). The efficiency of the YOLO implementations by \cite{Jocher_Ultralytics_YOLO_2023} for segmentation tasks is examined in \cite{agriculture13081643} and \cite{STRAKER2023100045}.
 
 
-In order to compare the YOLO approach, we devise a track detection algorithm based on the fast line detector (FLD) by \cite{FLD}.
-In the following, we describe the YOLO and the FLD approach, and give details of the infrastructure for running the experiments.
+\cite{meyer2021yolino} introduce YOLinO, a versatile and efficient algorithm inspired by YOLO. It is designed to detect polylines in the context of lane detection, as discussed in Section~\ref{sec:lane_detection}. While the proposed approach is suitable for rail track detection, adapting the existing codebase from lane detection to rail track detection exceeds the scope of this thesis. Furthermore, our goal is to employ an off-the-shelf solution framework that can be readily utilized by a broader audience.
+
+In order to evaluate the YOLOv8 approach, we devise a track detection algorithm based on the fast line detector (FLD) by \cite{FLD}.
+In the following, we describe the YOLOv8 and the FLD approach, and give details of the infrastructure for running the experiments.
 
 \section{Infrastructure}
 
 Experiments are run on the High Performance Lab Cluster (HPL) of the UAS Technikum Wien. 
 The HPL comprises 19 PCs connected through a 10-GBit-Network. The PCs have the following setup, respectively: AMD Ryzen 9 3900X 12-Core Processor, NVIDIA GeForce RTX 2080 Ti GPU, 32 GB RAM, and 80 GB Hard Disk.
 
-All nodes are running Linux Ubuntu 20. CUDA libraries are installed for GPU management; the programming language is Python 3.8.10. 
+All nodes are running Linux Ubuntu 20. CUDA libraries are installed for GPU management. All scripts we written in Python 3.8.10. 
 
 
 \section{Transforming labels} 
 
-In semantic segmentation, labels are often represented as closed polygons. Each polygon corresponds to a specific semantic class, and the pixels enclosed within the polygon are assigned the label of that class.
-However, the track labels in both OSDaR23 and RailSem19 dataset are given as polylines. Therefore, we transform the labels as follows. First, we adjust the thickness of the polyline such that is covers the tracks. Second, we generate the mask -- a binary image where each pixel is assigned a value indicating the category it belongs to (i.e., track or background). Finally, the boundaries of the track label are exacted by using the $drawContours$ and $approxPolyDP$ functions in the OpenCV library, and the vectors defining the polygons are written to disk.  Figure~\ref{fig:labeling} illustrates the transformation process.
+In semantic segmentation, labels are often represented as closed polygons. Each polygon corresponds to a specific semantic class and the pixels enclosed within the polygon are assigned the label of that class.
+However, the track labels in both OSDaR23 and RailSem19 dataset are given as polylines. Therefore, we transform the labels as follows. First, we adjust the thickness of the polyline such that is covers the tracks. Second, we generate the mask -- a binary image where each pixel is assigned a value indicating the category it belongs to (i.e., track or background). Finally, the boundaries of the track label are extracted by using the $drawContours$ and $approxPolyDP$ functions in the OpenCV library. The vectors defining the polygons are written to disk and are loaded during the training.  Figure~\ref{fig:labeling} illustrates the transformation process.
 
 
 \begin{figure}
@@ -530,7 +532,7 @@ However, the track labels in both OSDaR23 and RailSem19 dataset are given as pol
 \begin{subfigure}[t]{.5\textwidth}
   \centering
   \includegraphics[width=0.9\textwidth]{images/labeling/polylines}
-  \caption{Estimate thickness of such that the lines \\ cover the tracks.}
+  \caption{Estimate thickness such that the lines \\ cover the tracks.}
  % \label{fig:railsem_sub1}
 \end{subfigure}%
 \begin{subfigure}[t]{.5\textwidth}
@@ -557,7 +559,7 @@ However, the track labels in both OSDaR23 and RailSem19 dataset are given as pol
 \end{figure}
 
 
-The presented approach generates polygons based on the segmentation mask. In order to test the effect of the labeling strategy, we also generate labels for each rail track label separately. Figure~\ref{fig:labeling2} illustrates the two labeling approaches. The unified polygon base on the mask is shown on the left; on the right, each track is labeled separately.
+The presented approach generates polygons based on the segmentation mask. In order to test the effect of the labeling strategy, we also generate labels for each rail track separately. Figure~\ref{fig:labeling2} illustrates the difference between the two labeling approaches. The unified polygon base on the mask is shown on the left; on the right, each track is labeled separately.
 
 
 
@@ -583,7 +585,7 @@ The presented approach generates polygons based on the segmentation mask. In ord
 
 \section{Performance evaluation}
 
-There is a number of performance metrics that are used in semantic segmentation to evaluate the effectiveness of the models \citep{Taha2015}. The choice of metrics typically depends on the specific requirements of the application and the nature of the dataset. In this section, we will introduce and examine different metrics. \\
+There is a number of performance metrics that are typically used in semantic segmentation to evaluate the effectiveness of the models \citep{Taha2015}. The choice of metrics depends on the specific requirements of the application and the nature of the dataset. In this section, we will introduce and examine different metrics for the rail segmentation task. \\
 
 
 \noindent\textbf{Pixel Accuracy} provides a simple measure of the overall accuracy by considering correctly predicted pixels. 
@@ -593,23 +595,28 @@ There is a number of performance metrics that are used in semantic segmentation 
 \text{Pixel Accuracy} = \frac{\text{Number of Correctly Predicted Pixels}}{\text{Total Number of Pixels}}
 \]
 
-\noindent\textbf{Precision} measures the accuracy of positive predictions among all positive predictions. The metric is important when minimizing false positives is critical such as in medical diagnostics.
+\vspace{1cm}
+
+\noindent\textbf{Precision} measures the accuracy of positive predictions among all positive predictions. The metric is important when minimizing false positives is critical (e.g., in medical diagnostics).
 
 \[
 \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
 \]
 True Positives (TP) are the instances where the model correctly predicts the positive class (i.e., it correctly identifies the track).
-False Positives (FP) are the instances where the model incorrectly predicts the positive class (i.e., it incorrectly identifies a track when it is actually absent). \\
+False Positives (FP) are the instances where the model incorrectly predicts the positive class (i.e., it identifies a track when it is actually absent). \\
 
+\vspace{1cm}
 
 \noindent\textbf{Recall} measures the ability to capture all positive instances. Recall is optimized when it is crucial to identify all instances of a particular class, even at the cost of some false positives.
 
 \[
 \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
 \]
-False Negatives are the instances where the model incorrectly predicts the negative class (i.e., it incorrectly identifies background even when the there is a track). \\
+False Negatives are the instances where the model incorrectly predicts the negative class (i.e., it identifies background even when the there is a track). \\
 
-\noindent\textbf{Dice score or F1 score}, balances precision and recall which is particularly useful when dealing with unbalanced datasets, i.e., when one class has a much larger or smaller number of pixels compared to the other class (in our case background vs. tracks). Some authors use the Dice score while others use the F1 score with the respective formulas. However, it can be shown that one reduces to the other. Dice is the most used metric in segmentation when the dataset is unbalanced (e.g., medical imaging). 
+\vspace{1cm}
+
+\noindent\textbf{Dice score or F1 score} balances precision and recall which is particularly useful when dealing with unbalanced datasets, i.e., when one class has a much larger or smaller number of pixels compared to the other class (in our case background vs. tracks). Dice and F1 score are the most used metrics in segmentation when the dataset is unbalanced. Some authors use the Dice score while others use the F1 score with the respective formulas given below. However, it can be shown that one reduces to the other. 
 
 
 \[
@@ -624,6 +631,9 @@ False Negatives are the instances where the model incorrectly predicts the negat
      &= \frac{2 \cdot \text{TP}}{2 \cdot \text{TP} + \text{FP} + \text{FN}}
 \end{align*}
 
+
+\vspace{1cm}
+
 \noindent\textbf{Intersection over Union (IoU) or Jaccard index}, measures the overlap between predicted and ground truth regions. The metric is commonly used to evaluate the spatial accuracy of segmentation masks. Apart from the boundary values \{0,1\}, the IoU score is consistently smaller than the Dice score.
 
 \[
@@ -631,7 +641,7 @@ False Negatives are the instances where the model incorrectly predicts the negat
 \]
 
 
-In Figure~\ref{fig:example_metrcis} we illustrate the concept of performance metric based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct pixels of the image being analyzed. Figure~\ref{fig:ex_sub1}, shows five potential predictions, where Image 5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i..e, all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
+In Figure~\ref{fig:example_metrcis}, we illustrate the performance metrics based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct mask of the image being analyzed. Figure~\ref{fig:ex_sub1} shows five possible predictions, where Image~5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i.e., all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
 
 Based on the literature and the example, we choose the Dice score to analyze the performance of different models.
 
@@ -647,7 +657,7 @@ Based on the literature and the example, we choose the Dice score to analyze the
 \begin{subfigure}[t]{0.9\textwidth}
   \centering
   \includegraphics[width=\textwidth]{images/performance/examples}
-  \caption{Example predictions selected randomly from training set; last image is only background illustrating a case where no rail track was found}
+  \caption{Example predictions selected randomly from training set; last image is only background illustrating a case where no rail track was found.}
 \label{fig:ex_sub1}
 \end{subfigure}
 \vskip\baselineskip
@@ -666,7 +676,7 @@ Based on the literature and the example, we choose the Dice score to analyze the
        \hline
        \multicolumn{6}{l}{$^{\mathrm{a}}$Division by zero as there are no positive classifications.} \\
   \end{tabular}
-  \caption{Performance Metrics}
+  \caption{Performance Metrics.}
   \label{tab:metrics}
 \end{subfigure}
 \caption{Example masks -- ground truth vs. prediction.}
@@ -683,15 +693,15 @@ In this section, we describe the baselining approach in detail.
 
 
 The fast line detection algorithm as proposed by \cite{fld_inproceedings} operates as follows: 
-First, edges in the image are detected using a Canny edge detector. The system then extracts line segments by connecting edge pixels with straight lines and extending them until they satisfy co-linearity conditions (i.e., whether or not the newly added pixels align well with the existing segment in terms of forming a straight line). Points that deviate from forming a straigt line are considered endpoints of segments. 
+First, edges in the image are detected using a Canny edge detector. The system then extracts line segments by connecting edge pixels with straight lines and extending them until they satisfy the co-linearity conditions (i.e., whether or not the newly added pixels align well with the existing segment in terms of forming a straight line). Points that deviate from forming a straigt line are considered endpoints of other segments. 
 
 %First, edges in the image are detected using a Canny edge detector. The Hough transform is then applied in order to represent lines in a parameter space known as the Hough space. For each edge pixel (i.e., points where the intensity changes along a line), a set of potential lines in the Hough space is generated by varying slope and intercept. Each edge pixel effectively "votes" for the lines it might belong to in the Hough space. After the voting process, lines that receive a sufficient number of votes are considered potential lines in the image. Finally, the identified lines are extracted based on the parameters slope and intercept that receive more votes than a predefined threshold.
 FLD is suitable for applications where speed is crucial such as real-time systems or applications where processing resources are limited.
-The exact implementation details vary based on the specific version of OpenCV and underlying optimizations applied.
+The exact implementation details vary based on the specific version of OpenCV and underlying optimizations that are applied.
 
 \subsection{Postprocessing}
 
-The results of the FLD algorithm are post-processed to incorporate domain specific knowledge. More precisely, we filter out lines based on the observation that cameras with different orientation capture rail tracks that are bounded by boxes of different aspect ratios. Figure~\ref{fig:bb_examples} illustrate the idea: Figure~\ref{fig:bb_long} shows an image of a forward facing camera; the aspect ration of the bounding box enclosing the track is large.  Figure~\ref{fig:bb_wide} shows an image of a left facing camera; the aspect ratio of the bounding box enclosing the track is small.
+The results of the FLD algorithm are post-processed to incorporate domain specific knowledge. More precisely, we filter out lines based on the observation that cameras with different orientations capture rail tracks that are bounded by boxes of different aspect ratios. Figure~\ref{fig:bb_examples} illustrate the idea: Figure~\ref{fig:bb_long} shows an image of a forward facing camera; the aspect ration of the bounding box enclosing the track is large.  Figure~\ref{fig:bb_wide} shows an image of a left facing camera; the aspect ratio of the bounding box enclosing the track is small.
 
 
 \begin{figure}
@@ -728,7 +738,7 @@ The aspect ratios are used to remove all lines detected by FLD that have a bound
 In a final step, we apply Connected Component Labeling (CCL) to remove noise or segments that are false positives \citep{CCL}. 
 The goals of CCL is to identify and label connected regions in a binary image where pixels are either tracks or background. After connected components are labeled in the image, we remove all components that are x\% smaller than the largest component.
 
-The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result showcases that the approach is a heuristic that filters out true positive labels.
+The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result showcases that the approach is a heuristic that might filter out true positive labels.
 
 \begin{figure}[h]
 \centering
@@ -742,7 +752,7 @@ The entire process is illustrated in Figure~\ref{fig:fld_demo}. The final result
 
 The performance of our traditional rail detection algorithm depends on a number of parameters. In order to choose the best parameter setting for each combination of sensor and orientation, we tune the parameters according to the grid search technique. Grid search involves specifying a grid of parameter values and exhaustively evaluating the performance of the algorithm for each combination of values. The parameter combination that yields the best performance is selected. Grid search is a simple technique that thoroughly   explores the parameter space but it is also computationally expensive in multi-dimensional spaces.
 
-In total, we test 22.680 parameter settings on 196 images\footnote{The idea is to select one image for each combination of sensor, sensor orientation, and video sequence in the train set (i.e., $3\times3\times33 = 297$). However, there are combinations with no track labels.} from the Os dataset. The images are sampled randomly from the train set such that there is at most one image per sensor per video sequence. 
+In total, we test 22.680 parameter settings on 196 images\footnote{The idea is to select one image for each combination of sensor, sensor orientation, and video sequence in the train set (i.e., $3\times3\times33 = 297$). However, there are combinations with no track labels.} from the OSDaR23 dataset. The images are sampled randomly from the train set such that there is one image per sensor per video sequence. 
  
 \begin{table}[htbp]
     \centering
@@ -773,9 +783,9 @@ In total, we test 22.680 parameter settings on 196 images\footnote{The idea is t
 \end{table}
 
 
-Table~\ref{tab:sensor_parameters} presents the best parameter configurations based on the average Dice score. The varying parameter settings across different sensors demonstrates the algorithm's sensitivity to the selected parameters.
+Table~\ref{tab:sensor_parameters} presents the best parameter configurations based on the average Dice score. The varying parameter settings across different sensors demonstrate the algorithm's sensitivity to the selected parameters.
 The left-oriented camera images seem to benefit from a higher level of blurring with a kernel size of seven. 
-The filtering criteria for lines with uncharacteristic bounding box aspect ratios appear to be relatively loose in most cases -- only the most extreme outliers are being removed. Left and right-oriented high-resolution camera images, on the other hand, seem require a more restrictive filtering. 
+The filtering criteria for lines with uncharacteristic bounding box aspect ratios appear to be relatively loose in most cases -- only the most extreme outliers are being removed. Left and right-oriented high-resolution camera images, on the other hand, seem to require a more restrictive filtering. 
 The "Avg. Time" column indicates the average inference time in seconds. The inference times seem to be strongly correlated with the entropy metrics discussed in Section~\ref{sec:entropy}; higher entropy values tend to be associated with longer inference times.
 
 
@@ -807,9 +817,9 @@ The "Avg. Time" column indicates the average inference time in seconds. The infe
 
 \section{Deep-learning based segmentation}
 
-In this section, we will describe the deep-learning based segmentation in more detail. The applied model is YOLOv8 which is the latest version of YOLO models by \cite{Jocher_Ultralytics_YOLO_2023}.  YOLOv8 is distributed under the GNU General Public License, which authorizes the users to freely share, modify and distribute the software. The accessibility of the code as well as high performance on many applications led to a large community and much resources for developing and tuning YOLO models. 
+In this section, we will describe the deep-learning based segmentation approach in more detail. The applied model is YOLOv8 which is the latest version of YOLO models by \cite{Jocher_Ultralytics_YOLO_2023}.  YOLOv8 is distributed under the GNU General Public License, which authorizes the users to freely share, modify and distribute the software. The accessibility of the code as well as high performance on many applications led to a large community and much resources for developing and tuning YOLO models. 
 
-YOLOv8 is used to detect objects in images with a single forward pass through the network. The models are pre-trained on large datasets like COCO and ImageNet which enables the prediction of everyday objects \citep{Krishnakumar}. Additionally, in line with the transfer learning technique, the  model can be fine-tuned on new datasets related to the problem at hand (i.e., rail track detection).
+YOLOv8 is used to detect objects in images with a single forward pass through the network. The models are pre-trained on large datasets like COCO and ImageNet which enables the prediction of everyday objects \citep{Krishnakumar}. By following the transfer learning technique, the  model can be fine-tuned on new datasets related to the problem at hand (i.e., rail track detection).
 The model architecture is presented in Appendix~\ref{app:yolo}.
 YOLOv8-Seg model is an extension of the YOLOv8 object detection model that performs semantic segmentation of the input image. The  model has been shown to achieve state-of-the-art results on a variety of object detection and semantic segmentation benchmarks while maintaining high speed and efficiency \citep{Krishnakumar}. 
 
@@ -819,12 +829,12 @@ Finally, segmentation loss quantifies how close the predicted segmentation map i
 
 \subsection{Models}
 
-In order to identify the best model setup for the rail track detection task, we experiment with 18 different models that are validated against different datasets. The models differ in the data the model is trained on, the size of the input image, and the labeling approach. All models are trained for 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
+In order to identify the best model setup for the rail track detection task, we experiment with 18 different models that are validated against different datasets. The models differ in the data the model is trained on, the size of the input image, and the labeling approach. All models are trained for at most 300 epochs. However, the optimization process stops if there has been no improvement in the last 50 epochs. 
 Hyper-parameters are either set to default values or automatically chosen in the initialization phase by YOLO.
 
 Table~\ref{tab:training} summarizes the setup of the different models. 
-The ``Epochs'' column gives the actual number of epochs and ``Duration'' is the wall-clock time for the training process with unified labels and separate labels, respectively. The remaining specifications in the table are the regardless of the labeling approach. 
-The column ``Train Set'' gives the set of images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results; the model resizes the input image such that the larger dimension scaled to 640 pixels while maintaining the original aspect ratio (e.g., the RGB low resolution images are resized from 2464x1600 to 640x416 as the image length and width have to be a multiples of 32).
+The ``Epochs'' column gives the actual number of performed epochs and ``Duration'' is the wall-clock time for the training process with unified labels and separate labels, respectively. The remaining specifications in the table are the same regardless of the labeling approach. 
+The column ``Train Set'' gives the set of images that are used to train the model. ``Image Size'' is either set to 640 or 1280 in order to assess the influence of the image size in the prediction results; the model resizes the input image such that the larger dimension is scaled to the given number of pixels while maintaining the original aspect ratio (e.g., if image size is set to 640 then the RGB low-resolution images are resized from 2464x1600 to 640x416 as the image length and width have to be a multiples of 32).
 The batch size is selected automatically by YOLO such that the model can best utilize the available GPU memory without running into ``out of memory'' situations. The ``Optimizer'' column gives the optimization algorithms used for training the neural networks. The optimizer is selected automatically.  SGD (Stochastic Gradient Descent) is a basic optimization algorithm used to minimize the loss function during the training of neural networks. In each iteration, SGD randomly selects a subset of training examples (also referred to as mini-batch) to compute the gradient estimate which supports faster convergence \citep{bottou2010large}. AdamW (Adam with Weight Decay) is a variant of the Adam optimizer that includes an additional term for weight decay regularization. AdamW combines the advantages of both Adam and weight decay regularization which helps prevent overfitting by penalizing large parameter values \citep{kingma2014adam}. 
  
 
@@ -852,15 +862,16 @@ The batch size is selected automatically by YOLO such that the model can best ut
     \label{tab:training}
 \end{table}
  
-When looking at the table, it becomes apparent that the size of the input images has a large impact on the batch size. With images of size $640\times640$ 23 images can be processed per iteration. If the images have $1280\times1280$ pixels, only 5 images can be processed at once with the given computational resources (i.e., GPU memory). The automatic selection of optimizers seems to depend on whether or not the Railsem19 images are added to the train set. With Railsem19 data YOLO selects the SGD optimizer, without Railsem19 data the AdamW optimizer is used.   
-In terms of computational time, it appears that the high-resolution images significantly influence the duration of processing. Among the experiments with $640\times640$ images, the presence of high-resolution images in the training set causes at least a five-fold increase in the computation time per epoch. The labeling approach is another factor that has a large effect on the computational time; training the model with all images (OSDaR23 and RailSem19) with separate labels took almost three days whereas with unified labels the training stopped after less than a day.
+When looking at the table, it becomes apparent that the size of the input images has a large impact on the batch size. With an image size of $640$, 23 images can be processed per iteration. If the image size is set to $1280$ pixels, only 5 images can be processed at once with the given computational resources. The automatic selection of optimizers seems to depend on whether or not the Railsem19 images are added to the train set. With Railsem19 data, YOLO selects the SGD optimizer, without Railsem19 data the AdamW optimizer is used.   
+In terms of computational time, it appears that the high-resolution images significantly influence the duration of processing. Among the experiments with an image size of $640$, the presence of high-resolution images in the training set causes at least a five-fold increase in the computation time per epoch. The labeling approach is another factor that has a large effect on the computational time; training the model with all images (OSDaR23 and RailSem19) with separate labels took almost three days whereas the training with unified labels stopped after less than a day.
 Also all models with unified labels stopped early as no improvement was observed for 50 epochs. With separate labels  the maximum number of iterations was reached in models that incorporated the RailSem19 dataset. 
 
 Figure~\ref{fig:yolo_models}, presents the results of the experiments with unified labels on the left and with separate labels on the right. On the y-axis, we list the nine models introduced above. The x-axis shows the validation sets on which the models are tested. The models are compared based on the average Dice score.
 
- The model that performs best on all OSDaR23 images is data\_all\_railsem\_640, on OSDaR23 high-resolution images data\_highres\_railsem\_640, on OSDaR23 infrared images data\_all\_640 with unified labels and  data\_all\_railsem\_640 with separate labels, and on OSDaR23 regular RGB images data\_highres\_railsem\_640. This means that all models benefited from adding images from the Railsem19 dataset to the training set, except when applied to the infrared images with unified labels. This outcome comes at no surprise as the Railsem19 dataset comprises a large variety of different images and deep-learning models are known to perform better with more training data. 
+ The model that performs best on all OSDaR23 images is data\_all\_railsem\_640, on OSDaR23 high-resolution and low-resolution images data\_highres\_railsem\_640 and on OSDaR23 infrared images data\_all\_640 with unified labels and  data\_all\_railsem\_640 with separate labels. This means that all models benefited from adding images from the Railsem19 dataset to the training set, except when applied to the infrared images with unified labels. This result comes at no surprise as the Railsem19 dataset comprises a large variety of different images and deep-learning models are known to perform better with more training data. 
  The lack of generalization of the models trained exclusively on the OSDaR23 data becomes apparent when validated against the Railsem19 dataset: the best dice score is 0.35 with the data\_all\_640 model compared to 0.76 with the data\_highres\_railsem\_640 model when labels are unified; with separate labels the difference is 0.44 versus 0.71.
-It is also interesting to observe the models trained on and validated against infrared images. While all models with unified labels fail to predict tracks in infrared images except of models that are trained on infrared images, models trained on infrared images exclusively can predict tracks in RGB images with a Dice score of 0.3. This indicates that training on infrared images support the prediction on RGB images but not the other way round. The picture is different when each track is labeled separately. Even if the training set does not contain infrared images, track can be predicted in infrared images with a dice score of 0.25.
+
+ It is also interesting to observe the models that are validated against infrared images. While all models with unified labels fail to predict tracks in infrared images except of models that are trained on infrared images, models trained exclusively on infrared images can predict tracks in RGB images with a Dice score of 0.3. This indicates that training on infrared images support the prediction on RGB images but not the other way round. The picture is different when each track is labeled separately. Even if the training set does not contain infrared images, tracks can be predicted in infrared images with a dice score of 0.25.
 
 In general, the results clearly indicate that the performance of the segmentation approach depends on the availability of appropriate training data. The comparison between the different labeling approaches is not straight forward because the dice score is calculated differently. We will perform a comparison based on the same metrics in Section~\ref{sec:results}.
 
@@ -885,7 +896,7 @@ In general, the results clearly indicate that the performance of the segmentatio
 \end{figure}
 
 
-The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_railsem) the Dice score even decrease when using 1280 images rather than 640 pixel images which might be caused by the smaller batch size that fits into the memory in each training step. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the average inference speed by a factor of around 4. %from under $2 ms$ to around $7 ms$. 
+The comparison between using 1200 pixel images as input and 600 pixel images reveals that using larger images has no clear advantage on the solution quality. In certain cases (e.g., data\_railsem) the Dice score even decrease when using 1280 pixel images rather than 640 pixel images which might be caused by the smaller batch size that fits into the memory in each training step. What is more, using larger images considerably increases the inference speed which might become a bottle-neck in real-life applications. Table~\ref{tab:inference_speed} show that using large images as input can increase the average inference speed by a factor of around 4. %from under $2 ms$ to around $7 ms$. 
 
 \begin{table}[htbp]
     \centering
@@ -905,7 +916,7 @@ The comparison between using 1200 pixel images as input and 600 pixel images rev
     \label{tab:inference_speed}
 \end{table}
 
-Going forward, we will focus on the models data\_highres\_railsem\_640 and data\_all\_640 with unified labels, and models data\_highres\_railsem\_640 and data\_all\_railsem\_640 with separate labels  for further analysis and refinement as these models provided the best results on the OSDaR23 validation sets. The detailed training results are given in Appending~\ref{app:yolo}.
+Going forward, we will focus on the models data\_highres\_railsem\_640 and data\_all\_640 with unified labels, and models data\_highres\_railsem\_640 and data\_all\_railsem\_640 with separate labels  for further analysis and refinement as these models provided the best results on the relevant OSDaR23 validation sets. The detailed training results are given in Appending~\ref{app:yolo}.
 
 
 \subsection{Parameter tuning}
@@ -969,10 +980,10 @@ All approaches, FLD, YOLOv8 with unified labels, and YOLOv8 with separate labels
 
 %YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
 
-First, we compare the YOLOv8 models with unified labels and with separate lables. Figure~\ref{fig:yolo_vs_yolo} visualizes the distrubution of the dice scores by sensort type and orientation. Both approaches seem to provide results of similar quality. 
-For the left oriented RGB camera and the right oriented high-resolution camera there is a clear adavantage of the separate labeling comapred to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
+First, we compare the YOLOv8 models with unified labels and with separate lables. Figure~\ref{fig:yolo_vs_yolo} visualizes the distrubution of the Dice scores by sensor type and orientation. Both approaches seem to provide results of similar quality. 
+For the left oriented RGB camera and the right oriented high-resolution camera, there is a clear adavantage of the separate labeling comapred to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
 
-Apart from performing similarly well, we continue the analysis on the model with separate labels as this model provides advantages when applying the results in the real-world. Figure~\res{ fig:labeling} illustrates the result of the two labelling approaches. On the top, we give the segmenetation result when the labels are unified. In this case, the output is a single bounding box and a single mask marking all pixles that are classified as track. On the otherhand, the example on the bottom shows the result when the model is trained with separate labels. In this case, the output is a bounding box and a mask for each track which makes it easier in interpret the environment.
+As both models perform similarly well, we continue the analysis on the model with separate labels as this model provides advantages when applying the results in the real-world. Figure~\res{ fig:labeling} illustrates the result of the two labelling approaches. On the top, we give the segmenetation result when the labels are unified. In this case, the output is a single bounding box and a single mask marking all pixles that are classified as track. On the otherhand, the example on the bottom shows the result when the model is trained with separate labels. In this case, the model provides a separate bounding box and mask for each track in the image which makes it easier in interpret the environment.
 
  
 
