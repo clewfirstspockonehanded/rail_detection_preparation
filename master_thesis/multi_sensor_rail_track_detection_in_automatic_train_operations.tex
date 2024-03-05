@@ -423,7 +423,7 @@ Figure~\ref{fig:labels_per_image_railsem} shows a histogram of images with the r
 \end{figure}
 
 
-Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show the distribution of the brightness values and the entropy values as defined in Section~\ref{sec:OSDaR23}, respectively. The RailSem19 images are mostly brighter than the OSDaR23; the distribution of the values ranges from almost black images to almost white images (see Figure~\ref{fig:railsem_sub1} and Figure~\ref{fig:railsem_sub2}). The entropy of the RailSem19 images is similar to the images in the OSDaR23 dataset. The outliers at the lower end of the entropy spectrum are associated with infrared images in the OSDaR23 dataset. Howerver, in RailSem19 low entropy images are often images that were generated in tunnels or at night. Figure~\ref{fig:railsem_sub2} and Figure~\ref{fig:railsem_sub4} are images with a low entropy levels close to zero whereas Figure~\ref{fig:railsem_sub3} has the highest entropy level in the data set with a score of 6.97.
+Figure~\ref{fig:railsem_brightness} and  Figure~\ref{fig:railsem_entropy} show the distribution of the brightness values and the entropy values as defined in Section~\ref{sec:OSDaR23}, respectively. The RailSem19 images are mostly brighter than the OSDaR23; the distribution of the values ranges from almost black images to almost white images (see Figure~\ref{fig:railsem_sub1} and Figure~\ref{fig:railsem_sub2}). The entropy of the RailSem19 images is similar to the images in the OSDaR23 dataset. The outliers at the lower end of the entropy spectrum are associated with infrared images in the OSDaR23 dataset. However, in RailSem19 low entropy images are often images that were generated in tunnels or at night. Figure~\ref{fig:railsem_sub2} and Figure~\ref{fig:railsem_sub4} are images with a low entropy levels close to zero whereas Figure~\ref{fig:railsem_sub3} has the highest entropy level in the data set with a score of 6.97.
 
 
 \begin{figure}
@@ -508,7 +508,7 @@ The pixel-level precision in object classification enables the understanding of 
  The segmentation is performed by the YOLOv8 algorithm \citep{Jocher_Ultralytics_YOLO_2023}.  YOLOv8, short for "You Only Look Once, version 8," is the latest version in the YOLO series of real-time object detectors, offering state-of-the-art performance in terms of accuracy and speed \citep{ultralytics_docs}. YOLOv8 builds upon the YOLO architecture, introduced in \cite{redmon2016you} -- a paper that has received more than 43.000 citations at the time of writing. Since the introduction of the original YOLO in 2016, the framework has been tested extensively with remarkable results (e.g., \cite{JIANG20221066, cryptography6020016, Diwan2023}). The efficiency of the YOLO implementations by \cite{Jocher_Ultralytics_YOLO_2023} for segmentation tasks is examined in \cite{agriculture13081643} and \cite{STRAKER2023100045}.
 
 
-\cite{meyer2021yolino} introduce YOLinO, a versatile and efficient algorithm inspired by YOLO. It is designed to detect polylines in the context of lane detection, as discussed in Section~\ref{sec:lane_detection}. While the proposed approach is suitable for rail track detection, adapting the existing codebase from lane detection to rail track detection exceeds the scope of this thesis. Furthermore, our goal is to employ an off-the-shelf solution framework that can be readily utilized by a broader audience.
+\cite{meyer2021yolino} introduce YOLinO, a versatile and efficient algorithm inspired by YOLO. It is designed to detect polylines in the context of lane detection, as discussed in Section~\ref{sec:lane_detection}. While the proposed approach is suitable for rail track detection, adapting the existing code base from lane detection to rail track detection exceeds the scope of this thesis. Furthermore, our goal is to employ an off-the-shelf solution framework that can be readily utilized by a broader audience.
 
 In order to evaluate the YOLOv8 approach, we devise a track detection algorithm based on the fast line detector (FLD) by \cite{FLD}.
 In the following, we describe the YOLOv8 and the FLD approach, and give details of the infrastructure for running the experiments.
@@ -693,7 +693,7 @@ In this section, we describe the baselining approach in detail.
 
 
 The fast line detection algorithm as proposed by \cite{fld_inproceedings} operates as follows: 
-First, edges in the image are detected using a Canny edge detector. The system then extracts line segments by connecting edge pixels with straight lines and extending them until they satisfy the co-linearity conditions (i.e., whether or not the newly added pixels align well with the existing segment in terms of forming a straight line). Points that deviate from forming a straigt line are considered endpoints of other segments. 
+First, edges in the image are detected using a Canny edge detector. The system then extracts line segments by connecting edge pixels with straight lines and extending them until they satisfy the co-linearity conditions (i.e., whether or not the newly added pixels align well with the existing segment in terms of forming a straight line). Points that deviate from forming a straight line are considered endpoints of other segments. 
 
 %First, edges in the image are detected using a Canny edge detector. The Hough transform is then applied in order to represent lines in a parameter space known as the Hough space. For each edge pixel (i.e., points where the intensity changes along a line), a set of potential lines in the Hough space is generated by varying slope and intercept. Each edge pixel effectively "votes" for the lines it might belong to in the Hough space. After the voting process, lines that receive a sufficient number of votes are considered potential lines in the image. Finally, the identified lines are extracted based on the parameters slope and intercept that receive more votes than a predefined threshold.
 FLD is suitable for applications where speed is crucial such as real-time systems or applications where processing resources are limited.
@@ -733,7 +733,7 @@ The histogram confirms the idea that different sensors have different aspect rat
 \label{fig:bb_aspect_ratio_hist}
 \end{figure}
 
-The aspect ratios are used to remove all lines detected by FLD that have a bounding box aspect ratio smaller than the $x^{th}$ Quantile or larger than the $1-x^{th}$ Quantile.
+The aspect ratios are used to remove all lines detected by FLD that have a bounding box aspect ratio smaller than the $x^{th}$ quantile or larger than the $1-x^{th}$ quantile.
 
 In a final step, we apply Connected Component Labeling (CCL) to remove noise or segments that are false positives \citep{CCL}. 
 The goals of CCL is to identify and label connected regions in a binary image where pixels are either tracks or background. After connected components are labeled in the image, we remove all components that are x\% smaller than the largest component.
@@ -921,10 +921,12 @@ Going forward, we will focus on the models data\_highres\_railsem\_640 and data\
 
 \subsection{Parameter tuning}
 
-Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO uses genetic algorithms to optimize hyperparameters. Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
+Parameter tuning or hyperparameter tuning refers to the process of selecting the optimal hyperparameters for a neural network model. Hyperparameters cannot be directly learned from the training data but are high-level settings that are provided as an external input to the model. The goal of parameter tuning is to find the combination of hyperparameters that results in the best performance.  Ultralytics YOLO enables hyperparameter tuning by genetic algorithms. 
+%Genetic algorithms are inspired by the mechanism of natural selection and genetics based on, e.g., mutation \citep{yolo_parameter}. 
 
-Parameter tuning is an iterative process where in each iteration the fitness of the current setting is assessed by training the model for a given number of epochs. We set the number of iterations to 300 and the number of epochs per iteration to 30.  Preliminary experiments revealed that the tuning process is computationally expensive. Therefore, the tuning is performed on 10\% of the training data. 
-Table~\ref{tab:model_duration} summarizes the tuning runs with unified labels. The tuning is very resource intensive despite the reduced training set. The tuning on the high-resolution  OSDaR23 images plus Railsem19 images took at 146 hours with the SGD optimizer and could not be finished within 148 hours with the AdamW optimizer.  
+Parameter tuning in YOLO is an iterative process where in each iteration the fitness of the current setting is assessed by training the model for a given number of epochs. We set the number of iterations to 300 and the number of epochs per iteration to 30.  Preliminary experiments revealed that the tuning process is computationally expensive. Therefore, the tuning is performed on 10\% of the training data. 
+Table~\ref{tab:model_duration} summarizes the tuning runs with unified labels. %The tuning is very resource intensive 
+Despite the reduced training set, the tuning on the high-resolution OSDaR23 images plus Railsem19 images took 146 hours with the SGD optimizer and was aborted after 148 hours with the AdamW optimizer.  
 
 \begin{table}[htbp]
 \centering
@@ -945,11 +947,11 @@ Table~\ref{tab:model_duration} summarizes the tuning runs with unified labels. T
 \label{tab:model_duration}
 \end{table}
 
-Table~\ref{tab:tuning_comparison} compare the results with unified labels that are generated by automatically setting the parameters by YOLO, tuning with SGD, and tuning with AdamW. The data\_all\_640 model is used for the infrared images and data\_highres\_railsem\_640 model is used for the RGB images.
+Table~\ref{tab:tuning_comparison} compares the results with unified labels that are generated by automatically setting the parameters by YOLO, tuning with SGD, and tuning with AdamW. The data\_all\_640 model is used as a basis for the infrared images and data\_highres\_railsem\_640 model is used for the RGB images.
 The results indicate that the automatically chosen parameters outperform the tuned parameters on two out of four tests. This is a surprising result but it can probably be explained by the reduced training set that was used during the parameter tuning. For example, if the subset of the training data used for tuning contained less infrared images relative to the entire training set, then the parameters of the data\_all\_640 model would be tuned towards performing better on RGB images. Detailed results of the tuning are given in Appendix~\ref{app:yolo_parameters}.
 
 Given the good overall performance of the automatically tuned parameters and the poor performance of the tuned parameters on the data\_rgb set, we use the models with the automatically chosen parameters for the final analysis.
-The parameter tuning was omitted for the models with separate labels due to the poor cost/benefit ratio.   
+In the same sense, the parameter tuning was omitted for the models with separate labels. 
 
 
 \begin{table}[htbp]
@@ -975,15 +977,18 @@ data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\
 
 \chapter{Results} \label{sec:results} % 2000 words
 
-In this section, we perform a detailed analysis of the proposed solution approaches on the test set.  The test set is not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
+In this section, we perform a detailed analysis of the proposed solution approaches on the OSDaR23 test set.  The test set is not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
 All approaches, FLD, YOLOv8 with unified labels, and YOLOv8 with separate labels are used to predict tracks in the test images. The evaluation is based on the Dice score of the resulting segmentation mask. 
 
-%YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
+YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
 
-First, we compare the YOLOv8 models with unified labels and with separate lables. Figure~\ref{fig:yolo_vs_yolo} visualizes the distrubution of the Dice scores by sensor type and orientation. Both approaches seem to provide results of similar quality. 
-For the left oriented RGB camera and the right oriented high-resolution camera, there is a clear adavantage of the separate labeling comapred to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
+First, we compare the YOLOv8 models with unified labels and with separate labels. Figure~\ref{fig:yolo_vs_yolo} visualizes the distribution of the Dice scores by sensor type and orientation in a violin plot -- a visualization that combines aspects of a box plot and a kernel density plot. 
+Both approaches seem to provide results of similar quality. 
+For the left oriented RGB camera and the right oriented high-resolution camera, there is a clear advantage of the separate labeling compared to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
 
-As both models perform similarly well, we continue the analysis on the model with separate labels as this model provides advantages when applying the results in the real-world. Figure~\res{ fig:labeling} illustrates the result of the two labelling approaches. On the top, we give the segmenetation result when the labels are unified. In this case, the output is a single bounding box and a single mask marking all pixles that are classified as track. On the otherhand, the example on the bottom shows the result when the model is trained with separate labels. In this case, the model provides a separate bounding box and mask for each track in the image which makes it easier in interpret the environment.
+As both models perform similarly well, we continue the analysis on the model with separate labels as this model provides advantages when applying the results in the real-world. 
+Figure~\ref{fig:labeling3} illustrates the result of the two labeling approaches. 
+On the top, we give the segmentation result when the labels are unified. In this case, the output is a single bounding box and a single mask marking all pixels that are classified as track. On the other hand, the example on the bottom shows the result when the model is trained with separate labels. In this case, the model provides a separate bounding box and mask for each track in the image which makes it easier in interpret the environment.
 
  
 
@@ -1023,14 +1028,16 @@ As both models perform similarly well, we continue the analysis on the model wit
  \label{fig:labeling_d}
 \end{subfigure}
 \caption{Example results of different labeling approaches.}
-\label{fig:labeling}
+\label{fig:labeling3}
 \end{figure}
 
 
 
 
-Figure~\ref{fig:yolo_vs_fld}, shows the comparison between FLD and YOLOv8 (with separate labels) based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line, where points along this line signify that both, YOLOv8 and FLD solutions, are equal good or bad. If a points is above the line then YOLOv8 performed better on that image; if a point is below the line FLD outperformed YOLOv8. It is easy to see that YOLOv8 outperforms FLD on most images. However, it is interesting to observe that on certain RGB images FLD provides predictions with a Dice score of up to 0.37. A closer look reveals that all images where YOLOv8 could not provide a prediction are frames from the same sequence. An example is given in Figure~\ref{fig:res_example1}; predictions are colored red. Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example1}
-An other interesting observation is that infrared images have the highest Dice scores among the images segmented with YOLOv8. Figure~\ref{fig:res_example4} illustrates the difference between FLD and YOLOv8 on an infrared image.
+Figure~\ref{fig:yolo_vs_fld} shows the comparison between FLD and YOLOv8 (with separate labels) based on the Dice score where each data point represents one image. The sensor types are distinguished by color. The dashed red line represents the indifference line where scores along this line are the same for YOLOv8 and FLD. If a points is above the line then YOLOv8 performed better on the given image; if a point is below the line, then FLD outperformed YOLOv8. It is easy to see that YOLOv8 performs better than FLD on most images. However, in certain instances FLD achieves better results, e.g., on infrared images. A closer look reveals that most clusters of images where YOLOv8 provides worse predictions than FLD are frames from the same sequence. 
+An example is given in Figure~\ref{fig:res_example1}. The ground truth image is given on the left; the labels are colored green\footnote{Note that the labeling is not perfect as certain tracks segments are not marked as tracks}. Predictions by FLD and YOLOv8 are colored red. 
+Similarly, the cluster of high-resolution images on which FLD performs better are all frames from the same sequence. The prediction of YOLOv8 and of FLD on one of these frames is given in Figure~\ref{fig:res_example2}
+An other interesting observation is that infrared images have the highest Dice scores among all images segmented with YOLOv8. Figure~\ref{fig:res_example4} illustrates the difference between FLD and YOLOv8 on an infrared image.
 
 
 
@@ -1118,7 +1125,7 @@ An other interesting observation is that infrared images have the highest Dice s
 \end{figure}
 
 
-In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an effect on the computation time. Next, in Figure~\ref{fig:dice_vs_entropy}, we examine the relation between Dice and entropy score; the different approaches are distinguished by color. There is no clear trend in the scatter plot, i.e., there is no linear relationship between Dice score and entropy. However,  both approaches seem to struggle with low entropy images that have uniform intensity  (e.g., which is often the case with infrared images -- see Figure~\ref{fig:entropy_sub1}).
+In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an effect on the computation time. In Figure~\ref{fig:dice_vs_entropy}, we examine the relation between Dice and entropy score; the solution approaches are distinguished by color. There is no clear trend in the scatter plot, i.e., there is no linear relationship between Dice score and entropy. However,  both approaches seem to struggle with low entropy images that have uniform intensity  (e.g., which is often the case with infrared images -- see Figure~\ref{fig:entropy_sub1}).
 
 
 
@@ -1131,9 +1138,9 @@ In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an e
 
 
 
-Figure~\ref{fig:yolo_models}, evaluates and compares FLD and YOLOv8 on sensor level. 
-The dice scores are visualized in a violin plot that combines aspects of a box plot and a kernel density plot. 
-The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 performs better than FLD in most of the cases. YOLOv8 performs particularly well on infrared images. Good results are achieved with forward-facing sensors. In particular, FLD performs best on forward-facing RGB cameras but performs poorly when the cameras are left or right oriented. YOLOv8 is more robust to the sensor type and orientation. Segmenting tracks on images of left oriented cameras seems to be particularly challenging. This might be an outcome of the right-hand traffic principle which is mostly followed in Germany.
+Figure~\ref{fig:yolo_models}, evaluates and compares FLD and YOLOv8 on a sensor level. 
+The Dice scores are visualized in a violin plot.
+The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 performs better than FLD in most of the cases. YOLOv8 performs particularly well on infrared images. Good results are achieved with forward-facing sensors. In particular, FLD performs best on forward-facing RGB cameras but performs poorly when the cameras are left or right oriented. YOLOv8 is more robust to the sensor type and orientation. Segmenting tracks on images of left oriented cameras seems to be particularly challenging which might be an outcome of the right-hand traffic principle which is mostly followed in Germany.
 
 
 \begin{figure}[h]
@@ -1177,15 +1184,15 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 
 \chapter{Conclusion} % 500 words
 
-This master's thesis addresses a challenge in the area of railway automation. The focus is on multi-sensor rail track detection within the context of Automatic Train Operations (ATO). Leveraging deep learning techniques, particularly semantic segmentation, the study aims to enhance the accuracy and robustness of track detection systems thereby contributing to the efficiency and safety of railway operations.
+This master's thesis addresses a challenge in the area of railway automation. The focus is on multi-sensor rail track detection within the context of Automatic Train Operations (ATO). By leveraging deep learning techniques, particularly semantic segmentation, the study aims to enhance the accuracy and robustness of track detection systems thereby contributing to the efficiency and safety of railway operations.
 
-The research compares deep learning-based segmentation with traditional non-AI-based methods, exploring the effectiveness of different sensor inputs and orientations. By conducting a comprehensive performance evaluation and integrating the developed model into real-world applications, valuable insights are gained into the feasibility and practical implications of automated track detection systems.
+The research compares deep learning-based segmentation with traditional non-AI-based methods and evaluates the effectiveness of both approaches on different sensor inputs and orientations. By conducting a comprehensive performance evaluation and testing the integrating of the developed model into real-world applications, valuable insights are gained into the feasibility and practical implications of automated track detection systems.
 
-The results demonstrate the advantages of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 performs robustly across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the highlights the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy.
+The results demonstrate the advantages of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 performs robustly across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the results highlight the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy.
 
-Overall, this research advances the field of railway automation by providing valuable insights, methodologies, and tools for improving the safety, efficiency, and competitiveness of automatic train operations. The findings hold significant implications for railway infrastructure management and contribute to the ongoing efforts towards sustainable transportation systems.
+Overall, this research advances the field of railway automation by providing valuable insights, methodologies, and tools for improving the safety, efficiency, and competitiveness of automatic train operations. The findings provide implications for railway infrastructure management and contribute to the ongoing efforts towards sustainable transportation systems.
 
-Future research could involve applying other deep-learning techniques instead of semantic segmentation. Give the fact that desired output are polylines marking tracks, it would be interesting to adjust the YOLinO approach proposed by \cite{meyer2021yolino} for lane detection. Furthermore, distinguishing the tracks the locomotive occupies currently from the surrounding tracks would support the navigation in the network. 
+Future research could involve applying other deep-learning techniques instead of semantic segmentation. Give the fact that in many cases the desired output are polylines marking tracks, it would be interesting to adjust the YOLinO approach proposed by \cite{meyer2021yolino} for lane detection. Furthermore, distinguishing the tracks the locomotive occupies currently from the surrounding tracks would support the navigation in the network. 
 The devised approach performs well on images from infrared sensors. Therefore, research could focus on more detailed analysis on track detection in adverse weather and low lighting conditions. 
 
 
@@ -1280,7 +1287,7 @@ In this thesis, we are focusing on images from the different sensor types.
 
 \section{Dataset split} \label{app:data_split}
 
-Splitting the OSDaR23 dataset in to train, validation, and test subsets is performed based on video sequences. Table~\ref{tab:dataset_split} lists the assignment of sequences to the respective subset. Figure~\ref{fig:data_split} show the split on an image level in total and for each sensor type.
+Splitting the OSDaR23 dataset into train, validation, and test subsets is performed based on video sequences. Table~\ref{tab:dataset_split} lists the assignment of sequences to the respective subset. Figure~\ref{fig:data_split} show the split on an image level in total and for each sensor type.
 
 \begin{table}[ht]
 \centering
@@ -1365,7 +1372,7 @@ rgb\_right & 2.522 & 1.890 & 0.143 & 0.951 & 5.515 & 1.329 & 4.101 & 8.476 \\
 \end{table}
 
 
-Figure~\ref{fig:fld_params} shows the effect on the performance measured by the Dice score. The results are averaged over 196 images. 
+Figure~\ref{fig:fld_params} shows the effect of different parameters on the performance measured by the Dice score. The results are averaged over 196 images. 
 
 \begin{figure}[h]
 \centering
@@ -1390,7 +1397,7 @@ Figure~\ref{fig:yolo_architecture} presents the model architecture of YOLOv8 \ci
 
 Figure~\ref{fig:training_highres} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_highres_example} gives and example of a training batch and a validation batch, respectively.
 Figure~\ref{fig:mosaic_augmentation_highres} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
-Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
+Mosaic data augmentation is a technique where four different images are mixed together and are then provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
 
 
 \begin{figure}[h]
@@ -1422,7 +1429,7 @@ Mosaic data augmentation is a technique where four different images are mixed to
 \subsection{Results of data\_all\_640 model with unified labels}
 
 Figure~\ref{fig:training_all} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example} gives and example of a training batch and a validation batch, respectively.
-Figure~\ref{fig:mosaic_augmentation_all} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
+Figure~\ref{fig:validation_batch_1} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
 
 
 \begin{figure}[h]
@@ -1444,6 +1451,7 @@ Figure~\ref{fig:mosaic_augmentation_all} demonstrates the down-side of having ma
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all/val_batch2_pred}
   \caption{Example of validation batch.\\ Images are frames of video sequence.}
+  \label{fig:validation_batch_1}
 \end{subfigure}
 \caption{Example of training and validation batch during training model data\_all\_640 with unified labels.}
 \label{fig:yolo_all_example}
@@ -1454,8 +1462,8 @@ Figure~\ref{fig:mosaic_augmentation_all} demonstrates the down-side of having ma
 \subsection{Results of data\_highres\_railsem\_640 model with separate labels}
 
 Figure~\ref{fig:training_highres_nl} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_highres_example_nl} gives and example of a training batch and a validation batch, respectively.
-Figure~\ref{fig:mosaic_augmentation_nl} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
-Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
+%Figure~\ref{fig:mosaic_augmentation_nl} demonstrates the mosaic data augmentation that was introduced in YOLOv8. 
+%Mosaic data augmentation is a technique where four different images are mixed together and provided to the model as input. This technique allows the model to learn the actual objects from different positions and with partial occlusion. 
 
 
 \begin{figure}[h]
@@ -1487,7 +1495,7 @@ Mosaic data augmentation is a technique where four different images are mixed to
 \subsection{Results of data\_all\_railsem\_640 model with separate labels}
 
 Figure~\ref{fig:training_all_nl} shows how the performance indicators evolve during the training process, while Figure~\ref{fig:yolo_all_example_nl} gives and example of a training batch and a validation batch, respectively.
-Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
+Figure~\ref{fig:mosaic_2} demonstrates the down-side of having many similar images that are taken from one video sequence -- the validation set is very restricted and therefore not always representative to the wide range of possible scenarios.
 
 
 \begin{figure}[h]
@@ -1509,6 +1517,7 @@ Figure~\ref{fig:images_from_videos} demonstrates the down-side of having many si
   \centering
   \includegraphics[width=0.9\textwidth]{images/yolo/all_nl/val_batch2_pred}
   \caption{Example of validation batch.\\ Images are frames of video sequence.}
+  \label{fig:mosaic_2}
 \end{subfigure}
 \caption{Example of training and validation batch during training model data\_all\_railsem\_640 with separate labels.}
 \label{fig:yolo_all_example_nl}
@@ -1587,7 +1596,7 @@ copy\_paste & segment copy-paste (probability) \\ \hline
 \end{figure}
 
 
-Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visualize the tuning process on the data\_highres\_railsem\_640 model  with AdamW and SGD optimizer, respectively.
+Figure~\ref{fig:yolo_tune_all_adam} and Figure~\ref{fig:yolo_tune_all_sgd} visualize the tuning process on the data\_all\_640 model  with AdamW and SGD optimizer, respectively.
 
 \begin{figure}
 \centering
