@@ -133,9 +133,9 @@ def parse_input():
 
                         temp["height"] = map_sensor_to_wh[coordinate_system]["height"]
                         temp["width"] = map_sensor_to_wh[coordinate_system]["width"]
-                        temp[
-                            "path"
-                        ] = f"{d}{v['frame_properties']['streams'][coordinate_system]['uri']}"
+                        temp["path"] = (
+                            f"{d}{v['frame_properties']['streams'][coordinate_system]['uri']}"
+                        )
                         temp["dataset"] = d
                         temp["timestamp"] = v["frame_properties"]["timestamp"]
                         temp["label_type"] = k3
@@ -259,11 +259,12 @@ def generate_mask_df(df: pd.DataFrame, path: str, file: str):
     takes an image and the repective labels and generates mask
     """
     print(file)
+    masks = []
     df = df[df["path"] == file]
     img = cv2.imread(path + file)
     thickness = int(img.shape[1] / 100)
-    mask = np.zeros_like(img)
     for idx, row in df.iterrows():
+        mask = np.zeros_like(img)
         cv2.polylines(
             mask,
             np.int32([row["poly2d"]]),
@@ -271,7 +272,8 @@ def generate_mask_df(df: pd.DataFrame, path: str, file: str):
             color=(255, 255, 255),
             thickness=thickness,
         )
-    return mask
+        masks.append(mask)
+    return masks
 
 
 def generate_mask_path(path_image: str, path_label: str, print=False):
@@ -392,13 +394,14 @@ def write_dataset_to_directory(
         destination = f"{path_data}{dataset}/{row['set']}/images/{filename}"
         shutil.copy(source, destination)
 
-        mask = generate_mask_df(df, path=path_orig_data, file=row["path"])
-        labels, coordinates = find_contours(mask)
-        with open(
-            f"{path_data}{dataset}/{row['set']}/labels/{filename.replace('png','txt').replace('jpg', 'txt')}",
-            "w",
-        ) as f:
-            f.write("\n".join(labels))
+        masks = generate_mask_df(df, path=path_orig_data, file=row["path"])
+        for mask in masks:
+            labels, coordinates = find_contours(mask)
+            with open(
+                f"{path_data}{dataset}/{row['set']}/labels/{filename.replace('png','txt').replace('jpg', 'txt')}",
+                "a",
+            ) as f:
+                f.write("\n".join(labels) + "\n")
 
 
 def apply_fast_line_detection(

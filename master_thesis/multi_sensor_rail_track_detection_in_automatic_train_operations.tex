@@ -26,6 +26,8 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{microtype} 
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
 \captionsetup{compatibility=false}
 
 %\addbibresource{Literatur.bib}                              % Literatur-File definieren
@@ -58,7 +60,8 @@ Diese Masterarbeit befasst sich mit der Aufgabe der Mehrsensorschienenverfolgung
 
 This master's thesis addresses the task of multi-sensor rail track detection within the ATO framework by utilizing deep learning techniques, particularly semantic segmentation. By exploring a multi-sensor dataset comprising images from high/low-resolution RGB cameras and infrared cameras with varying orientations, this research aims to improve the accuracy and robustness of track detection in diverse conditions. The study compares the performance of deep learning-based segmentation with traditional non-AI-based methods, conducts comprehensive evaluations on different sensor inputs, and explores real-world application integration. The findings contribute valuable insights to the field of railway automation, offering implications for enhancing the safety and efficiency of automatic train operations.}
 \keywords{Deep Learning, Computer Vision, Rail Track Segmentation, YOLO, Automatic Train Operations}
-%\acknowledgements{\blindtext}
+\acknowledgements{The author would like to thank Lukas Rohatsch and Daniele Capriotti for their support and insightful contributions. Acknowledgment is also extended to DB and DB Cargo for providing the essential images and videos that made this research possible. 
+}
 \setListingsAndAcronyms % Definition der Namen für Quellcodeverzeichnis 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende des Headers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Beginn des Dokuments
@@ -640,6 +643,7 @@ False Negatives are the instances where the model incorrectly predicts the negat
 \text{IoU} = \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}
 \]
 
+\vspace{1cm}
 
 In Figure~\ref{fig:example_metrcis}, we illustrate the performance metrics based on an example. Figure~\ref{fig:gt_sub1} shows the ground truth label, i.e., the correct mask of the image being analyzed. Figure~\ref{fig:ex_sub1} shows five possible predictions, where Image~5 is simply a black image with no positive classifications. The metrics for the five predictions are given in Figure~\ref{tab:metrics}. The example shows that Pixel accuracy is not appropriate in unbalanced dataset -- even Image 5 which has no prediction at all has an accuracy score of almost 95\%. Image 2 yields a high Precision score of 0.706 as the FN values are not accounted for.  Recall seems to be a strong predictor of performance in this example. However, an all white image (i.e., all pixels classified as track) would yield a perfect Recall. Dice and IoU are best suited to distinguish between good and bad predictions. Both values have a wide range and the scores are in line with the estimation based on visual inspection.
 
@@ -758,7 +762,7 @@ In total, we test 22.680 parameter settings on 196 images\footnote{The idea is t
     \centering
     \tiny
     \caption{Sensor Parameters}
-    \label{tab:sensor_parameters}
+    \label{tab:sensor_parameters_fld}
     \begin{tabular}{|l|l|l|}
         \hline
         \textbf{Parameter} & \textbf{Description} & \textbf{Values} \\
@@ -783,7 +787,7 @@ In total, we test 22.680 parameter settings on 196 images\footnote{The idea is t
 \end{table}
 
 
-Table~\ref{tab:sensor_parameters} presents the best parameter configurations based on the average Dice score. The varying parameter settings across different sensors demonstrate the algorithm's sensitivity to the selected parameters.
+Table~\ref{tab:sensor_parameters_fld} presents the best parameter configurations based on the average Dice score. The varying parameter settings across different sensors demonstrate the algorithm's sensitivity to the selected parameters.
 The left-oriented camera images seem to benefit from a higher level of blurring with a kernel size of seven. 
 The filtering criteria for lines with uncharacteristic bounding box aspect ratios appear to be relatively loose in most cases -- only the most extreme outliers are being removed. Left and right-oriented high-resolution camera images, on the other hand, seem to require a more restrictive filtering. 
 The "Avg. Time" column indicates the average inference time in seconds. The inference times seem to be strongly correlated with the entropy metrics discussed in Section~\ref{sec:entropy}; higher entropy values tend to be associated with longer inference times.
@@ -977,12 +981,16 @@ data\_all\_640 & data\_ir & \textbf{0.440} & 0.425 & 0.375 & -3.324 & -14.704 \\
 
 \chapter{Results} \label{sec:results} % 2000 words
 
+In this section, we analyze the results of the introduced solution approaches and investigate options for post-processing and integration into existing tools for rail-track detection.
+
+\section{Performance analysis}
+
 In this section, we perform a detailed analysis of the proposed solution approaches on the OSDaR23 test set.  The test set is not used during the model development and training process, so the results provide an unbiased performance evaluation on unseen data.
 All approaches, FLD, YOLOv8 with unified labels, and YOLOv8 with separate labels are used to predict tracks in the test images. The evaluation is based on the Dice score of the resulting segmentation mask. 
 
 YOLOv8 uses different methods to evaluate the performance during the validation (i.e., on validation set) and prediction (i.e., on test set). The validation method generates detections on padded images, while the predict method does not. This means that the two methods are using slightly different versions of the same image when generating predictions. In order to enable a fair comparison between YOLOv8 and FLD, we evaluate the performance of both approaches by using the same function.
 
-First, we compare the YOLOv8 models with unified labels and with separate labels. Figure~\ref{fig:yolo_vs_yolo} visualizes the distribution of the Dice scores by sensor type and orientation in a violin plot -- a visualization that combines aspects of a box plot and a kernel density plot. 
+First, we compare the YOLOv8 models with unified labels and with separate labels. Figure~\ref{fig:yolo_vs_yolo} visualizes the distribution of the Dice scores by sensor type and orientation in a violin plot -- a visualization that combines aspects of a box plot and a kernel density plot\footnote{The negative values in the violin plot are caused by the kernel density estimation.} 
 Both approaches seem to provide results of similar quality. 
 For the left oriented RGB camera and the right oriented high-resolution camera, there is a clear advantage of the separate labeling compared to the unified labeling. For the left oriented infrared camera, the unified labels provide better results.
 
@@ -1043,7 +1051,7 @@ An other interesting observation is that infrared images have the highest Dice s
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{images/results/dice_fld_vs_yolo_nl}
+\includegraphics[width=0.8\textwidth]{images/results/dice_fld_vs_yolo_nl}
 \caption{Comparison between YOLOv8 (separate labels) and FLD based on Dice score. Sensor types are distinguished by color. }
 \label{fig:yolo_vs_fld}
 \end{figure}
@@ -1125,15 +1133,21 @@ An other interesting observation is that infrared images have the highest Dice s
 \end{figure}
 
 
-In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an effect on the computation time. In Figure~\ref{fig:dice_vs_entropy}, we examine the relation between Dice and entropy score; the solution approaches are distinguished by color. There is no clear trend in the scatter plot, i.e., there is no linear relationship between Dice score and entropy. However,  both approaches seem to struggle with low entropy images that have uniform intensity  (e.g., which is often the case with infrared images -- see Figure~\ref{fig:entropy_sub1}).
-
-
+In Section~\ref{sec:fld_parameter}, we have seen that the image entropy has an effect on the computation time. In Figure~\ref{fig:dice_vs_entropy}, we examine the relation between Dice and entropy score; the solution approaches are distinguished by color. There is no clear trend in the scatter plot, i.e., there is no linear relationship between Dice score and entropy. However,  both approaches seem to struggle with low entropy images that have uniform intensity  (e.g., which might be the case with infrared images -- see Figure~\ref{fig:entropy_sub1}).
+Figure~\ref{fig:dice_vs_brightness} shows the relation between image brightness and the dice score achieved by FLD and YOLOv8, respectively.  Image brightness does not seem to have a significant effect on the result. Even in very dark images YOLOv8 is able to generate predictions with dice scores of around 0.8. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{images/results/dice_vs_entropy_nl}
 \caption{Dice scores vs. entropy scores -- FLD and YOLOv8 are distinguished by color.  }
 \label{fig:dice_vs_entropy}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/results/dice_vs_brightness_nl}
+\caption{Dice scores vs. brightness scores -- FLD and YOLOv8 are distinguished by color.  }
+\label{fig:dice_vs_brightness}
 \end{figure}
 
 
@@ -1152,26 +1166,31 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 
 
 
-\section{Post-processing and application}
+\section{Post-processing}
+
+In rail track detection, the choice between providing the result as a polyline or a segmentation mask holds significant importance due to several practical advantages. For example, presenting the result as a polyline simplifies interpretation of the result. The clear representation in form of an array of points offers a concise depiction of detected rail tracks. Additionally, utilizing polylines reduces data volume compared to segmentation masks which advantageous the bandwidth of resources is limited. Furthermore, polylines facilitate the further processing in subsequent tasks such as detecting obstacles the might block the tracks. 
+
+Training the model with separate labels for each track allows us in a post-processing step to identify tracks individually and convert the masks into polylines by applying a traditional line detector on the masks.  
+Figure~\ref{fig:postprocessing1} illustrates the idea. The image on the left shows the original image with the overlayed mask given in red. The image in the middle shows the segmentation mask which is generated by combining the four masks -- one for each track. The image on the right displays the result where each track is marked by a polyline with a different color.
 
 
 \begin{figure}
 \centering
 \begin{subfigure}[t]{.33\textwidth}
   \centering
-  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_segmented}
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/9_station_ruebenkamp_9.1_rgb_center_082_1631711160.300000056_segmented}
   \caption{Segmented image.}
 %   \label{fig:bb_long}
 \end{subfigure}%
 \begin{subfigure}[t]{.33\textwidth}
   \centering
-  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_mask}
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/9_station_ruebenkamp_9.1_rgb_center_082_1631711160.300000056_mask}
   \caption{Segmentation mask comprising four tracks.}
 %   \label{fig:bb_long}
 \end{subfigure}%
 \begin{subfigure}[t]{.33\textwidth}
   \centering
-  \includegraphics[width=0.9\textwidth]{images/postprocessing/3_fire_site_3.3_rgb_center_056_1631639533.600000000_line}
+  \includegraphics[width=0.9\textwidth]{images/postprocessing/9_station_ruebenkamp_9.1_rgb_center_082_1631711160.300000056_line}
   \caption{Each track can be identified separately. }
  % \label{fig:bb_wide}
 \end{subfigure}
@@ -1182,18 +1201,80 @@ The Figure supports the conclusion from Figure~\ref{fig:yolo_vs_fld}: YOLOv8 per
 
 
 
+\section{Integration into existing tools}
+
+The goal of the proposed solution approaches is to integrate the image segmentation model into a live video stream.
+
+Once the image segmentation model has been trained, the camera output is fed into the model. Each frame of the video stream is preprocessed to meet the input requirements of the segmentation model (e.g., the image resized). The frames are then analyzed by the segmentation model to obtain the segmentation masks and labeled regions. 
+The segmentation masks can be overlayed onto the original video frames to visualize the segmentation results and the processed frames can be displayed in real-time. Alternatively, the masks can be used as an input into existing rails track detection approaches.
+
+As a proof of concept, we integrate the YOLOv8 model with a rail track analysis algorithm proposed by \cite{danieles_algorithm}. The pseudocode of the algorithms is given in Algorithm~\ref{alg:track_analysis}.
+
+
+\begin{algorithm}
+\caption{Euclid’s algorithm}\label{alg:track_analysis}
+\begin{algorithmic}[1]
+\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+\State $r\gets a\bmod b$
+\While{$r\not=0$}\Comment{We have the answer if r is 0}
+\State $a\gets b$
+\State $b\gets r$
+\State $r\gets a\bmod b$
+\EndWhile\label{euclidendwhile}
+\State \textbf{return} $b$\Comment{The gcd is b}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+
+Several optimization strategies can be implemented to improve the real-time performance of video processing and enable a seamless segmentation with computationally intensive operations.
+For example, parallel processing techniques such as multiprocessing can be utilized to concurrently handle different tasks simultaneously (e.g., segmentation processing, frame capturing, and image preprocessing). 
+Hardware acceleration, such as GPU utilization, can significantly speed up inference by leveraging parallel processing capabilities. Batch processing, where multiple frames are processed simultaneously, and asynchronous inference, which allows frames to be processed independently, are effective methods to further enhance processing efficiency. 
+Additionally, selectively skipping frames or processing frames at a lower frequency can reduce the computational load, especially in scenarios with relatively static scenes that often occur on straight tracks. Furthermore, the segmentation model itself can be optimized for faster inference. 
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.395\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/streaming/img3}
+  \caption{Segmented image.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.395\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/streaming/img2}
+  \caption{Segmentation mask comprising four tracks.}
+%   \label{fig:bb_long}
+\end{subfigure}%
+\begin{subfigure}[t]{.215\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/streaming/img1}
+  \caption{Each track can be identified separately. }
+ % \label{fig:bb_wide}
+\end{subfigure}
+\caption{Lines. }
+\label{fig:postprocessing2}
+\end{figure}
+
+
+
+
+
 \chapter{Conclusion} % 500 words
 
 This master's thesis addresses a challenge in the area of railway automation. The focus is on multi-sensor rail track detection within the context of Automatic Train Operations (ATO). By leveraging deep learning techniques, particularly semantic segmentation, the study aims to enhance the accuracy and robustness of track detection systems thereby contributing to the efficiency and safety of railway operations.
 
 The research compares deep learning-based segmentation with traditional non-AI-based methods and evaluates the effectiveness of both approaches on different sensor inputs and orientations. By conducting a comprehensive performance evaluation and testing the integrating of the developed model into real-world applications, valuable insights are gained into the feasibility and practical implications of automated track detection systems.
 
-The results demonstrate the advantages of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 performs robustly across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the results highlight the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy.
+The results demonstrate the advantages of deep learning-based approaches, particularly YOLOv8, over traditional methods in most scenarios. YOLOv8 performs robustly across various sensor types and orientations, with infrared images yielding the highest Dice scores. Furthermore, the results highlight the challenges associated with low entropy images and the impact of sensor orientation on segmentation accuracy. 
+Deep-learning approaches have the disadvantage that it is difficult to incorporate expert knowledge. By applying traditional track-detection approaches to post-process the segmentation results, we successfully mitigated false positive classifications and achieved a higher accuracy in identifying tracks.
 
 Overall, this research advances the field of railway automation by providing valuable insights, methodologies, and tools for improving the safety, efficiency, and competitiveness of automatic train operations. The findings provide implications for railway infrastructure management and contribute to the ongoing efforts towards sustainable transportation systems.
 
-Future research could involve applying other deep-learning techniques instead of semantic segmentation. Give the fact that in many cases the desired output are polylines marking tracks, it would be interesting to adjust the YOLinO approach proposed by \cite{meyer2021yolino} for lane detection. Furthermore, distinguishing the tracks the locomotive occupies currently from the surrounding tracks would support the navigation in the network. 
-The devised approach performs well on images from infrared sensors. Therefore, research could focus on more detailed analysis on track detection in adverse weather and low lighting conditions. 
+
+Future research could involve applying other deep-learning techniques instead of semantic segmentation. Give the fact that in many cases the desired output are polylines marking tracks, it would be interesting to adjust the YOLinO approach proposed by \cite{meyer2021yolino} for lane detection. %Furthermore, distinguishing the tracks the locomotive occupies currently from the surrounding tracks would support the navigation in the network. 
+The approach proposed in this thesis performs well on images from infrared sensors. Therefore, research could focus on more detailed analysis on track detection in adverse weather and low lighting conditions. Another interesting stream of research is the combination of CNNs with recurrent neural network (RNN) architecture designed to model sequential data. Capturing temporal dependencies between video frames  could overcome the limitation of analyzing each frame independently of the sequence in which the frames are generated. Finally, for real-world applications further research could focus on combining traditional segmentation approaches and deep-learning based approaches to increase the overall performance of the system.
 
 
 
